@@ -1,0 +1,28 @@
+.workXpBlock li{
+
+    padding-bottom: 16px;
+    padding-left: 36px;
+    margin-bottom: 16px;
+    margin-top: 10px;
+    position: relative;
+    
+    &::before{
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 7px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #8f96a3;
+    }
+
+    &::after{
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 25px;
+        bottom: 0;
+        border-left: 1px dashed #8f96a3;
+    }
+}

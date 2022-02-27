@@ -83,9 +83,9 @@ export class CardStatsComponent implements OnInit {
   }
   set statIconColor(statIconColor: string) {
     this._statIconColor =
-      statIconColor === undefined ? "bg-red-500" : statIconColor;
+      statIconColor === undefined ? "bg-orange-500" : statIconColor;
   }
-  private _statIconColor = "bg-red-500";
+  private _statIconColor = "bg-orange-500";
 
   constructor() {}
 

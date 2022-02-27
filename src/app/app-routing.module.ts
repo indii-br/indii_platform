@@ -7,7 +7,6 @@ import { AuthComponent } from "./layouts/auth/auth.component";
 
 // admin views
 import { DashboardComponent } from "./views/admin/dashboard/dashboard.component";
-import { MapsComponent } from "./views/admin/maps/maps.component";
 import { SettingsComponent } from "./views/admin/settings/settings.component";
 import { TablesComponent } from "./views/admin/tables/tables.component";
 
@@ -16,9 +15,14 @@ import { LoginComponent } from "./views/auth/login/login.component";
 import { RegisterComponent } from "./views/auth/register/register.component";
 
 // no layouts views
-import { IndexComponent } from "./views/index/index.component";
+import { SiteComponent } from "./views/site/site.component";
 import { LandingComponent } from "./views/landing/landing.component";
-import { ProfileComponent } from "./views/profile/profile.component";
+import { PublicProfileComponent } from "./views/public-profile/public-profile.component";
+import { NewContractComponent } from "./views/admin/contracts/new-contract/new-contract.component";
+import { ContractsComponent } from "./views/admin/contracts/contracts.component";
+import { JobsComponent } from "./views/admin/jobs/jobs.component";
+import { NewJobComponent } from "./views/admin/jobs/new-job/new-job.component";
+import { ProfileComponent } from "./views/admin/profile/profile.component";
 
 const routes: Routes = [
   // admin views
@@ -28,8 +32,11 @@ const routes: Routes = [
     children: [
       { path: "dashboard", component: DashboardComponent },
       { path: "settings", component: SettingsComponent },
-      { path: "tables", component: TablesComponent },
-      { path: "maps", component: MapsComponent },
+      { path: "contratos", component: ContractsComponent },
+      { path: "oportunidades", component: JobsComponent },
+      { path: "nova-oportunidade", component: NewJobComponent },
+      { path: "editar-oportunidade/:id", component: NewJobComponent },
+      { path: "profile/:id", component: ProfileComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ],
   },
@@ -44,9 +51,9 @@ const routes: Routes = [
     ],
   },
   // no layout views
-  { path: "profile", component: ProfileComponent },
+  { path: "public-profile", component: PublicProfileComponent },
   { path: "landing", component: LandingComponent },
-  { path: "", component: IndexComponent },
+  { path: "", component: SiteComponent },
   { path: "**", redirectTo: "", pathMatch: "full" },
 ];
 

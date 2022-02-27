@@ -1,50 +1,37 @@
-<a
-  class="text-blueGray-500 block"
-  href="#pablo"
-  (click)="toggleDropdown($event)"
-  #btnDropdownRef
->
+<a class="text-blueGray-500 block" href="#" (click)="toggleDropdown($event)" #btnDropdownRef>
   <div class="items-center flex">
-    <span
-      class="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"
-    >
-      <img
-        alt="..."
-        class="w-full rounded-full align-middle border-none shadow-lg"
-        src="assets/img/team-1-800x800.jpg"
-      />
+    <span class="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full overflow-hidden">
+      <img *ngIf="user.type !== 'CLIENT'" class="w-full rounded-full align-middle border-none shadow-lg"
+        src="assets/img/team-1-800x800.jpg" />
+
+        <app-avatar-default *ngIf="user.type === 'CLIENT'" [seed]="user.email"></app-avatar-default>
     </span>
   </div>
 </a>
+
 <div class="min-w-48 z-50" #popoverDropdownRef>
-  <div
-    class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
-    [ngClass]="dropdownPopoverShow ? 'block' : 'hidden'"
-  >
-    <a
-      href="#pablo"
-      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-    >
-      Action
+  <div class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
+    [ngClass]="dropdownPopoverShow ? 'block' : 'hidden'">
+    <span class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+      {{user.full_name}}<br/>
+      <small *ngIf="user.type !== 'CLIENT'">Cliente</small>
+    </span>
+    <a [routerLink]="['/admin/settings']"
+      class="text-sm py-2 cursor-pointer px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+      Configurações
     </a>
-    <a
-      href="#pablo"
-      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-    >
-      Another action
+    <a href="#"
+      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+      Alterar Senha
     </a>
-    <a
-      href="#pablo"
-      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-    >
-      Something else here
+    <a href="#"
+      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+      FAQ
     </a>
     <div class="h-0 my-2 border border-solid border-blueGray-100"></div>
-    <a
-      href="#pablo"
-      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-    >
-      Seprated link
+    <a (click)="logout()"
+      class="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+      Sair
     </a>
   </div>
 </div>

@@ -3,7 +3,7 @@ const colors = require("tailwindcss/colors");
 
 module.exports = {
   purge: {
-    enabled: true,
+    enabled: false,
     content: [
       "./**/*.html",
       "./*.html",
@@ -19,6 +19,9 @@ module.exports = {
   theme: {
     colors: {
       ...colors,
+    },
+    listStyleType: {
+      disc: 'disc'
     },
     extend: {
       minHeight: {

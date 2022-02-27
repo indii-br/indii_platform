@@ -1,0 +1,25 @@
+<app-editable-painel *ngIf="userData" title="Dados do Cliente" [editing]="editingSettingClient" (isEditing)="setEditing($event)" (onSave)="updateClientComponent()">
+  <app-editable-input-block [value]="userData.full_name" title="Nome Completo" [editing]="editingSettingClient">
+    <input type="text" [value]="userData.full_name" #full_name (change)="setValue('full_name', full_name.value)"
+      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+      placeholder="Insira seu nome completo" />
+  </app-editable-input-block>
+
+  <app-editable-input-block [value]="userData.email" title="Email" [editing]="editingSettingClient">
+    <input type="email" [value]="userData.email" #email (change)="setValue('email', email.value)"
+      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+      placeholder="Insira seu email" />
+  </app-editable-input-block>
+
+  <app-editable-input-block [value]="userData.phone" title="Numero de celular" [editing]="editingSettingClient">
+    <input type="text" [value]="userData.phone"  #phone (change)="setValue('phone', phone.value)"
+      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+      placeholder="ex: +55(41) 99999-9999" />
+  </app-editable-input-block>
+
+  <app-editable-input-block [value]="userData.position" title="Cargo" [editing]="editingSettingClient">
+    <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedUseRole" (change)="setValue('position', selectedUseRole)">
+      <ng-option *ngFor="let role of userRoleOptions" [value]="role">{{role}}</ng-option>
+    </ng-select>
+  </app-editable-input-block>
+</app-editable-painel>

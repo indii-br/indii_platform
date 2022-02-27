@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  supabaseUrl: "https://ncqiffihejrcdnmygfdj.supabase.co",
+  supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyNzc3MjkwMiwiZXhwIjoxOTQzMzQ4OTAyfQ.jCgESn7uxBu8uAB2pnhRR0Wu65rFQppuzJodi3SUTls"
 };
 
 /*
@@ -13,4 +15,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

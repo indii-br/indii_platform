@@ -1,0 +1,18 @@
+<div class="w-full lg:w-12/12 pb-4 px-4 input-block">
+    <div class="relative w-full mb-3">
+        <label class="block uppercase text-blueGray-600 text-xs mb-2" htmlFor="grid-password">
+            {{title}}
+        </label>
+
+        <span class="block whitespace-pre-line text-blueGray-700 text-sm font-semibold mb-2" *ngIf="!editing && value">
+            <span *ngIf="!isCurrency">{{value}}</span>
+            <span *ngIf="isCurrency">{{value | currency : 'R$'}}</span>
+        </span>
+
+        <span class="block uppercase text-blueGray-400 text-xs mb-2" *ngIf="!editing && !value">
+            -- Inserir {{title}} --
+        </span>
+
+       <ng-content *ngIf="editing"></ng-content>
+    </div>
+</div>

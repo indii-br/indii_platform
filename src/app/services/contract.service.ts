@@ -5,44 +5,30 @@ import { SupabaseService } from './supabase.service';
 @Injectable({
   providedIn: 'root'
 })
-export class JobService {
+export class ContractService {
   constructor(
     private supabaseService: SupabaseService,
     private authService: AuthService
   ) { }
 
-  async getJobById(jobId: string): Promise<any> {
+  async getContractById(contractId: string): Promise<any> {
     return this.supabaseService.supabase
-      .from('jobs')
+      .from('contracts')
       .select("*")
-      .eq('id', jobId)
+      .eq('id', contractId)
       .single()
   }
 
   async getJobsByCompany(companyId: string): Promise<any> {
     return this.supabaseService.supabase
-      .from('jobs')
+      .from('contracts')
       .select("*, company!inner(*)")
       .eq('company.id', companyId)
   }
 
-  async updateJobData(jobToUpdate: any, id: string): Promise<any> {
+  async saveNewContract(contractToSave: any): Promise<any> {
     return this.supabaseService.supabase
-      .from('jobs')
-      .update(jobToUpdate)
-      .eq("id", id)
-  }
-
-  async saveNewJob(jobToUpdate: any): Promise<any> {
-    return this.supabaseService.supabase
-      .from('jobs')
-      .insert(jobToUpdate)
-  }
-
-  async closeJob(jobid: any): Promise<any> {
-    return this.supabaseService.supabase
-      .from('jobs')
-      .update({ status: 'ARCHIVED' })
-      .eq("id", jobid)
+      .from('contracts')
+      .insert(contractToSave)
   }
 }

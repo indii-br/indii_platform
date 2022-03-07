@@ -2,6 +2,8 @@ import { Component, AfterViewInit, ViewChild, ElementRef, Input } from "@angular
 import { createPopper } from "@popperjs/core";
 import { AuthService } from "src/app/services/auth.service";
 
+declare var Swal: any;
+
 @Component({
   selector: "app-user-dropdown",
   templateUrl: "./user-dropdown.component.html",
@@ -15,7 +17,9 @@ export class UserDropdownComponent implements AfterViewInit {
 
   @Input('user') user: any;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   ngAfterViewInit() {
     createPopper(
@@ -26,7 +30,7 @@ export class UserDropdownComponent implements AfterViewInit {
       }
     );
   }
-  
+
   toggleDropdown(event) {
     event.preventDefault();
     if (this.dropdownPopoverShow) {
@@ -34,6 +38,14 @@ export class UserDropdownComponent implements AfterViewInit {
     } else {
       this.dropdownPopoverShow = true;
     }
+  }
+
+  openHelpBlock() {
+    Swal.fire({
+      title: 'Você precisa de ajuda?',
+      text: "Entre em contato via contato@indii.com.br",
+      icon: 'info',
+    })
   }
 
   logout() {

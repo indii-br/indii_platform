@@ -1,6 +1,93 @@
-<div class="flex flex-wrap">
-    <div class="w-full px-4">
-      <app-settings-client></app-settings-client>
-    </div>
+<div *ngIf="selectedContractType" class="flex flex-wrap">
+  <div class="w-full lg:w-8/12 px-4">
+    <app-editable-painel [editing]="editingNewContract" [title]="getTitlePanel()" (isEditing)="setEditing($event)"
+      (onSave)="triggerSaveOrEdit()" hideCancel="true">
+
+      <section *ngIf="editingNewContract" class="w-full mb-8">
+        <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+          OPÇÕES DE CONTRATO
+        </h6>
+
+        <div id="selectContractOption" class="w-full flex flex-wrap mb-6">
+          <div class="w-full lg:w-6/12 px-4">
+            <div
+              class="disabled relative text-center m-aut border-coolGray-600 py-6 cursor-pointer shadow-lg border-2 w-full h-96 text-blueGray-600 rounded-lg selectBoxType">
+              <h6 class="font-semibold mb-3 pt-6">Template de Contrato</h6>
+              <p class="text-xs leading-4 px-6">Use o modelo de contrato seguro e revisado profissionalmente da INDII.
+              </p>
+              <span class="soon">Em Breve</span>
+            </div>
+          </div>
+          <div class="w-full lg:w-6/12 px-4">
+            <div
+              class="text-center relative m-aut border-coolGray-600 py-6 cursor-pointer shadow-lg border-2 w-full h-96 text-blueGray-600 rounded-lg selectBoxType">
+              <h6 class="font-semibold mb-3 pt-6">Contrato Próprio</h6>
+              <p class="text-xs leading-4 px-6">Utilize seu próprio contrato, fazendo o upload dele pela plataforma.</p>
+              <span class="selected-label text-white"><i class="fas fa-check mr-1"></i> Selecionado</span>
+            </div>
+          </div>
+        </div>
+        <p class="py-2 w-full text-xs">
+          *Importante: Certifique-se que o contrato carregado na plataforma seja valido juridicamente, esteja assinado
+          corretamente por todas as partes. <span class="font-semibold"> A INDII não se responsabiliza por quaisquer
+            problemas jurídicos entre contratado e contratante.</span>
+        </p>
+      </section>
+
+      <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+        INFORMAÇÕES DO CONTRATO
+      </h6>
+
+      <app-editable-input-block [value]="contractData?.contractName" title="Nome do Projeto ou Time"
+        [editing]="editingNewContract">
+        <input type="text" [value]="contractData?.contractName" #contractName
+          (change)="setValue('contractName', contractName.value)"
+          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+          placeholder="Ex: Landing Page, Consultoria de Marketing, Aplicativo MVP, Time de TI" />
+      </app-editable-input-block>
+
+      <app-editable-input-block [value]="contractData?.contractorRole" title="Cargo do profissional"
+        [editing]="editingNewContract">
+        <input type="text" [value]="contractData?.contractorRole" #contractorRole
+          (change)="setValue('contractorRole', contractorRole.value)"
+          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+          placeholder="Ex: Full-stack Developer, Designer, Programador(a), Copywriter, etc" />
+      </app-editable-input-block>
+
+      <app-editable-input-block [value]="contractData?.seniorityLevel" title="Nível de Senioridade"
+        [editing]="editingNewContract">
+        <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedSeniorityLevel"
+          (change)="setValue('seniorityLevel', selectedSeniorityLevel)">
+          <ng-option *ngFor="let sLevel of seniorityLevelList" [value]="sLevel">{{sLevel}}</ng-option>
+        </ng-select>
+      </app-editable-input-block>
+
+      <app-editable-input-block [value]="contractData?.startAt" title="Data de início do contrato"
+        [editing]="editingNewContract">
+        <input type="date" [value]="contractData?.startAt" #startAt
+          (change)="setValue('startAt', startAt.value)"
+          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+          placeholder="Ex: Landing Page, Consultoria de Marketing, Aplicativo MVP, Time de TI" />
+      </app-editable-input-block>
+
+      <a (click)="hasEndDate = true" class="text-indigo-600 bg-transparent border border-solid border-indigo-custom hover:text-white font-bold uppercase text-xs px-4 py-2 rounded outline-none">Configurar Data de Termino do contrato</a>
+
+      <app-editable-input-block *ngIf="hasEndDate" [value]="contractData?.endAt" title="Data de término do contrato"
+        [editing]="editingNewContract" class="mt-6">
+        <input type="date" [value]="contractData?.endAt" #endAt
+          (change)="setValue('endAt', endAt.value)"
+          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+          placeholder="Ex: Landing Page, Consultoria de Marketing, Aplicativo MVP, Time de TI" />
+      </app-editable-input-block>
+    </app-editable-painel>
   </div>
-  
+
+  <div class="w-full lg:w-4/12 px-4">
+    <app-info-contract></app-info-contract>
+  </div>
+</div>
+
+<section class="h-screen">
+  <app-select-type-contract *ngIf="!selectedContractType" (selectedTypeContract)="setSelectedContractType($event)">
+  </app-select-type-contract>
+</section>

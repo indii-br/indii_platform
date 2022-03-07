@@ -29,7 +29,6 @@ export class JobsComponent implements OnInit {
 
   async ngOnInit() {
     const { data: company, error } = await this.companyService.getCompanyByUser()
-
     if (company) {
       this.companyData = company;
 

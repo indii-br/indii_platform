@@ -73,7 +73,8 @@
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{job.profileType}}
+                                {{job.profileType}}<br/>
+                                <small class="lowercase">({{job.availabilityType}})</small>
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -94,7 +95,7 @@
                 </table>
                 <h2 *ngIf="!jobsList || jobsList.length === 0"
                     class="text-blueGray-500 text-center p-8 font-semibold text-xl">
-                    Você não tem nenhuma Oportunidade Aberta<br />
+                    Você não tem nenhuma Oportunidade criada<br />
                     <small class="text-sm">
                         <a [routerLink]="['/admin/nova-oportunidade']" style="color: rgb(99, 102, 241);">
                             <i class="fa fa-plus"></i>

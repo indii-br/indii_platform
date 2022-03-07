@@ -14,7 +14,7 @@ export class ProfileService {
 
   async getProfileById(profileId): Promise<any> {
     return this.supabaseService.supabase
-      .from('profile')
+      .from('profiles')
       .select("*, user!inner(*)")
       .eq('id', profileId)
       .single()

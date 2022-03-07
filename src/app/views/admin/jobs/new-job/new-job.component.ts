@@ -21,6 +21,9 @@ export class NewJobComponent implements OnInit {
   selectedSeniorityLevel: string;
   selectedProfileType: string;
   selectedContractType: string;
+  selectedAvailabilityType: string;
+  selectedMeetingTimeType: string;
+  
 
   selectedRate: any;
   selectedSkillsList: any;
@@ -38,8 +41,6 @@ export class NewJobComponent implements OnInit {
     'Senior',
     'Lead/Leader',
     'Principal / Staff',
-    'Gestor de departamento',
-    'C-level',
   ]
 
   profileType: Array<string> = [
@@ -47,11 +48,22 @@ export class NewJobComponent implements OnInit {
     'Contractor / PJ / Autônomo',
   ]
 
+  availabilityType: Array<string> = [
+    'FULL-TIME',
+    'PART-TIME',
+  ]
+
+  meetingTimeType: Array<string> = [
+    'Manhã',
+    'Tarde',
+    'Noite',
+    'Indiferente'
+  ]
+
   contractType: Array<string> = [
     'Por Hora',
     'Fixo',
-    'Milestone / Por Entrega',
-    'Indii Squad',
+    'Milestone / Por Entrega'
   ]
 
   jobStatusList: any;
@@ -106,6 +118,8 @@ export class NewJobComponent implements OnInit {
     this.selectedSkillsList = this.jobToSaveOrUpdate.skills;
     this.selectedProfileType = this.jobToSaveOrUpdate.profileType;
     this.selectedContractType = this.jobToSaveOrUpdate.contractType;
+    this.selectedAvailabilityType = this.jobToSaveOrUpdate.availabilityType;
+    this.selectedMeetingTimeType = this.jobToSaveOrUpdate.meetingTimeType;
     this.selectedRate = this.jobToSaveOrUpdate.rate;
   }
 
@@ -209,6 +223,8 @@ export class NewJobComponent implements OnInit {
       !jobToSave.requirements || jobToSave.requirements === '' ||
       !jobToSave.profileType || jobToSave.profileType === '' ||
       !jobToSave.contractType || jobToSave.contractType === '' ||
+      !jobToSave.availabilityType || jobToSave.availabilityType === '' ||
+      !jobToSave.meetingTimeType || jobToSave.meetingTimeType === '' ||
       !jobToSave.rate || jobToSave.rate === ''
     )
   }

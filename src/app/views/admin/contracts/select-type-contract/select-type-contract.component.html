@@ -1,0 +1,51 @@
+<div id="selectContractType" class="relative bg-white w-full rounded-lg">
+
+    <h3 class="text-center font-semibold text-3xl mb-8 py-8 text-blueGray-600">
+        Tipo de Contrato<br />
+        <small class="text-lg text-blueGray-400">Comece a criar seu contrato selecionando o tipo mais relevante.</small>
+    </h3>
+
+    <div class="flex flex-row flex-wrap" style="padding: 0 15px;">
+        <div class="w-full lg:w-3/12 px-4">
+            <div (click)="onSelectType('FIXED')"
+                class="text-center m-aut border-coolGray-600 py-6 cursor-pointer shadow-lg border-2 w-full h-96 text-blueGray-600 rounded-lg selectBoxType">
+                <img style="margin: 0 auto;" src="../../../../../assets/img/type-fixed.svg" width="180" alt="">
+                <h6 class="font-semibold mb-3">Valor Fixo</h6>
+                <p class="text-sm leading-4 px-6">Para contratos que têm um valor fixo para cada ciclo de pagamento</p>
+            </div>
+        </div>
+        <div class="w-full lg:w-3/12 px-4">
+            <div (click)="onSelectType('HOURLY')"
+                class="disabled text-center m-aut border-coolGray-600 py-6 cursor-pointer shadow-lg border-2 w-full h-96 text-blueGray-600 rounded-lg selectBoxType">
+                <img style="margin: 0 auto;" src="../../../../../assets/img/type-hourly.svg" width="180" alt="">
+                <h6 class="font-semibold mb-3">Por Hora</h6>
+                <p class="text-sm leading-4 px-6">Para contratos que têm o valor calculado por horas trabalhadas em cada
+                    ciclo de pagamento</p>
+                <span class="soon">Em Breve</span>
+            </div>
+        </div>
+        <div class="w-full lg:w-3/12 px-4">
+            <div (click)="onSelectType('MILESTONE')"
+                class="disabled text-center m-aut border-coolGray-600 py-6 cursor-pointer shadow-lg border-2 w-full h-96 text-blueGray-600 rounded-lg selectBoxType">
+                <img style="margin: 0 auto;" src="../../../../../assets/img/type-milestone.svg" width="180" alt="">
+                <h6 class="font-semibold mb-3">Por Entrega</h6>
+                <p class="text-sm leading-4 px-6">Para contratos com milestones/entregas que são pagos à medida que são
+                    concluídos</p>
+                <span class="soon">Em Breve</span>
+            </div>
+        </div>
+        <div class="w-full lg:w-3/12 px-4">
+            <div
+                class="disabled text-center m-aut border-coolGray-600 py-6 cursor-pointer shadow-lg border-2 w-full h-96 text-blueGray-600 rounded-lg selectBoxType">
+                <img style="margin: 0 auto;" src="../../../../../assets/img/type-indii.svg" width="180" alt="">
+                <h6 class="font-semibold mb-3">Indii Squad</h6>
+                <p class="text-sm leading-4 px-6">Para contratos que têm um valor fixo ou por hora com profissionais
+                    terceirizados com a
+                    Indii Squad</p>
+                <span class="soon">Em Breve</span>
+            </div>
+
+        </div>
+    </div>
+
+</div>

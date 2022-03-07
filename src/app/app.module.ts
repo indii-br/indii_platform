@@ -59,6 +59,10 @@ import { NewJobComponent } from './views/admin/jobs/new-job/new-job.component';
 import { TipsJobComponent } from './views/admin/jobs/tips-job/tips-job.component';
 import { ProfileAppliedComponent } from './views/admin/jobs/profile-applied/profile-applied.component';
 import { ProfileComponent } from "./views/admin/profile/profile.component";
+import { SelectTypeContractComponent } from './views/admin/contracts/select-type-contract/select-type-contract.component';
+import { AddMilestonesComponent } from './views/admin/contracts/add-milestones/add-milestones.component';
+import { ResetPasswordComponent } from './views/auth/reset-password/reset-password.component';
+import { InfoContractComponent } from './views/admin/contracts/info-contract/info-contract.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +108,10 @@ import { ProfileComponent } from "./views/admin/profile/profile.component";
     NewJobComponent,
     TipsJobComponent,
     ProfileAppliedComponent,
+    SelectTypeContractComponent,
+    AddMilestonesComponent,
+    ResetPasswordComponent,
+    InfoContractComponent,
   ],
   imports: [
     BrowserModule, 

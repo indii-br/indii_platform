@@ -73,6 +73,22 @@
                 </ng-select>
             </app-editable-input-block>
 
+            <app-editable-input-block [value]="jobData?.availabilityType" title="Disponibilidade"
+                [editing]="editingNewJob">
+                <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedAvailabilityType"
+                    (change)="setValue('availabilityType', selectedAvailabilityType)">
+                    <ng-option *ngFor="let aType of availabilityType" [value]="aType">{{aType}}</ng-option>
+                </ng-select>
+            </app-editable-input-block>
+
+            <app-editable-input-block [value]="jobData?.meetingTimeType" title="Horários para Reuniões"
+                [editing]="editingNewJob">
+                <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedMeetingTimeType"
+                    (change)="setValue('meetingTimeType', selectedMeetingTimeType)">
+                    <ng-option *ngFor="let mType of meetingTimeType" [value]="mType">{{mType}}</ng-option>
+                </ng-select>
+            </app-editable-input-block>
+
             <app-editable-input-block isCurrency="true" [value]="jobData?.rate" title="Valor do Contrato"
                 [editing]="editingNewJob">
                 <div class="mt-4" *ngIf="selectedContractType">
@@ -104,9 +120,7 @@
                                 class="{{jobStatusList[jobData.status].color}} text-sm font-semibold ml-2">{{jobStatusList[jobData.status].label}}</span>
                         </li>
                         <li *ngIf="jobData.status !== 'ARCHIVED'" class="mt-5">
-                            <button
-                                (click)="closeJob(jobData.id)"
-                                style="background-color: tomato;"
+                            <button (click)="closeJob(jobData.id)" style="background-color: tomato;"
                                 class="text-white w-full text-xs font-bold px-3 py-1 rounded outline-none mr-1 mb-1"
                                 type="button">
                                 <i class="fas fa-archive mr-2"></i>

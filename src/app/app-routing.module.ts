@@ -23,6 +23,7 @@ import { ContractsComponent } from "./views/admin/contracts/contracts.component"
 import { JobsComponent } from "./views/admin/jobs/jobs.component";
 import { NewJobComponent } from "./views/admin/jobs/new-job/new-job.component";
 import { ProfileComponent } from "./views/admin/profile/profile.component";
+import { ResetPasswordComponent } from "./views/auth/reset-password/reset-password.component";
 
 const routes: Routes = [
   // admin views
@@ -33,6 +34,8 @@ const routes: Routes = [
       { path: "dashboard", component: DashboardComponent },
       { path: "settings", component: SettingsComponent },
       { path: "contratos", component: ContractsComponent },
+      { path: "novo-contrato", component: NewContractComponent },
+      { path: "editar-contrato/:id", component: NewContractComponent },
       { path: "oportunidades", component: JobsComponent },
       { path: "nova-oportunidade", component: NewJobComponent },
       { path: "editar-oportunidade/:id", component: NewJobComponent },
@@ -47,6 +50,8 @@ const routes: Routes = [
     children: [
       { path: "login", component: LoginComponent },
       { path: "register", component: RegisterComponent },
+      { path: "alterar-senha", component: ResetPasswordComponent },
+      { path: "alterar-senha/:token", component: ResetPasswordComponent },
       { path: "", redirectTo: "login", pathMatch: "full" },
     ],
   },

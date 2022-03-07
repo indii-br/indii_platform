@@ -1,1 +1,108 @@
-<p>contracts works!</p>
+<div *ngIf="!loading" class="flex flex-wrap mt-4">
+    <div class="w-full h-screen mb-4 px-4">
+        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
+            <div class="rounded-t mb-0 px-4 py-3 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                        <h3 class="font-semibold text-lg text-blueGray-700">
+                            Contratos
+                        </h3>
+                    </div>
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                        <!-- <button style="background-color: #ececec;"
+                            class="text-blueGray-500 text-xs font-semibold lowercase px-3 py-1 rounded outline-none mr-1 mb-1"
+                            type="button">
+                            ver Concluidas e Arquivadas
+                        </button> -->
+
+                        <button [routerLink]="['/admin/novo-contrato']"
+                            class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1"
+                            type="button">
+                            <i class="fa fa-plus"></i>
+                            <span class="ml-2">Criar Contrato</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="block w-full overflow-x-auto">
+                <table class="items-center w-full bg-transparent border-collapse">
+                    <thead>
+                        <tr>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Contratado
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Cargo
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Pagamento
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Ciclo
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Status
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let contract of contractList">
+                            <td 
+                                class="cursor-pointer border-t-0 font-bold px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                <!-- {{job.title}} -->
+                                Rafael Bruno Silva<br/>
+                                <small>rafaelbruno.web@gmail.com</small>
+                            </td>
+                            <td
+                                class="font-normal border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                <!-- {{job.rate | currency : 'R$'}} -->
+                                Full-stack Developer<br/>
+                                <small>Senior</small>
+                            </td>
+                            <td
+                                class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                <!-- {{job.profileType}} -->
+                                Por Hora<br/>
+                                <small>R$80,00 / hora</small>
+                            </td>
+                            <td
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                Quinzenal<br/>
+                                <small>Venc.: dia<strong>&ensp;15</strong></small>
+                            </td>
+                            <td
+                                class="font-semibold border-t-0 text-xs text-orange-500 px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">
+                                <!-- {{job.contractType}} -->
+                                    Aguardando<br/>
+                                    <small>(Assinatura do Profissional)</small>
+                            </td>
+                            <td
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                <a class="text-indigo-600">Ver/Editar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 *ngIf="!contractList || contractList.length === 0"
+                    class="text-blueGray-500 text-center p-8 font-semibold text-xl">
+                    Você não tem nenhum contrato criado<br />
+                    <small class="text-sm">
+                        <a [routerLink]="['/admin/novo-contrato']" style="color: rgb(99, 102, 241);">
+                            <i class="fa fa-plus"></i>
+                            <span class="ml-2">Criar Novo Contrato</span>
+                        </a>
+                    </small>
+                </h2>
+            </div>
+        </div>
+
+    </div>
+</div>

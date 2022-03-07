@@ -15,8 +15,8 @@ export class CompanyService {
   async getCompanyByUser(): Promise<any> {
     return this.supabaseService.supabase
       .from('companies')
-      .select("*, users!inner(*)")
-      .eq('users.uuid', this.authService.user.id)
+      .select("*, owner!inner(*)")
+      .eq('owner.uuid', this.authService.user.id)
       .single()
   }
 

@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContractsComponent implements OnInit {
 
+  contractList: Array<any> = [{}];
+  loading: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {

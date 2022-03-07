@@ -1,3 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import '~ngx-toastr/toastr';
+
+
+.disabled{
+    pointer-events: none;
+    opacity: .8;
+    background-color: gainsboro;
+    position: relative;
+}
+
+.link-disabled{
+    opacity: .5;
+    pointer-events: none;
+}
+
+.link-disabled small{
+    color: #d86c00;
+    font-size: 10px;
+    text-transform: lowercase;
+}
+
+.disabled .soon{
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: #ea7c11;
+    color: white;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}

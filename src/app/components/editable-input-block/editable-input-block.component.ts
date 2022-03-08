@@ -9,6 +9,8 @@ export class EditableInputBlockComponent implements OnInit {
 
   @Input('editing') editing: boolean = false;
   @Input('isCurrency') isCurrency: boolean;
+  @Input('isDate') isDate: boolean;
+  
   @Input('value') value: string = null;
   @Input('title') title: string = '';
 

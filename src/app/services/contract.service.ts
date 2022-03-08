@@ -19,7 +19,7 @@ export class ContractService {
       .single()
   }
 
-  async getJobsByCompany(companyId: string): Promise<any> {
+  async getAllByCompany(companyId: string): Promise<any> {
     return this.supabaseService.supabase
       .from('contracts')
       .select("*, company!inner(*)")
@@ -30,5 +30,35 @@ export class ContractService {
     return this.supabaseService.supabase
       .from('contracts')
       .insert(contractToSave)
+  }
+
+  async saveNewPaymentConfig(paymentConfigToSave: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contract_payment_config')
+      .insert(paymentConfigToSave)
+  }
+
+  async updateContractData(contractToUpdate: any, id: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contracts')
+      .update(contractToUpdate)
+      .eq("id", id)
+  }
+
+  async updatePaymentConfigData(paymentConfigToUpdate: any, id: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contract_payment_config')
+      .update(paymentConfigToUpdate)
+      .eq("id", id)
+  }
+
+  async changeSelfUploadedContractStatePaymentConfig(contractId: any, paymentConfigId: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contracts')
+      .update({ 
+        status: 'SELF_UPLOADED_WAITING_CONTRACTOR',
+        paymentConfig: paymentConfigId
+       })
+      .eq("id", contractId)
   }
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CompanyService } from 'src/app/services/company.service';
+import { ContractService } from 'src/app/services/contract.service';
+import { CONTRACT_STATUS, RATE_TYPE } from 'src/app/types/constants';
 
 @Component({
   selector: 'app-contracts',
@@ -7,12 +10,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContractsComponent implements OnInit {
 
-  contractList: Array<any> = [{}];
+  contractList: Array<any> = [];
   loading: boolean = false;
 
-  constructor() { }
+  rateTypes: any = RATE_TYPE;
+  contractStatus: any = CONTRACT_STATUS;
 
-  ngOnInit(): void {
+  constructor(
+    private contractService: ContractService,
+    private companyService: CompanyService,
+  ) { }
+
+  async ngOnInit() {
+    const { data: company, errorCompany } = await this.companyService.getCompanyByUser()
+
+    if (company) {
+      const { data: contractsList, error: errorContractList } = await this.contractService.getAllByCompany(company.id)
+      
+      this.contractList = contractsList
+      this.loading = true;
+    }
   }
 
 }

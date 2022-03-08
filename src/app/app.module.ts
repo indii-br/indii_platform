@@ -63,6 +63,8 @@ import { SelectTypeContractComponent } from './views/admin/contracts/select-type
 import { AddMilestonesComponent } from './views/admin/contracts/add-milestones/add-milestones.component';
 import { ResetPasswordComponent } from './views/auth/reset-password/reset-password.component';
 import { InfoContractComponent } from './views/admin/contracts/info-contract/info-contract.component';
+import { ContractorBlockComponent } from './views/admin/contracts/contractor-block/contractor-block.component';
+import { PaymentBlockComponent } from './views/admin/contracts/payment-block/payment-block.component';
 
 @NgModule({
   declarations: [
@@ -112,6 +114,8 @@ import { InfoContractComponent } from './views/admin/contracts/info-contract/inf
     AddMilestonesComponent,
     ResetPasswordComponent,
     InfoContractComponent,
+    ContractorBlockComponent,
+    PaymentBlockComponent,
   ],
   imports: [
     BrowserModule, 

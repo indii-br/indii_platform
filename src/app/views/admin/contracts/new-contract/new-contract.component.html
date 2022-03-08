@@ -1,9 +1,10 @@
-<div *ngIf="selectedContractType" class="flex flex-wrap">
+<div *ngIf="showForm()" class="flex flex-wrap">
   <div class="w-full lg:w-8/12 px-4">
+    <!-- BASIC INFO | CONTRACT -->
     <app-editable-painel [editing]="editingNewContract" [title]="getTitlePanel()" (isEditing)="setEditing($event)"
-      (onSave)="triggerSaveOrEdit()" hideCancel="true">
+      (onSave)="triggerSaveOrEdit()" [hideCancel]="hideCancel">
 
-      <section *ngIf="editingNewContract" class="w-full mb-8">
+      <section *ngIf="editingNewContract && !contractData?.id" class="w-full mb-8">
         <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
           OPÇÕES DE CONTRATO
         </h6>
@@ -34,6 +35,13 @@
         </p>
       </section>
 
+      <section class="w-full p-3" *ngIf="!editingNewContract && contractData && contractData?.id">
+        <ul>
+          <li>Ciclo de pagamento: <strong>{{rateType[contractData.contractType].label}}</strong></li>
+          <li>Tipo de Contrato: <strong>{{contractModelType[contractData.contractModel].label}}</strong></li>
+        </ul>
+      </section>
+
       <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
         INFORMAÇÕES DO CONTRATO
       </h6>
@@ -62,32 +70,38 @@
         </ng-select>
       </app-editable-input-block>
 
-      <app-editable-input-block [value]="contractData?.startAt" title="Data de início do contrato"
+      <app-editable-input-block isDate="true" [value]="contractData?.startAt" title="Data de início do contrato"
         [editing]="editingNewContract">
-        <input type="date" [value]="contractData?.startAt" #startAt
-          (change)="setValue('startAt', startAt.value)"
+        <input type="date" [value]="contractData?.startAt" #startAt (change)="setValue('startAt', startAt.value)"
           class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
           placeholder="Ex: Landing Page, Consultoria de Marketing, Aplicativo MVP, Time de TI" />
       </app-editable-input-block>
 
-      <a (click)="hasEndDate = true" class="text-indigo-600 bg-transparent border border-solid border-indigo-custom hover:text-white font-bold uppercase text-xs px-4 py-2 rounded outline-none">Configurar Data de Termino do contrato</a>
+      <a (click)="setEndDate()"
+        class="text-indigo-600 mb-6 bg-transparent border border-solid border-indigo-custom hover:text-white font-bold uppercase text-xs px-4 py-2 rounded outline-none">Configurar
+        Data de Termino do contrato</a>
 
-      <app-editable-input-block *ngIf="hasEndDate" [value]="contractData?.endAt" title="Data de término do contrato"
-        [editing]="editingNewContract" class="mt-6">
-        <input type="date" [value]="contractData?.endAt" #endAt
-          (change)="setValue('endAt', endAt.value)"
+      <app-editable-input-block *ngIf="hasEndDate || contractData?.endAt" isDate="true" [value]="contractData?.endAt"
+        title="Data de término do contrato" [editing]="editingNewContract" class="mt-6">
+        <input type="date" [value]="contractData?.endAt" #endAt (change)="setValue('endAt', endAt.value)"
           class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
           placeholder="Ex: Landing Page, Consultoria de Marketing, Aplicativo MVP, Time de TI" />
       </app-editable-input-block>
     </app-editable-painel>
+
+    <!-- PAYMENT INFO | CONTRACT -->
+    <app-payment-block *ngIf="showPaymentBlock()" [contractData]="contractData"></app-payment-block>
+
+    <!-- USER AND INVITE | CONTRACT -->
+    <!-- <app-info-contract [contractData]="contractData"></app-info-contract> -->
   </div>
 
   <div class="w-full lg:w-4/12 px-4">
-    <app-info-contract></app-info-contract>
+    <app-info-contract [contractData]="contractData"></app-info-contract>
   </div>
 </div>
 
-<section class="h-screen">
-  <app-select-type-contract *ngIf="!selectedContractType" (selectedTypeContract)="setSelectedContractType($event)">
+<section *ngIf="!selectedContractType && editingNewContract" class="h-screen">
+  <app-select-type-contract (selectedTypeContract)="setSelectedContractType($event)">
   </app-select-type-contract>
 </section>

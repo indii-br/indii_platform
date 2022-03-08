@@ -1,4 +1,4 @@
-<div *ngIf="!loading" class="flex flex-wrap mt-4">
+<div *ngIf="loading" class="flex flex-wrap mt-4">
     <div class="w-full h-screen mb-4 px-4">
         <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
             <div class="rounded-t mb-0 px-4 py-3 border-0">
@@ -55,45 +55,52 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let contract of contractList">
-                            <td 
+                            <td
                                 class="cursor-pointer border-t-0 font-bold px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                <!-- {{job.title}} -->
-                                Rafael Bruno Silva<br/>
-                                <small>rafaelbruno.web@gmail.com</small>
+                                <span *ngIf="contract.contractor">
+                                    Rafael Bruno Silva<br />
+                                    <small>rafaelbruno.web@gmail.com</small>
+                                </span>
+                                <span *ngIf="!contract.contractor">
+                                    {{contract.contractName}}<br />
+                                    <small style="opacity: .7; font-weight: 400;">(Aguardando Contratado)</small>
+                                </span>
                             </td>
                             <td
                                 class="font-normal border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                <!-- {{job.rate | currency : 'R$'}} -->
-                                Full-stack Developer<br/>
-                                <small>Senior</small>
+                                {{contract.contractorRole}}<br />
+                                <small>{{contract.seniorityLevel}}</small>
                             </td>
                             <td
                                 class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                <!-- {{job.profileType}} -->
-                                Por Hora<br/>
-                                <small>R$80,00 / hora</small>
+                                {{rateTypes[contract.contractType].label}}<br />
+                                <small style="opacity: .7; font-weight: 400;">(Aguardando Configuração)</small>
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                Quinzenal<br/>
-                                <small>Venc.: dia<strong>&ensp;15</strong></small>
+                                <span *ngIf="contract.paymentCycle">
+                                    Quinzenal<br />
+                                    <small>Venc.: dia<strong>&ensp;15</strong></small>
+                                </span>
+                                <small *ngIf="!contract.paymentCycle" style="opacity: .7; font-weight: 400;">(Aguardando
+                                    Configuração)</small>
                             </td>
                             <td
-                                class="font-semibold border-t-0 text-xs text-orange-500 px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">
+                                class="font-semibold border-t-0 text-xs {{contractStatus[contract.status].color}} px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">
                                 <!-- {{job.contractType}} -->
-                                    Aguardando<br/>
-                                    <small>(Assinatura do Profissional)</small>
+                                {{contractStatus[contract.status].label}}<br />
+                                <small>({{contractStatus[contract.status].sub_label}})</small>
                             </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                <a class="text-indigo-600">Ver/Editar</a>
+                            <td [routerLink]="['/admin/editar-contrato', contract.id]"
+                                class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                <a class="text-indigo-600">Editar</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <h2 *ngIf="!contractList || contractList.length === 0"
                     class="text-blueGray-500 text-center p-8 font-semibold text-xl">
-                    Você não tem nenhum contrato criado<br />
+                    Você não tem nenhum contrato ainda<br />
                     <small class="text-sm">
                         <a [routerLink]="['/admin/novo-contrato']" style="color: rgb(99, 102, 241);">
                             <i class="fa fa-plus"></i>

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyService } from 'src/app/services/company.service';
 import { ContractService } from 'src/app/services/contract.service';
-import { RATE_TYPE } from 'src/app/types/constants';
+import { CONTRACT_MODEL_TYPE, RATE_TYPE } from 'src/app/types/constants';
 
 @Component({
   selector: 'app-new-contract',
@@ -15,7 +15,6 @@ export class NewContractComponent implements OnInit {
   selectedContractType: string;
   selectedModelOfContract: string = 'SELF_UPLOADED_CONTRACT';
   selectedSeniorityLevel: string;
-  selectedRate: string;
 
   hasEndDate: boolean = false;
 
@@ -23,8 +22,11 @@ export class NewContractComponent implements OnInit {
   contractToSaveOrUpdate: any = {};
 
   editingNewContract: boolean = true;
+  hideCancel: boolean = true;
   companyData: any;
 
+  rateType: any = RATE_TYPE
+  contractModelType: any = CONTRACT_MODEL_TYPE
 
   seniorityLevelList: Array<string> = [
     'Não se aplica',
@@ -54,10 +56,26 @@ export class NewContractComponent implements OnInit {
     private contractService: ContractService,
     private toastrService: ToastrService,
     private companyService: CompanyService,
-    private route: Router
-  ) {}
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   async ngOnInit() {
+    this.route.params.subscribe(async (params) => {
+      const contractId = params['id'];
+      if (contractId) {
+        this.editingNewContract = false;
+
+        const { data: contractData, error } = await this.contractService.getContractById(contractId)
+
+        if (contractData) {
+          this.contractData = contractData;
+          this.contractToSaveOrUpdate = contractData;
+          this.selectedContractType = contractData.contractType
+        }
+      }
+    });
+
     const { data, error } = await this.companyService.getCompanyByUser()
 
     if (data) {
@@ -71,6 +89,8 @@ export class NewContractComponent implements OnInit {
 
   setEditing(ev) {
     this.editingNewContract = ev;
+    this.hideCancel = false;
+    this.selectedSeniorityLevel = this.contractData?.seniorityLevel;
   }
 
   setValue(key: string, value: string) {
@@ -78,7 +98,11 @@ export class NewContractComponent implements OnInit {
   }
 
   triggerSaveOrEdit() {
-    this.saveNewContract();
+    if (this.contractData && this.contractData?.id) {
+      this.editContractInfo();
+    } else {
+      this.saveNewContract();
+    }
   }
 
   async saveNewContract() {
@@ -102,18 +126,43 @@ export class NewContractComponent implements OnInit {
     const { data, error } = await this.contractService.saveNewContract(contractToSave)
 
 
-    if(error){
+    if (error) {
       this.toastrService.error("Erro ao salvar contrato!")
       console.error(error)
     }
 
-    if(data){
+    if (data) {
       this.toastrService.success("Contrato criado com sucesso!")
-      this.route.navigate(["/admin/editar-contrato", data.id])
+      this.router.navigate(["/admin/editar-contrato", data[0].id])
+    }
+  }
+
+  async editContractInfo() {
+    // if (this.checkRequiredValues(jobToUpdate)) {
+    //   this.toastrService.warning('Preencha todos os campos para editar!')
+
+    //   return;
+    // }
+
+    const { data, error } = await this.contractService.updateContractData(this.contractToSaveOrUpdate, this.contractToSaveOrUpdate.id)
+    if (data) {
+      this.contractData = data[0];
+      this.contractToSaveOrUpdate = data[0];
+      this.editingNewContract = false;
+      this.toastrService.success('Editado com sucesso!')
+    }
+    if (error) {
+      console.log(error)
+      this.editingNewContract = true;
+      this.toastrService.error('Erro ao Editar!')
     }
   }
 
   getTitlePanel() {
+    if (this.contractData && this.companyData?.id) {
+      return 'Editar Contrato | ' + RATE_TYPE[this.selectedContractType].label
+    }
+
     return 'Novo Contrato | ' + RATE_TYPE[this.selectedContractType].label
   }
 
@@ -123,5 +172,25 @@ export class NewContractComponent implements OnInit {
 
   isFixed() {
     return this.selectedContractType && this.selectedContractType === 'FIXED';
+  }
+
+  showForm() {
+    if (this.editingNewContract) {
+      return !!this.selectedContractType;
+    } else {
+      return !!this.contractData;
+    }
+  }
+
+  setEndDate() {
+    this.hasEndDate = true;
+    this.editingNewContract = true;
+    this.hideCancel = false;
+  }
+
+  showPaymentBlock(){
+    return this.contractData &&
+    this.contractData.id &&
+    this.contractData.status !== 'MILESTONE';
   }
 }

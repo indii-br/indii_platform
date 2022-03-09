@@ -65,6 +65,7 @@ import { ResetPasswordComponent } from './views/auth/reset-password/reset-passwo
 import { InfoContractComponent } from './views/admin/contracts/info-contract/info-contract.component';
 import { ContractorBlockComponent } from './views/admin/contracts/contractor-block/contractor-block.component';
 import { PaymentBlockComponent } from './views/admin/contracts/payment-block/payment-block.component';
+import { UploadContractBlockComponent } from './views/admin/contracts/upload-contract-block/upload-contract-block.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { PaymentBlockComponent } from './views/admin/contracts/payment-block/pay
     InfoContractComponent,
     ContractorBlockComponent,
     PaymentBlockComponent,
+    UploadContractBlockComponent,
   ],
   imports: [
     BrowserModule, 

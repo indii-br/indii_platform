@@ -36,7 +36,6 @@ export const PAYMENT_CYCLES = [
     {
         key: 'WEEKLY',
         label: 'Semanalmente',
-        subOptions: []
     },
     {
         key: 'BIWEEKLY',

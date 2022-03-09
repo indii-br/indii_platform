@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppliesService } from 'src/app/services/applies.service';
 import { CompanyService } from 'src/app/services/company.service';
 import { JobService } from 'src/app/services/job.service';
-import { JOB_STATUS } from 'src/app/types/constants';
+import { JOB_STATUS } from 'src/app/utils/constants';
 
 @Component({
   selector: 'app-jobs',

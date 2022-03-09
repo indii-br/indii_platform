@@ -14,7 +14,7 @@ export class ContractService {
   async getContractById(contractId: string): Promise<any> {
     return this.supabaseService.supabase
       .from('contracts')
-      .select("*")
+      .select("*, paymentConfig!inner(*), inviteContractor!inner(*)")
       .eq('id', contractId)
       .single()
   }
@@ -32,17 +32,27 @@ export class ContractService {
       .insert(contractToSave)
   }
 
-  async saveNewPaymentConfig(paymentConfigToSave: any): Promise<any> {
-    return this.supabaseService.supabase
-      .from('contract_payment_config')
-      .insert(paymentConfigToSave)
-  }
-
   async updateContractData(contractToUpdate: any, id: string): Promise<any> {
     return this.supabaseService.supabase
       .from('contracts')
       .update(contractToUpdate)
       .eq("id", id)
+  }
+
+  async changeSelfUploadedContractStatePaymentConfig(contractId: any, paymentConfigId: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contracts')
+      .update({
+        status: 'SELF_UPLOADED_WAITING_CONTRACTOR',
+        paymentConfig: paymentConfigId
+      })
+      .eq("id", contractId)
+  }
+
+  async saveNewPaymentConfig(paymentConfigToSave: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contract_payment_config')
+      .insert(paymentConfigToSave)
   }
 
   async updatePaymentConfigData(paymentConfigToUpdate: any, id: string): Promise<any> {
@@ -52,13 +62,31 @@ export class ContractService {
       .eq("id", id)
   }
 
-  async changeSelfUploadedContractStatePaymentConfig(contractId: any, paymentConfigId: any): Promise<any> {
+  async createContractorInvite(contractId: string, email: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contractor_invite')
+      .insert({
+        contract: contractId,
+        emailContractorToSendInvite: email
+      })
+  }
+
+  async getContractInviteById(inviteId: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contractor_invite')
+      .select("*")
+      .eq('id', inviteId)
+      .single()
+  }
+
+  async changeSelfUploadedContractStateInviteContractor(contractId: any, inviteContractorId: any): Promise<any> {
     return this.supabaseService.supabase
       .from('contracts')
-      .update({ 
-        status: 'SELF_UPLOADED_WAITING_CONTRACTOR',
-        paymentConfig: paymentConfigId
-       })
+      .update({
+        status: 'SELF_UPLOADED_WAITING_UPLOAD_CONTRACT',
+        inviteContractor: inviteContractorId
+      })
       .eq("id", contractId)
   }
+
 }

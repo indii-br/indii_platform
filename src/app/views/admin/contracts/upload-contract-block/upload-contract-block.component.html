@@ -1,0 +1,20 @@
+<div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+    <div class="flex-auto px-1 py-2">
+        <div class="flex flex-wrap pb-4">
+            <h6 class="w-full text-blueGray-400 text-center text-sm mt-3 mb-6 font-bold uppercase">
+                Carregar Contrato
+            </h6>
+            <div class="w-full text-center">
+                <div class="flex justify-center">
+                    <input (change)="uploadedFile(fileToUpload.value)" #fileToUpload id="upload" type="file">
+
+                    <label for="upload">
+                        <i class="fas fa-file-upload text-lg"></i>
+                        <br/>
+                        <span class="uppercase">Fazer Upload do contrato</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

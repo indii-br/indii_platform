@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CONTRACT_STATUS } from 'src/app/types/constants';
+import { CONTRACT_STATUS } from 'src/app/utils/constants';
 
 @Component({
   selector: 'app-info-contract',

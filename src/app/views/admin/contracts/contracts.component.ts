@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyService } from 'src/app/services/company.service';
 import { ContractService } from 'src/app/services/contract.service';
-import { CONTRACT_STATUS, RATE_TYPE } from 'src/app/types/constants';
+import { CONTRACT_STATUS, RATE_TYPE } from 'src/app/utils/constants';
 
 @Component({
   selector: 'app-contracts',

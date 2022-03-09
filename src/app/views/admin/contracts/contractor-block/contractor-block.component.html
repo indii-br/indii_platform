@@ -1,8 +1,22 @@
-<app-editable-painel [editing]="editingPaymentContract" title="Convidar Profissional" (isEditing)="setEditing($event)"
-    (onSave)="triggerSaveOrEdit()" [hideCancel]="hideCancel">
+<div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+    <div class="flex-auto px-1 py-2">
+        <div class="flex flex-wrap pb-4">
+            <h6 class="w-full text-blueGray-400 text-center text-sm mt-3 mb-6 font-bold uppercase">
+                Profissional Contratado
+            </h6>
+            <div class="w-full text-center">
+                <a *ngIf="showInviteBtn" (click)="inviteContractor()"
+                    class="text-indigo-600 w-full mb-6 bg-transparent border border-solid border-indigo-custom font-bold uppercase text-xs px-4 py-2 rounded outline-none">
+                    <i class="fas fa-user mr-2"></i> Adicionar profissional ao contrato
+                </a>
 
-    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-        INFORMAÇÕES DO PAGAMENTO
-    </h6>
-
-</app-editable-painel>
+                <h6 *ngIf="showInvitedBlock"
+                    style="font-size: 11px; color: rgba(234, 88, 12)"
+                    class="w-full text-center mt-3 mb-6 font-semibold uppercase">
+                    Aguardando profissional entrar no projeto<br />
+                    <span class="font-bold lowercase">{{contractData.inviteContractor.emailContractorToSendInvite}}</span>
+                </h6>
+            </div>
+        </div>
+    </div>
+</div>

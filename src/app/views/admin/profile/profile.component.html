@@ -1,7 +1,7 @@
 <section *ngIf="profileData">
     <section style="height: 350px;" class="relative block">
         <div class="absolute top-0 w-full h-full bg-center bg-cover rounded-lg overflow-hidden" style="
-            background-image: url('https://ncqiffihejrcdnmygfdj.supabase.in/storage/v1/object/sign/site/unknown-wong-gFtCSi2rZQQ-unsplash.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJzaXRlL3Vua25vd24td29uZy1nRnRDU2kyclpRUS11bnNwbGFzaC5qcGciLCJpYXQiOjE2NDU5MDk4OTAsImV4cCI6MTk2MTI2OTg5MH0.mRuXutkMUMQkqE6LS7e3-MIjOq2TR-xLLNKvZvGnD7I');
+            background-image: url('https://ppcjgvkwowexttcrodgv.supabase.in/storage/v1/object/sign/site/profile_bg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJzaXRlL3Byb2ZpbGVfYmciLCJpYXQiOjE2NDY3NjcyNjMsImV4cCI6MTk2MjEyNzI2M30.68NIAAaXyX2h_MHtwsZA6T96sL5etfraF4gkeLF7UWY');
           ">
             <span id="blackOverlay" class="w-full h-full absolute opacity-50 bg-black"></span>
         </div>
@@ -54,7 +54,7 @@
                         </h3>
                         <div class="text-sm leading-normal mt-2 mb-2 text-blueGray-400 font-bold capitalize">
                             <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                            {{profileData.user.city}}, {{profileData.user.state}}, {{profileData.user.country}}
+                            {{profileData.user.city}}, {{profileData.user.state}}, Brasil
                         </div>
                         <div class="mb-2 text-blueGray-600 mt-2 ">
                             <i class="fas fa-clock mr-2 text-lg text-blueGray-400"></i>
@@ -90,7 +90,7 @@
                                             <span *ngIf="wExp.stillWorking">Hoje</span>
                                             <span *ngIf="!wExp.stillWorking">{{wExp.endAt | date: 'dd/MM/yyyy'}}</span>
                                         </small>
-                                        <div class="text-left block whitespace-pre-line">
+                                        <div class="text-left text-xs block whitespace-pre-line">
                                            {{wExp.description}}
                                         </div>
                                     </li>

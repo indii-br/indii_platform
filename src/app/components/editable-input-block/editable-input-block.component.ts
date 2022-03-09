@@ -10,6 +10,8 @@ export class EditableInputBlockComponent implements OnInit {
   @Input('editing') editing: boolean = false;
   @Input('isCurrency') isCurrency: boolean;
   @Input('isDate') isDate: boolean;
+  @Input('isList') isList: boolean;
+
   
   @Input('value') value: string = null;
   @Input('title') title: string = '';
@@ -17,6 +19,10 @@ export class EditableInputBlockComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  getArray(array): Array<any> {
+    return JSON.parse(array)
   }
 
 }

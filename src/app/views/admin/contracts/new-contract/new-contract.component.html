@@ -91,13 +91,17 @@
 
     <!-- PAYMENT INFO | CONTRACT -->
     <app-payment-block *ngIf="showPaymentBlock()" [contractData]="contractData"></app-payment-block>
-
-    <!-- USER AND INVITE | CONTRACT -->
-    <!-- <app-info-contract [contractData]="contractData"></app-info-contract> -->
   </div>
 
   <div class="w-full lg:w-4/12 px-4">
+    <!-- INFO BLOCK -->
     <app-info-contract [contractData]="contractData"></app-info-contract>
+
+     <!-- CONTRACTOR AND INVITE | CONTRACT -->
+     <app-contractor-block *ngIf="showContractorBlock()" [contractData]="contractData"></app-contractor-block>
+     
+     <!-- CONTRACT BLOCK UPLOAD | CONTRACT -->
+     <app-upload-contract-block *ngIf="showContractorBlock()" [contractData]="contractData"></app-upload-contract-block>
   </div>
 </div>
 

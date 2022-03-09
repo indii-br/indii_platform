@@ -13,7 +13,7 @@
         </span>
     </app-editable-input-block>
 
-    <app-editable-input-block [value]="paymentData?.paymentCycle" title="Ciclo de Pagamentos"
+    <app-editable-input-block [value]="paymentCyclesValues[paymentData?.paymentCycle]" title="Ciclo de Pagamentos"
         [editing]="editingPaymentContract">
         <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedPaymentCycle"
             (change)="setValue('paymentCycle', selectedPaymentCycle)">
@@ -21,7 +21,7 @@
         </ng-select>
     </app-editable-input-block>
 
-    <section class="w-full" style="padding: 0 18px;" *ngIf="selectedPaymentCycle">
+    <section class="w-full" style="padding: 0 18px;" *ngIf="selectedPaymentCycle && editingPaymentContract">
         <div class="text-white px-4 py-4 border-0 rounded relative mb-6 bg-indigo-500">
             <span class="text-xs inline-block mr-5 align-middle">
                 <i class="fas fa-history mr-2"></i>
@@ -40,7 +40,7 @@
         </div>
     </section>
 
-    <app-editable-input-block [value]="paymentData?.submitLimitDocuments" title="Tempo limite para envio de documentos"
+    <app-editable-input-block [value]="submitDocumentsLimitValues[paymentData?.submitLimitDocuments]" title="Tempo limite para envio de documentos"
         [editing]="editingPaymentContract">
         <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedSubmitLimit"
             (change)="setValue('submitLimitDocuments', selectedSubmitLimit)">
@@ -53,7 +53,7 @@
         </div>
     </app-editable-input-block>
 
-    <app-editable-input-block [value]="paymentData?.dueDate" title="Vencimento da fatura"
+    <app-editable-input-block [value]="dueDateLimitValues[paymentData?.dueDate]" title="Vencimento da fatura"
         [editing]="editingPaymentContract">
         <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedDueDate"
             (change)="setValue('dueDate', selectedDueDate)">

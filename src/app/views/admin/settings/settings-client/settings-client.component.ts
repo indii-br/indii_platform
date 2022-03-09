@@ -22,7 +22,7 @@ export class SettingsClientComponent implements OnInit {
   ];
   selectedUseRole: string;
 
-  userData: User;
+  userData: any;
   userToUpdate: any = {};
 
   constructor(

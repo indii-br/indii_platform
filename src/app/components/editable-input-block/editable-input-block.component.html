@@ -5,15 +5,21 @@
         </label>
 
         <span class="block whitespace-pre-line text-blueGray-700 text-sm font-semibold mb-2" *ngIf="!editing && value">
-            <span *ngIf="!isCurrency && !isDate">{{value}}</span>
+            <span *ngIf="!isCurrency && !isDate && !isList">{{value}}</span>
             <span *ngIf="isCurrency">{{value | currency : 'R$'}}</span>
             <span *ngIf="isDate">{{value | date: 'dd/MM/yyy'}}</span>
+            <span *ngIf="isList">
+                <span *ngFor="let iValue of getArray(value)" style="font-size: 10px;"
+                    class="font-semibold inline-block mt-1 py-1 px-2 uppercase rounded text-white bg-indigo-500 last:mr-0 mr-1">
+                    {{iValue}}
+                </span>
+            </span>
         </span>
 
         <span class="block uppercase text-blueGray-400 text-xs mb-2" *ngIf="!editing && !value">
             -- Inserir {{title}} --
         </span>
 
-       <ng-content *ngIf="editing"></ng-content>
+        <ng-content *ngIf="editing"></ng-content>
     </div>
 </div>

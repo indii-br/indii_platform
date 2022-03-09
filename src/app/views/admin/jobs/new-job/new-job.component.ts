@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyService } from '../../../../services/company.service';
 import { JobService } from '../../../../services/job.service';
-import { JOB_STATUS } from '../../../../types/constants';
+import { JOB_STATUS } from '../../../../utils/constants';
 
 declare var Swal: any;
 
@@ -115,7 +115,7 @@ export class NewJobComponent implements OnInit {
     this.jobToSaveOrUpdate = this.jobData;
 
     this.selectedSeniorityLevel = this.jobToSaveOrUpdate.seniorityLevel;
-    this.selectedSkillsList = this.jobToSaveOrUpdate.skills;
+    this.selectedSkillsList = JSON.parse(this.jobToSaveOrUpdate.skills);
     this.selectedProfileType = this.jobToSaveOrUpdate.profileType;
     this.selectedContractType = this.jobToSaveOrUpdate.contractType;
     this.selectedAvailabilityType = this.jobToSaveOrUpdate.availabilityType;

@@ -46,4 +46,9 @@ export class AuthService {
       password: password
     })
   }
+
+  async forceUpdatePassword(access_token, new_password){
+    const { error, data } = await this.supabaseService.supabase.auth.api
+      .updateUser(access_token, { password : new_password })
+  }
 }

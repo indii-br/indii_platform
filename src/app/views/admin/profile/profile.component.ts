@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
-import { RATE_TYPE } from 'src/app/types/constants';
+import { RATE_TYPE } from 'src/app/utils/constants';
 
 @Component({
   selector: 'app-profile',

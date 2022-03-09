@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyService } from 'src/app/services/company.service';
 import { ContractService } from 'src/app/services/contract.service';
-import { CONTRACT_MODEL_TYPE, RATE_TYPE } from 'src/app/types/constants';
+import { CONTRACT_MODEL_TYPE, RATE_TYPE } from 'src/app/utils/constants';
 
 @Component({
   selector: 'app-new-contract',
@@ -120,7 +120,8 @@ export class NewContractComponent implements OnInit {
       company: this.companyData.id,
       contractModel: this.selectedModelOfContract,
       contractType: this.selectedContractType,
-      status: status
+      status: status,
+      isSelfUploaded: isSelfUploaded
     }, this.contractToSaveOrUpdate)
 
     const { data, error } = await this.contractService.saveNewContract(contractToSave)
@@ -138,12 +139,6 @@ export class NewContractComponent implements OnInit {
   }
 
   async editContractInfo() {
-    // if (this.checkRequiredValues(jobToUpdate)) {
-    //   this.toastrService.warning('Preencha todos os campos para editar!')
-
-    //   return;
-    // }
-
     const { data, error } = await this.contractService.updateContractData(this.contractToSaveOrUpdate, this.contractToSaveOrUpdate.id)
     if (data) {
       this.contractData = data[0];
@@ -160,7 +155,7 @@ export class NewContractComponent implements OnInit {
 
   getTitlePanel() {
     if (this.contractData && this.companyData?.id) {
-      return 'Editar Contrato | ' + RATE_TYPE[this.selectedContractType].label
+      return 'Editar Contrato | ' + this.contractData.contractName
     }
 
     return 'Novo Contrato | ' + RATE_TYPE[this.selectedContractType].label
@@ -191,6 +186,21 @@ export class NewContractComponent implements OnInit {
   showPaymentBlock(){
     return this.contractData &&
     this.contractData.id &&
-    this.contractData.status !== 'MILESTONE';
+    this.contractData.contractType !== 'MILESTONE';
+  }
+
+  showContractorBlock(){
+    return this.contractData &&
+    this.contractData.id &&
+    this.contractData.paymentConfig &&
+    this.contractData.contractType !== 'MILESTONE';
+  }
+
+  showImportContractBlock(){
+    return this.contractData &&
+    this.contractData.id &&
+    this.contractData.paymentConfig &&
+    (this.companyData.inviteContractor || this.contractData.contractor) &&
+    this.contractData.contractType !== 'MILESTONE';
   }
 }

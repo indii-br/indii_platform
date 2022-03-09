@@ -21,7 +21,7 @@
                 </ng-select>
             </app-editable-input-block>
 
-            <app-editable-input-block [value]="jobData?.skills" title="Habilidades Obrigatórias"
+            <app-editable-input-block isList="true" [value]="jobData?.skills" title="Habilidades Obrigatórias"
                 [editing]="editingNewJob">
                 <ng-select placeholder="Insira a habilidade e pressione [enter] para adicionar"
                     [(ngModel)]="selectedSkillsList" [items]="[]" [addTag]="true" [multiple]="true" [selectOnTab]="true"
@@ -73,6 +73,24 @@
                 </ng-select>
             </app-editable-input-block>
 
+            <app-editable-input-block isCurrency="true" [value]="jobData?.rate" title="Valor do Contrato"
+            [editing]="editingNewJob">
+            <div class="mt-4" *ngIf="selectedContractType">
+                <input *ngIf="!rateToCheck" type="text" [(ngModel)]="selectedRate" currencyMask
+                    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                    class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-lg shadow focus:outline-none focus:ring w-full ease-linear"
+                    placeholder="Insira o valor (R$)" />
+
+                <h6 *ngIf="rateToCheck" class="text-blueGray-600 text-sm mt-3 mb-6 font-bold capitalize">
+                    Sob Consulta
+                </h6>
+            </div>
+
+            <h6 *ngIf="!selectedContractType" class="text-blueGray-400 text-sm mt-3 mb-6 font-bold lowercase">
+                -- Selecione o tipo de contrato --
+            </h6>
+        </app-editable-input-block>
+
             <app-editable-input-block [value]="jobData?.availabilityType" title="Disponibilidade"
                 [editing]="editingNewJob">
                 <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedAvailabilityType"
@@ -87,24 +105,6 @@
                     (change)="setValue('meetingTimeType', selectedMeetingTimeType)">
                     <ng-option *ngFor="let mType of meetingTimeType" [value]="mType">{{mType}}</ng-option>
                 </ng-select>
-            </app-editable-input-block>
-
-            <app-editable-input-block isCurrency="true" [value]="jobData?.rate" title="Valor do Contrato"
-                [editing]="editingNewJob">
-                <div class="mt-4" *ngIf="selectedContractType">
-                    <input *ngIf="!rateToCheck" type="text" [(ngModel)]="selectedRate" currencyMask
-                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-                        class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-lg shadow focus:outline-none focus:ring w-full ease-linear"
-                        placeholder="Insira o valor (R$)" />
-
-                    <h6 *ngIf="rateToCheck" class="text-blueGray-600 text-sm mt-3 mb-6 font-bold capitalize">
-                        Sob Consulta
-                    </h6>
-                </div>
-
-                <h6 *ngIf="!selectedContractType" class="text-blueGray-400 text-sm mt-3 mb-6 font-bold lowercase">
-                    -- Selecione o tipo de contrato --
-                </h6>
             </app-editable-input-block>
 
         </app-editable-painel>

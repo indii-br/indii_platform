@@ -49,4 +49,11 @@ export class InfoContractComponent implements OnInit {
     }
   }
 
+  isDone(position){
+    if(position === 999){
+      return true;
+    }
+    return false;
+  }
+
 }

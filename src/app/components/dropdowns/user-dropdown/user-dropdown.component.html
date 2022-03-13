@@ -2,10 +2,10 @@
   <div class="items-center flex">
     <span
       class="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full overflow-hidden">
-      <img *ngIf="user.type !== 'CLIENT'" class="w-full rounded-full align-middle border-none shadow-lg"
-        src="assets/img/team-1-800x800.jpg" />
+      <img *ngIf="user.userType !== 'CLIENT'" class="w-full rounded-full align-middle border-none shadow-lg"
+        [src]="user.avatar" />
 
-      <app-avatar-default *ngIf="user.type === 'CLIENT'" [seed]="user.email"></app-avatar-default>
+      <app-avatar-default *ngIf="user.userType === 'CLIENT'" [seed]="user.email"></app-avatar-default>
     </span>
   </div>
 </a>
@@ -15,7 +15,8 @@
     [ngClass]="dropdownPopoverShow ? 'block' : 'hidden'">
     <span class="text-sm py-2 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-700">
       {{user.full_name}}<br />
-      <small *ngIf="user.type !== 'CLIENT'">Cliente</small>
+      <small *ngIf="user.userType === 'CLIENT'">Cliente</small>
+      <small *ngIf="user.userType !== 'CLIENT'">Profissional</small>
     </span>
     <a [routerLink]="['/admin/settings']"
       class="text-sm py-2 cursor-pointer px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">

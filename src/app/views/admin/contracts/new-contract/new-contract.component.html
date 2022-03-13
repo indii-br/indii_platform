@@ -39,6 +39,7 @@
         <ul>
           <li>Ciclo de pagamento: <strong>{{rateType[contractData.contractType].label}}</strong></li>
           <li>Tipo de Contrato: <strong>{{contractModelType[contractData.contractModel].label}}</strong></li>
+          <li>Criado em: <strong>{{contractData.created_at | date: 'dd/MM/yyyy'}}</strong></li>
         </ul>
       </section>
 

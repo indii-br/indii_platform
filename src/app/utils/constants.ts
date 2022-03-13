@@ -112,3 +112,8 @@ export const CONTRACT_STATUS = {
         position: 999
     }
 }
+
+export const USER_TYPES = {
+    CLIENT: 'CLIENT',
+    CONTRACTOR: 'CONTRACTOR'
+}

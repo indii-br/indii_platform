@@ -1,0 +1,173 @@
+<div *ngIf="jobData" class="flex flex-wrap">
+    <div class="w-full lg:w-8/12 px-4">
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-700 text-lg font-semibold">
+                            {{jobData.title}}<br />
+                            <small class="font-normal text-xs mr-1">Empresa:</small> <span
+                                class="text-sm">{{jobData.company.name}}</span><br />
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-auto px-4 pb-2 lg:px-10 py-10 pt-8">
+                <div class="flex flex-wrap pb-4">
+                    <p class="text-xs text-blueGray-500">
+                        Essa é uma proposta para trabalhar <strong>remotamente</strong> em um projeto. Caso tenha alguma
+                        dúvida, sinta-se a vontade para entrar em contato com a gente em contato@indii.com.br
+                    </p>
+                    <ul class="text-blueGray-600 text-sm mt-4">
+                        <li class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Valor:
+                            <strong class="mr-1">{{jobData.rate | currency: 'R$'}}</strong> <small>/
+                                {{jobData.contractType}}</small>
+                        </li>
+
+                        <li class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Forma de pagamento:
+                            <strong>{{jobData.contractType}}</strong>
+                        </li>
+
+                        <li class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Senioridade:
+                            <strong>{{jobData.seniorityLevel}}</strong>
+                        </li>
+
+                        <li class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Perfil:
+                            <strong>{{jobData.profileType}}</strong>
+                        </li>
+
+                        <li class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Disponibilidade:
+                            <strong class="lowercase">{{jobData.availabilityType}}</strong>
+                        </li>
+
+                        <li *ngIf="jobData.meetingTimeType" class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Horário para Reuniões:
+                            <strong class="capitalize">{{jobData.meetingTimeType}}</strong>
+                        </li>
+
+                        <li *ngIf="jobData.created_at">
+                            <i class="fas fa-caret-right mr-1"></i> Criado em:
+                            <strong class="lowercase">{{jobData.created_at | date : 'dd/MM/yyyy'}}</strong>
+                        </li>
+
+                        <hr class="my-6 border-b-1 border-blueGray-300" />
+
+                        <li class="mb-5">
+                            <i class="fas fa-caret-right mr-1"></i> Habilidades e Competências:<br />
+
+                            <span *ngFor="let skill of getArray(jobData.skills)"
+                                style="font-size: 10px; margin-top: 12px;"
+                                class="font-semibold inline-block mt-1 py-1 px-2 uppercase rounded text-white bg-indigo-500 last:mr-0 mr-1">
+                                {{skill}}
+                            </span>
+                        </li>
+
+                        <li class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Descrição da oportunidade:<br />
+                            <div class="block whitespace-pre-line text-blueGray-700 text-sm font-normal mb-2 mt-2"
+                                [innerHTML]="jobData.scopeOfWork">
+                            </div>
+                        </li>
+
+                        <li class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Requisitos:<br />
+                            <div class="block whitespace-pre-line text-blueGray-700 text-sm font-normal mb-2 mt-2"
+                                [innerHTML]="jobData.requirements">
+                            </div>
+                        </li>
+
+                        <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+                        <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-semibold uppercase">
+                            Sobre a <strong>{{jobData.company.name}}</strong>
+                        </h6>
+
+                        <li class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Sobre:<br />
+                            <div class="block whitespace-pre-line text-blueGray-700 text-sm font-normal mb-2 mt-2"
+                                [innerHTML]="jobData.company.description">
+                            </div>
+                        </li>
+
+                        <li class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Tipo:
+                            <strong class="capitalize">{{jobData.company.type}}</strong>
+                        </li>
+
+                        <li *ngIf="jobData.meetingTimeType" class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Localização:
+                            <strong class="capitalize">{{jobData.company.city}} / {{jobData.company.state}} </strong>
+                        </li>
+
+                        <li *ngIf="jobData.meetingTimeType" class="mb-3">
+                            <i class="fas fa-caret-right mr-1"></i> Site:
+                            <strong class="lowercase">{{jobData.company.site}}</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w-full lg:w-4/12 px-4">
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-700 text-sm font-semibold">
+                            Gostou da oportunidade?
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-auto px-4 pb-2 lg:px-10 py-5 pt-4">
+                <div class="flex flex-wrap pb-4">
+                    <ul class="text-sm text-blueGray-700 w-full">
+                        <li class="mb-2">Requisitos para candidatura:</li>
+                        <li class="text-teal-500 fpnt-semibold">
+                            <i class="fas fa-check-double mr-1"></i>
+                            Ter um CNPJ ativo
+                        </li>
+                        <li class="text-teal-500 fpnt-semibold">
+                            <i class="fas fa-check-double mr-1"></i>
+                            Emitir Nota Fiscal (NFs)
+                        </li>
+                        <li class="text-teal-500 fpnt-semibold">
+                            <i class="fas fa-check-double mr-1"></i>
+                            Perfil com dados reais
+                        </li>
+                        <li class="text-teal-500 fpnt-semibold">
+                            <i class="fas fa-check-double mr-1"></i>
+                            Conta bancária com PIX
+                        </li>
+                        <li class="text-teal-500 fpnt-semibold">
+                            <i class="fas fa-check-double mr-1"></i>
+                            Responsabilidade e Competência
+                        </li>
+                        <li *ngIf="!appliedData && profileData && loaded" class="mt-6">
+                            <button (click)="createApply()"
+                                class="bg-teal-500 w-full text-white font-bold uppercase text-xs px-4 py-2 rounded shadow outline-none mr-1 mb-1"
+                                type="button">
+                                Tenho interesse
+                            </button>
+                        </li>
+
+                        <li *ngIf="appliedData && loaded" class="mt-6">
+                            <button (click)="removeApply()"
+                                class="bg-orange-500 w-full text-white font-bold uppercase text-xs px-4 py-2 rounded shadow outline-none mr-1 mb-1"
+                                type="button">
+                                Cancelar Candidatura
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

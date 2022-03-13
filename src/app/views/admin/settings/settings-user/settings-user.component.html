@@ -1,4 +1,4 @@
-<app-editable-painel *ngIf="userData" title="Dados do Cliente" [editing]="editingSettingClient" (isEditing)="setEditing($event)" (onSave)="updateClientComponent()">
+<app-editable-painel *ngIf="userData" title="Dados do usuário" [editing]="editingSettingClient" (isEditing)="setEditing($event)" (onSave)="updateClientComponent()">
   <app-editable-input-block [value]="userData.full_name" title="Nome Completo" [editing]="editingSettingClient">
     <input type="text" [value]="userData.full_name" #full_name (change)="setValue('full_name', full_name.value)"
       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import { AuthService } from './auth.service';
 import { SupabaseService } from './supabase.service';
 
@@ -14,7 +15,7 @@ export class ContractService {
   async getContractById(contractId: string): Promise<any> {
     return this.supabaseService.supabase
       .from('contracts')
-      .select("*, paymentConfig!inner(*), inviteContractor!inner(*)")
+      .select("*, paymentConfig!inner(*), inviteContractor!inner(*), company!inner(*)")
       .eq('id', contractId)
       .single()
   }
@@ -22,7 +23,7 @@ export class ContractService {
   async getAllByCompany(companyId: string): Promise<any> {
     return this.supabaseService.supabase
       .from('contracts')
-      .select("*, company!inner(*)")
+      .select("*, company!inner(*), paymentConfig!inner(*), inviteContractor!inner(*)")
       .eq('company.id', companyId)
   }
 
@@ -87,6 +88,52 @@ export class ContractService {
         inviteContractor: inviteContractorId
       })
       .eq("id", contractId)
+  }
+
+  async changeSelfUploadedContractStateContractUploaded(contractId: any, contractUrl: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contracts')
+      .update({
+        status: 'SELF_UPLOADED_CYCLE',
+        contractSelfUploaded: contractUrl
+      })
+      .eq("id", contractId)
+  }
+
+  async setContractorInContract(userID: any, contractId: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contracts')
+      .update({
+        contractor: userID,
+      })
+      .eq("id", contractId)
+  }
+
+
+  // CONTRACTOR AREA
+  async getAllByContractor(userId: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contracts')
+      .select("*, contractor!inner(*), company!inner(*), paymentConfig!inner(*), inviteContractor!inner(*)")
+      .eq('contractor.id', userId)
+  }
+
+  async getAllInvitesByContractorEmail(userEmail: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contractor_invite')
+      .select("*, contract!inner(*, company!inner(name))")
+      .eq('emailContractorToSendInvite', userEmail)
+      .is('joinedAt', null)
+  }
+
+  async setContractorInviteToJoined(userID: any, inviteId: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contractor_invite')
+      .update({
+        user: userID,
+        joinedAt: moment().format("YYYY-MM-DD hh:mm:ss"),
+      })
+      .eq("id", inviteId)
   }
 
 }

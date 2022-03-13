@@ -1,0 +1,75 @@
+<app-editable-painel *ngIf="companyData" [editing]="editingSettingCompany" title="Dados da Empresa"
+    (isEditing)="setEditing($event)" (onSave)="updateCompany()">
+    <app-editable-input-block [value]="companyData.name" title="Nome da Empresa" [editing]="editingSettingCompany">
+        <input type="text" [value]="companyData.name" #name (change)="setValue('name', name.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            placeholder="Insira o nome da empresa" />
+    </app-editable-input-block>
+
+    <app-editable-input-block [value]="companyData.email" title="Email da Empresa" [editing]="editingSettingCompany">
+        <input type="email" [value]="companyData.email" #email (change)="setValue('email', email.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            placeholder="Insira o email da empresa" />
+    </app-editable-input-block>
+
+    <app-editable-input-block [value]="companyData.cnpj" title="CNPJ" [editing]="editingSettingCompany">
+        <input type="text" [value]="companyData.cnpj" #cnpj (change)="setValue('cnpj', cnpj.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            placeholder="Insira o CNPJ" />
+    </app-editable-input-block>
+
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+        Endereço
+    </h6>
+
+    <app-editable-input-block [value]="companyData.address" title="Endereço da Empresa"
+        [editing]="editingSettingCompany">
+        <input type="text" [value]="companyData.address" #address (change)="setValue('address', address.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            placeholder="Insira o endereço da empresa" />
+    </app-editable-input-block>
+
+    <app-editable-input-block [value]="companyData.city" title="Cidade" [editing]="editingSettingCompany">
+        <input type="text" [value]="companyData.city" #city (change)="setValue('city', city.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            placeholder="Insira a cidade" />
+    </app-editable-input-block>
+
+    <app-editable-input-block [value]="companyData.state" title="Estado" [editing]="editingSettingCompany">
+        <input type="text" [value]="companyData.state" #state (change)="setValue('state', state.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            placeholder="Insira o estado" />
+    </app-editable-input-block>
+
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+        Sobre a empresa
+    </h6>
+
+    <app-editable-input-block [value]="companyData.type" title="Tipo de Empresa" [editing]="editingSettingCompany">
+        <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedCompanyType"
+            (change)="setValue('type', selectedCompanyType)">
+            <ng-option *ngFor="let cType of companyTypeOptions" [value]="cType">{{cType}}</ng-option>
+        </ng-select>
+    </app-editable-input-block>
+
+</app-editable-painel>
+
+<div *ngIf="!companyData"
+    class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+    <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+        <div class="flex flex-wrap items-center">
+            <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                <h6 class="text-blueGray-700 uppercase text-sm text-center font-semibold">
+                    Sua empresa não esta configurada<br/>
+                    <small class="lowercase font-normal">
+                        Entre em contato com nossa equipe: <strong>contato@indii.com.br</strong>
+                    </small>
+                </h6>
+            </div>
+        </div>
+    </div>
+</div>

@@ -56,14 +56,14 @@
                     <tbody>
                         <tr *ngFor="let contract of contractList">
                             <td
-                                class="cursor-pointer border-t-0 font-bold px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                class="cursor-pointer border-t-0 font-semibold px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 <span *ngIf="contract.contractor">
                                     Rafael Bruno Silva<br />
                                     <small>rafaelbruno.web@gmail.com</small>
                                 </span>
                                 <span *ngIf="!contract.contractor">
                                     {{contract.contractName}}<br />
-                                    <small style="opacity: .7; font-weight: 400;">(Aguardando Contratado)</small>
+                                    <small style="opacity: .7; font-weight: bold; color: tomato">(Aguardando Contratado)</small>
                                 </span>
                             </td>
                             <td
@@ -74,15 +74,16 @@
                             <td
                                 class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 {{rateTypes[contract.contractType].label}}<br />
-                                <small style="opacity: .7; font-weight: 400;">(Aguardando Configuração)</small>
+                                <small *ngIf="!contract.paymentConfig" style="opacity: .7; font-weight: 400;">(Aguardando Configuração)</small>
+                                <span *ngIf="contract.paymentConfig" style="font-weight: bold;">{{contract.paymentConfig.rate | currency : 'R$'}}</span>
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                <span *ngIf="contract.paymentCycle">
-                                    Quinzenal<br />
-                                    <small>Venc.: dia<strong>&ensp;15</strong></small>
+                                <span class="font-semibold" *ngIf="contract.paymentConfig">
+                                    {{paymentCyclesValues[contract.paymentConfig.paymentCycle]}}<br />
+                                    <small>Venc.: <strong>{{dueDateLimitValues[contract.paymentConfig.dueDate]}}</strong></small>
                                 </span>
-                                <small *ngIf="!contract.paymentCycle" style="opacity: .7; font-weight: 400;">(Aguardando
+                                <small *ngIf="!contract.paymentConfig" style="opacity: .7; font-weight: 400;">(Aguardando
                                     Configuração)</small>
                             </td>
                             <td

@@ -1,8 +1,9 @@
 <div class="flex flex-wrap">
   <div class="w-full lg:w-6/12 px-4">
-    <app-settings-client></app-settings-client>
+    <app-settings-user></app-settings-user>
   </div>
   <div class="w-full lg:w-6/12 px-4">
-    <app-settings-company></app-settings-company>
+    <app-settings-company *ngIf="isClient()"></app-settings-company>
+    <app-settings-contractor-company *ngIf="isContractor()"></app-settings-contractor-company>
   </div>
 </div>

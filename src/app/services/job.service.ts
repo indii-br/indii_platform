@@ -14,7 +14,7 @@ export class JobService {
   async getJobById(jobId: string): Promise<any> {
     return this.supabaseService.supabase
       .from('jobs')
-      .select("*")
+      .select("*, company!inner(name, type, description, site, city, state)")
       .eq('id', jobId)
       .single()
   }
@@ -44,5 +44,13 @@ export class JobService {
       .from('jobs')
       .update({ status: 'ARCHIVED' })
       .eq("id", jobid)
+  }
+
+  // CONTRACTOR AREA
+
+  async getAllOpen(){
+    return this.supabaseService.supabase
+      .from('jobs')
+      .select("*, company!inner(name)")
   }
 }

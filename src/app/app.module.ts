@@ -48,7 +48,7 @@ import { NotificationDropdownComponent } from "./components/dropdowns/notificati
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user-dropdown.component";
 import { AvatarDefaultComponent } from './components/avatar-default/avatar-default.component';
-import { SettingsClientComponent } from './views/admin/settings/settings-client/settings-client.component';
+import { SettingsUserComponent } from './views/admin/settings/settings-user/settings-user.component';
 import { SettingsCompanyComponent } from './views/admin/settings/settings-company/settings-company.component';
 import { NewContractComponent } from './views/admin/contracts/new-contract/new-contract.component';
 import { EditablePainelComponent } from './components/editable-painel/editable-painel.component';
@@ -66,6 +66,19 @@ import { InfoContractComponent } from './views/admin/contracts/info-contract/inf
 import { ContractorBlockComponent } from './views/admin/contracts/contractor-block/contractor-block.component';
 import { PaymentBlockComponent } from './views/admin/contracts/payment-block/payment-block.component';
 import { UploadContractBlockComponent } from './views/admin/contracts/upload-contract-block/upload-contract-block.component';
+import { StoreModule } from '@ngrx/store';
+
+import { userReducer } from "./stores/user.reducer";
+import { profileReducer } from "./stores/profile.reducer";
+
+
+import { HeaderStatsContractorComponent } from './components/headers/header-stats-contractor/header-stats-contractor.component';
+import { JobsContractorComponent } from './views/admin/jobs-contractor/jobs-contractor.component';
+import { ContractsContractorComponent } from './views/admin/contracts-contractor/contracts-contractor.component';
+import { ContractorDocumentsComponent } from './views/admin/contractor-documents/contractor-documents.component';
+import { JobPageComponent } from './views/admin/job-page/job-page.component';
+import { SettingsContractorCompanyComponent } from './views/admin/settings/settings-contractor-company/settings-contractor-company.component';
+import { ProfileContractorComponent } from './views/admin/profile-contractor/profile-contractor.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +114,7 @@ import { UploadContractBlockComponent } from './views/admin/contracts/upload-con
     ProfileComponent,
     PublicProfileComponent,
     AvatarDefaultComponent,
-    SettingsClientComponent,
+    SettingsUserComponent,
     SettingsCompanyComponent,
     NewContractComponent,
     EditablePainelComponent,
@@ -118,6 +131,13 @@ import { UploadContractBlockComponent } from './views/admin/contracts/upload-con
     ContractorBlockComponent,
     PaymentBlockComponent,
     UploadContractBlockComponent,
+    HeaderStatsContractorComponent,
+    JobsContractorComponent,
+    ContractsContractorComponent,
+    ContractorDocumentsComponent,
+    JobPageComponent,
+    SettingsContractorCompanyComponent,
+    ProfileContractorComponent,
   ],
   imports: [
     BrowserModule, 
@@ -126,7 +146,11 @@ import { UploadContractBlockComponent } from './views/admin/contracts/upload-con
     ToastrModule.forRoot(), 
     NgSelectModule, 
     NgxCurrencyModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot({ 
+      user: userReducer,
+      profile: profileReducer
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],

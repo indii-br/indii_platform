@@ -1,9 +1,15 @@
-<div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+<div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
     <div class="flex-auto px-4 pb-2 lg:px-10 py-10 pt-8">
         <div class="flex flex-wrap pb-4">
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Etapa {{position}}/{{statusListToShow.length}}
+                <span *ngIf="!isDone(position)">
+                    Etapa {{position}}/{{statusListToShow.length}}
+                </span>
+                <span *ngIf="isDone(position)">
+                    Contrato Ativo
+                </span>
             </h6>
+            
             <ul class="w-full list-disc text-blueGray-600 text-xs">
                 <li *ngFor="let status of statusListToShow" class="{{getPositionClass(status.position, contractData)}} text-blueGray-400 mb-2 li-default">
                     <i class="fas fa-circle mr-2"></i>

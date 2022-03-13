@@ -10,13 +10,21 @@ export class ProfileService {
   constructor(
     private supabaseService: SupabaseService,
     private authService: AuthService
-    ) { }
+  ) { }
 
   async getProfileById(profileId): Promise<any> {
     return this.supabaseService.supabase
       .from('profiles')
       .select("*, user!inner(*)")
       .eq('id', profileId)
+      .single()
+  }
+
+  async getProfileByUserUuid(): Promise<any> {
+    return this.supabaseService.supabase
+      .from('profiles')
+      .select("*, user!inner(*)")
+      .eq('user.uuid', this.authService.session.user.id)
       .single()
   }
 

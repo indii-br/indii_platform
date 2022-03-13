@@ -19,11 +19,12 @@ export class AuthNavbarComponent implements OnInit {
 
   async ngOnInit() {
     this.session = this.authService.session;
-
-    const { data, error } = await this.userService.getUserByUUID()
+    if(this.session){
+      const { data, error } = await this.userService.getUserByUUID()
     
-    if (data) {
-      this.user = data;
+      if (data) {
+        this.user = data;
+      }
     }
   }
 

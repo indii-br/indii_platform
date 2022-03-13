@@ -1,0 +1,122 @@
+<div *ngIf="loaded" class="flex flex-wrap">
+    <div class="w-full lg:w-8/12 px-4">
+        <app-editable-painel [editing]="editingProfile" title="Meu Perfil" (isEditing)="setEditing($event)"
+            (onSave)="updateOrSaveProfile()">
+
+            <app-editable-input-block [value]="profileData?.headline" title="Área de atuação / Headline"
+                [editing]="editingProfile">
+                <input type="text" [value]="profileData.headline" #headline
+                    (change)="setValue('headline', headline.value)"
+                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+                    placeholder="Insira o nome da empresa" />
+            </app-editable-input-block>
+
+            <app-editable-input-block [value]="profileData?.availability" title="Disponibilidade"
+                [editing]="editingProfile">
+                <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedAvailabilityType"
+                    (change)="setValue('availability', selectedAvailabilityType)">
+                    <ng-option *ngFor="let aType of availabilityType" [value]="aType">{{aType}}</ng-option>
+                </ng-select>
+            </app-editable-input-block>
+
+            <app-editable-input-block [value]="profileData?.bio" title="Sobre você" [editing]="editingProfile">
+                <textarea type="text" #bio (change)="setValue('bio', bio.value)"
+                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+                    rows="4">{{profileData.bio}}</textarea>
+            </app-editable-input-block>
+
+            <app-editable-input-block isList="true" [value]="profileData?.skills" title="Habilidades principais"
+                [editing]="editingProfile">
+                <ng-select placeholder="Insira a habilidade e pressione [enter] para adicionar"
+                    [(ngModel)]="selectedSkillsList" [items]="[]" [addTag]="true" [multiple]="true" [selectOnTab]="true"
+                    [isOpen]="false" (change)="setValue('skills', selectedSkillsList)">
+                </ng-select>
+            </app-editable-input-block>
+
+            <app-editable-input-block [value]="rateTypeLabels[profileData?.typeRate].label"
+                title="Você prefere cobrar um valor por Hora ou Fixo?" [editing]="editingProfile">
+                <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedRateType"
+                    (change)="setValue('typeRate', selectedRateType)">
+                    <ng-option *ngFor="let rType of rateTypeList" [value]="rType">{{rateTypeLabels[rType].label}}
+                    </ng-option>
+                </ng-select>
+            </app-editable-input-block>
+
+            <app-editable-input-block *ngIf="profileData?.typeRate" isCurrency="true" [value]="profileData?.minRate"
+                title="Qual o valor MÍNIMO {{rateTypeLabels[profileData?.typeRate].label}} que você costuma cobrar?"
+                [editing]="editingProfile">
+                <input type="text" [(ngModel)]="selectedMinRate" currencyMask
+                    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                    class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-lg shadow focus:outline-none focus:ring w-full ease-linear"
+                    placeholder="Insira o valor (R$) / {{rateTypeLabels[profileData?.typeRate].label}}" />
+
+                <small class="text-blueGray-600 text-xs">*Insira o valor
+                    <strong>{{rateTypeLabels[profileData?.typeRate].label}}</strong> </small>
+            </app-editable-input-block>
+
+            <app-editable-input-block *ngIf="profileData?.typeRate" isCurrency="true" [value]="profileData?.maxRate"
+                title="Qual o valor MÁXIMO {{rateTypeLabels[profileData?.typeRate].label}} que você costuma cobrar?"
+                [editing]="editingProfile">
+                <input type="text" [(ngModel)]="selectedMaxRate" currencyMask
+                    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                    class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-lg shadow focus:outline-none focus:ring w-full ease-linear"
+                    placeholder="Insira o valor (R$) / {{rateTypeLabels[profileData?.typeRate].label}}" />
+
+                <small class="text-blueGray-600 text-xs">*Insira o valor
+                    <strong>{{rateTypeLabels[profileData?.typeRate].label}}</strong> </small>
+            </app-editable-input-block>
+
+            <hr class="w-full mt-6 border-b-1 border-blueGray-300" />
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold">
+                LINKS<br />
+                <small>Insira links relevantes para seu perfil como Linkedin, Portfolio, Site pessoal, Github, Dribbble,
+                    Pinterest, etc...</small>
+            </h6>
+
+            <a *ngIf="editingProfile"
+                class="text-indigo-600 cursor-pointer mb-6 bg-transparent border border-solid border-indigo-custom hover:text-white font-bold uppercase text-xs px-4 py-2 rounded outline-none">
+                <i class="fas fa-plus mr-1"></i>Adicionar um link
+            </a>
+
+            <ul class="w-full mx-6 mb-8 text-md text-blueGray-700">
+                <li class="mb-2 w-full" *ngFor="let link of profileData.links">
+                    <i class="fas fa-link mr-2 text-xs"></i>
+                    {{link}}
+                    <span *ngIf="editingProfile" class="text-red-500 text-xs lowercase ml-2 cursor-pointer">Remover
+                        link</span>
+                </li>
+            </ul>
+
+        </app-editable-painel>
+    </div>
+
+    <div class="w-full lg:w-4/12 px-4">
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="flex-auto px-4 pb-2 lg:px-10 py-10 pt-8">
+                <div class="flex flex-wrap pb-4">
+                    <ul class="w-full list-disc text-blueGray-600">
+                        <li class="text-sm font-semibold">Projetos & Experiências Profissionais</li>
+                        <li class="mt-5">
+                            <a
+                                class="w-full block text-center text-indigo-600 cursor-pointer mb-6 bg-transparent border border-solid border-indigo-custom hover:text-white font-bold uppercase text-xs px-4 py-2 rounded outline-none">
+                                <i class="fas fa-plus mr-2"></i>Adicionar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <app-editable-painel *ngFor="let workEx of workingExperienceList; let i = index" [editing]="editingProfile"
+            title="Projeto {{i+1}}" (isEditing)="setEditing($event)" (onSave)="updateOrSaveWorkingEx()">
+
+            <app-editable-input-block [value]="workEx?.title" title="Título" [editing]="editingProfile">
+                <input type="text" [value]="workEx.title" #workEx (change)="setValueToWorkingExp('title', workEx.value)"
+                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+                    placeholder="Insira o nome da empresa" />
+            </app-editable-input-block>
+        </app-editable-painel>
+    </div>
+</div>

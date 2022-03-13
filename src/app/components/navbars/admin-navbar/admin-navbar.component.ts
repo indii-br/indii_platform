@@ -1,20 +1,28 @@
 import { Component, OnInit } from "@angular/core";
-import { UserService } from "src/app/services/user.service";
+import { Store } from "@ngrx/store";
+import { SELECTORS } from "src/app/stores/selectors";
+import { USER_TYPES } from "src/app/utils/constants";
 
 @Component({
   selector: "app-admin-navbar",
   templateUrl: "./admin-navbar.component.html",
 })
 export class AdminNavbarComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  constructor(private store: Store<any>) { }
 
-  user: any = null;
+  user: any;
 
   async ngOnInit() {
-    const { data, error } = await this.userService.getUserByUUID()
+    this.store
+      .select(SELECTORS.USER)
+      .subscribe(res => this.user = res?.userData)
+  }
 
-    if(data){
-      this.user = data;
-    }
+  isClient() {
+    return this.user.userType === USER_TYPES.CLIENT;
+  }
+
+  isContractor() {
+    return this.user.userType ===  USER_TYPES.CONTRACTOR;
   }
 }

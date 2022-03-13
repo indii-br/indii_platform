@@ -3,10 +3,10 @@ import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-settings-client',
-  templateUrl: './settings-client.component.html'
+  selector: 'app-settings-user',
+  templateUrl: './settings-user.component.html'
 })
-export class SettingsClientComponent implements OnInit {
+export class SettingsUserComponent implements OnInit {
 
   editingSettingClient: boolean = false;
   userRoleOptions: Array<string> = [

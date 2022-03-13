@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyService } from 'src/app/services/company.service';
 import { ContractService } from 'src/app/services/contract.service';
-import { CONTRACT_STATUS, RATE_TYPE } from 'src/app/utils/constants';
+import { CONTRACT_STATUS, DUE_DATE_LIMIT, PAYMENT_CYCLES, RATE_TYPE, SUBMIT_DOCUMENT_LIMIT } from 'src/app/utils/constants';
+import { convertArrayInObject } from 'src/app/utils/helpers';
 
 @Component({
   selector: 'app-contracts',
@@ -15,6 +16,12 @@ export class ContractsComponent implements OnInit {
 
   rateTypes: any = RATE_TYPE;
   contractStatus: any = CONTRACT_STATUS;
+
+  paymentCyclesValues: any = convertArrayInObject(PAYMENT_CYCLES)
+
+  submitDocumentsLimitValues: any = convertArrayInObject(SUBMIT_DOCUMENT_LIMIT)
+
+  dueDateLimitValues: any = convertArrayInObject(DUE_DATE_LIMIT)
 
   constructor(
     private contractService: ContractService,

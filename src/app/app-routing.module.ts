@@ -24,6 +24,10 @@ import { JobsComponent } from "./views/admin/jobs/jobs.component";
 import { NewJobComponent } from "./views/admin/jobs/new-job/new-job.component";
 import { ProfileComponent } from "./views/admin/profile/profile.component";
 import { ResetPasswordComponent } from "./views/auth/reset-password/reset-password.component";
+import { JobsContractorComponent } from "./views/admin/jobs-contractor/jobs-contractor.component";
+import { ContractsContractorComponent } from "./views/admin/contracts-contractor/contracts-contractor.component";
+import { JobPageComponent } from "./views/admin/job-page/job-page.component";
+import { ProfileContractorComponent } from "./views/admin/profile-contractor/profile-contractor.component";
 
 const routes: Routes = [
   // admin views
@@ -34,12 +38,16 @@ const routes: Routes = [
       { path: "dashboard", component: DashboardComponent },
       { path: "settings", component: SettingsComponent },
       { path: "contratos", component: ContractsComponent },
+      { path: "meus-contratos", component: ContractsContractorComponent },
       { path: "novo-contrato", component: NewContractComponent },
       { path: "editar-contrato/:id", component: NewContractComponent },
       { path: "oportunidades", component: JobsComponent },
+      { path: "oportunidades-abertas", component: JobsContractorComponent },
       { path: "nova-oportunidade", component: NewJobComponent },
+      { path: "oportunidade/:id", component: JobPageComponent },
       { path: "editar-oportunidade/:id", component: NewJobComponent },
       { path: "profile/:id", component: ProfileComponent },
+      { path: "meu-perfil", component: ProfileContractorComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ],
   },
@@ -66,4 +74,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

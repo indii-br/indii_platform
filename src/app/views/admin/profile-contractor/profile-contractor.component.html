@@ -74,16 +74,17 @@
                     Pinterest, etc...</small>
             </h6>
 
-            <a *ngIf="editingProfile"
+            <a *ngIf="editingProfile" (click)="addLink()"
                 class="text-indigo-600 cursor-pointer mb-6 bg-transparent border border-solid border-indigo-custom hover:text-white font-bold uppercase text-xs px-4 py-2 rounded outline-none">
                 <i class="fas fa-plus mr-1"></i>Adicionar um link
             </a>
 
             <ul class="w-full mx-6 mb-8 text-md text-blueGray-700">
-                <li class="mb-2 w-full" *ngFor="let link of profileData.links">
+                <li class="mb-2 w-full" *ngFor="let link of profileData.links, let i = index">
                     <i class="fas fa-link mr-2 text-xs"></i>
                     {{link}}
-                    <span *ngIf="editingProfile" class="text-red-500 text-xs lowercase ml-2 cursor-pointer">Remover
+                    <span *ngIf="editingProfile" (click)="removeLinkFromListToSave(i)"
+                        class="text-red-500 text-xs lowercase ml-2 cursor-pointer">Remover
                         link</span>
                 </li>
             </ul>
@@ -99,7 +100,7 @@
                     <ul class="w-full list-disc text-blueGray-600">
                         <li class="text-sm font-semibold">Projetos & Experiências Profissionais</li>
                         <li class="mt-5">
-                            <a
+                            <a (click)="editOrCreateWorkExpModal()"
                                 class="w-full block text-center text-indigo-600 cursor-pointer mb-6 bg-transparent border border-solid border-indigo-custom hover:text-white font-bold uppercase text-xs px-4 py-2 rounded outline-none">
                                 <i class="fas fa-plus mr-2"></i>Adicionar
                             </a>
@@ -109,14 +110,25 @@
             </div>
         </div>
 
-        <app-editable-painel *ngFor="let workEx of workingExperienceList; let i = index" [editing]="editingProfile"
-            title="Projeto {{i+1}}" (isEditing)="setEditing($event)" (onSave)="updateOrSaveWorkingEx()">
-
-            <app-editable-input-block [value]="workEx?.title" title="Título" [editing]="editingProfile">
-                <input type="text" [value]="workEx.title" #workEx (change)="setValueToWorkingExp('title', workEx.value)"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
-                    placeholder="Insira o nome da empresa" />
-            </app-editable-input-block>
-        </app-editable-painel>
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="flex-auto px-4 pb-2 lg:px-10 py-10 pt-8">
+                <div class="flex flex-wrap pb-4">
+                    <ul *ngFor="let workEx of workingExperienceList; let i = index"
+                        class="w-full list-disc text-sm mb-5 text-blueGray-600">
+                        <li class="font-semibold">{{workEx.title}}</li>
+                        <li class="mt-2">{{workEx.company}}</li>
+                        <li class="text-left mt-2 text-xs block whitespace-pre-line">{{workEx.description}}</li>
+                        <li class="mt-3">De {{workEx.startedAt | date: 'dd/MM/yyy'}}</li>
+                        <li class="mt-1" *ngIf="workEx.stillWorking">Até Hoje</li>
+                        <li class="mt-1" *ngIf="!workEx.stillWorking">Até {{workEx.endAt | date: 'dd/MM/yyyy'}}</li>
+                        <li (click)="deleteWorkExp(workEx.id)" class="text-red-500 mt-2 cursor-pointer">Deletar</li>
+                        <li (click)="editOrCreateWorkExpModal(workEx)" class="text-indigo-600 mt-2 cursor-pointer">Editar</li>
+                        <li *ngIf="i !== (workingExperienceList.length - 1)" class="w-full mt-4 border-b-1"
+                            style="border: 1px solid #e1e7ee;"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

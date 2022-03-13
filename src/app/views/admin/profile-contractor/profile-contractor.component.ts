@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { ToastrService } from 'ngx-toastr';
 import { ProfileService } from 'src/app/services/profile.service';
-import { SELECTORS } from 'src/app/stores/selectors';
 import { RATE_TYPE } from 'src/app/utils/constants';
+
+declare var Swal: any;
 
 @Component({
   selector: 'app-profile-contractor',
@@ -17,7 +18,6 @@ export class ProfileContractorComponent implements OnInit {
   profileData: any = {};
   workingExperienceList: Array<any>;
   profileToUpdate: any = {};
-  workingExpToUpdate: any = {};
 
   availabilityType: Array<string> = [
     'FULL-TIME',
@@ -38,7 +38,10 @@ export class ProfileContractorComponent implements OnInit {
   selectedMinRate: any;
   selectedMaxRate: any;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(
+    private profileService: ProfileService,
+    private toastrService: ToastrService
+  ) { }
 
   setEditing(ev) {
     this.editingProfile = ev;
@@ -50,10 +53,6 @@ export class ProfileContractorComponent implements OnInit {
     this.profileToUpdate[key] = value;
   }
 
-  setValueToWorkingExp(key: string, value: string) {
-    this.workingExpToUpdate[key] = value;
-  }
-
   async ngOnInit() {
     const { data: profileData, error } = await this.profileService.getProfileByUserUuid();
 
@@ -61,15 +60,19 @@ export class ProfileContractorComponent implements OnInit {
       this.profileData = profileData
       this.setInitValues();
 
-      const { data: workingExperienceList, errorWE } = await this.profileService.getWorkExpByUser(profileData.user.id)
-
-      if (workingExperienceList) {
-        this.workingExperienceList = workingExperienceList;
-      }
+      this.getWorkExp();
 
       this.loaded = true;
     } else {
       this.editingProfile = true;
+    }
+  }
+
+  async getWorkExp() {
+    const { data: workingExperienceList, errorWE } = await this.profileService.getWorkExpByUser(this.profileData.user.id)
+
+    if (workingExperienceList) {
+      this.workingExperienceList = workingExperienceList;
     }
   }
 
@@ -82,10 +85,190 @@ export class ProfileContractorComponent implements OnInit {
   }
 
   updateOrSaveProfile() {
-
+    if (this.profileData && this.profileData.id) {
+      this.editProfile()
+    }
   }
 
-  updateOrSaveWorkingEx() {
+  async editProfile() {
+    console.log(this.profileData.links)
+    const profileToUpdate = Object.assign(this.profileToUpdate, {
+      minRate: this.selectedMinRate,
+      maxRate: this.selectedMaxRate,
+      links: this.profileToUpdate.links
+    })
 
+    const { data, error } = await this.profileService.updateProfileData(profileToUpdate, this.profileData.id)
+    if (data) {
+      this.profileData = data[0];
+      this.editingProfile = false;
+      this.toastrService.success('Editado com sucesso!')
+    }
+    if (error) {
+      console.log(error)
+      this.editingProfile = true;
+      this.toastrService.error('Erro ao Editar!')
+    }
+  }
+
+  removeLinkFromListToSave(linkIndex: number) {
+    this.profileData.links.splice(linkIndex, 1);
+    this.profileToUpdate['links'] = this.profileData.links;
+  }
+
+  async addLink() {
+    const { value: url } = await Swal.fire({
+      input: 'text',
+      inputLabel: 'Insira links relevantes para seu perfil!',
+      inputPlaceholder: 'ex: Linkedin Profile, Site pessoal, Portfolio, etc...',
+      showCancelButton: true,
+      confirmButtonText: 'Adicionar Link',
+      cancelButtonText: 'Cancelar'
+    })
+
+    if (url) {
+      this.profileData.links.push(url)
+      this.profileToUpdate['links'] = this.profileData.links;
+    }
+  }
+
+  async editOrCreateWorkExpModal(workExp?: any) {
+
+    let workExpDataToSaveOrUpdate: any = {
+      title: "",
+      company: "",
+      startedAt: "",
+      endAt: "",
+      description: "",
+    };
+
+    let stillWorking: any = null;
+
+    if (workExp) {
+      workExpDataToSaveOrUpdate = workExp
+    }
+
+    const { value: formValues } = await Swal.fire({
+      customClass: 'swal-wide',
+      title: 'Projeto ou Experiência Profissional',
+      html: `
+        <label class="font-semibold block text-sm text-blueGray-500">Título / Cargo</label>
+        <input id="swal-title" value="${workExpDataToSaveOrUpdate?.title}" placeholder="Ex: Full-stack Developer, Designer Senior" class="swal2-input">
+        <label class="font-semibold block mt-4 text-sm text-blueGray-500">Empresa</label>
+        <input id="swal-company" value="${workExpDataToSaveOrUpdate?.company}" placeholder="Insira a Empresa" class="swal2-input">
+        <label class="font-semibold block mt-4 text-sm text-blueGray-500">De (Data de início)</label>
+        <input id="swal-startedAt" value="${workExpDataToSaveOrUpdate?.startedAt}" type="date" placeholder="Insira a data de início" class="swal2-input">
+        <label id="label-to-endAt" class="font-semibold block mt-4 text-sm text-blueGray-500">Até (Data de término)</label>
+        <input id="swal-endAt" value="${workExpDataToSaveOrUpdate?.endAt}" type="date" placeholder="Insira a data de término" class="swal2-input">
+        <div class="mt-4 mb-2">
+          <input type="checkbox" id="swal-stillWorking" name="stillWorking">
+          <label for="stillWorking" class="ml-2">Meu emprego atual</label>
+        </div>
+        <label class="font-semibold block mt-4 text-sm text-blueGray-500">Fale um pouco sobre o Projeto/Experiência</label>
+        <textarea id="swal-description" placeholder="Sobre" value="${workExpDataToSaveOrUpdate?.description}" class="swal2-input">${workExpDataToSaveOrUpdate?.description}</textarea>
+      `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Salvar',
+      cancelButtonText: 'Cancelar',
+      didRender: () => {
+        if (workExpDataToSaveOrUpdate.id && workExpDataToSaveOrUpdate.stillWorking) {
+          // @ts-ignore
+          document.getElementById('swal-stillWorking')?.checked = true;
+          document.getElementById('swal-endAt').style.display = "none"
+          document.getElementById('label-to-endAt').style.display = "none"
+        }
+
+        document.getElementById('swal-stillWorking').addEventListener('change', (ev: any) => {
+          const checkedValue = ev.target?.checked
+          if (checkedValue === true) {
+            stillWorking = true;
+            workExpDataToSaveOrUpdate.endAt = null
+            // @ts-ignore
+            document.getElementById('swal-endAt')?.value = null
+
+            document.getElementById('swal-endAt').style.visibility = "hidden"
+            document.getElementById('label-to-endAt').style.visibility = "hidden"
+          } else {
+            stillWorking = null;
+            document.getElementById('swal-endAt').style.visibility = "visible"
+            document.getElementById('label-to-endAt').style.visibility = "visible"
+          }
+        });
+      },
+      preConfirm: () => {
+        // @ts-ignore 
+        const endAt = document.getElementById('swal-endAt')?.value
+        return {
+          // @ts-ignore
+          title: document.getElementById('swal-title')?.value,
+          // @ts-ignore
+          company: document.getElementById('swal-company')?.value,
+          // @ts-ignore
+          startedAt: document.getElementById('swal-startedAt')?.value,
+          endAt: (endAt === "" || !endAt) ? null : endAt,
+          // @ts-ignore
+          description: document.getElementById('swal-description')?.value,
+          stillWorking: stillWorking
+        }
+      }
+    })
+
+    if (formValues) {
+      if (workExpDataToSaveOrUpdate && workExpDataToSaveOrUpdate.id) {
+        const { data: workingExperienceData, errorEditWE } = await this.profileService.updateWorkExpData(formValues, workExpDataToSaveOrUpdate.id)
+
+        if (workingExperienceData) {
+          Swal.close()
+          this.getWorkExp()
+          this.toastrService.success("Editado com sucesso!");
+        }
+
+        if (errorEditWE) {
+          console.log(errorEditWE)
+          this.toastrService.error('Erro ao Editar!')
+        }
+      } else {
+        const dataToSave = Object.assign({
+          user: this.profileData.user.id
+        }, formValues)
+
+        const { data: workingExperienceData, errorSaveWE } = await this.profileService.saveWorkExpData(dataToSave)
+
+        if (workingExperienceData) {
+          Swal.close()
+          this.getWorkExp()
+          this.toastrService.success("Salvo com sucesso!");
+        }
+
+        if (errorSaveWE) {
+          console.log(errorSaveWE)
+          this.toastrService.error('Erro ao Salvar!')
+        }
+      }
+    }
+  }
+
+  async deleteWorkExp(WexpID) {
+    Swal.fire({
+      title: 'Você tem certeza disso?',
+      text: "Tenha cuidado, pois essa ação não pode ser desfeita!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, deletar!',
+      cancelButtonText: 'Não'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data, error } = await this.profileService.deleteWorkExpData(WexpID)
+        if (data) {
+          this.getWorkExp();
+          this.toastrService.success('Deletado com sucesso!')
+        }
+        if (error) {
+          console.log(error)
+          this.toastrService.error('Erro ao Deletar!')
+        }
+      }
+    })
   }
 }

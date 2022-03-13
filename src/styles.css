@@ -32,3 +32,20 @@
     top: 5px;
     right: 10px;
 }
+
+.swal-wide{
+    width:50%!important;
+}
+
+.swal-wide input[type=text], .swal-wide input[type=date], .swal-wide textarea{
+    font-size: 15px!important;
+    width: 60%;
+}
+
+.swal-wide input::-webkit-input-placeholder, .swal-wide textarea::-webkit-input-placeholder {
+    font-size: 15px!important;
+}
+
+.swal-wide textarea{
+    height: 125px!important;
+}

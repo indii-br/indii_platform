@@ -103,9 +103,9 @@
         </li>
 
         <li class="items-center">
-          <a [routerLink]="['/admin/dashboard']" class="text-xs uppercase py-3 font-bold block">
+          <a [routerLink]="['/admin/dashboard']" class="link-disabled text-xs uppercase py-3 font-bold block">
             <i class="fas fa-id-card mr-2 text-sm text-blueGray-300"></i>
-            Documentos
+            Documentos <small>(em breve)</small>
           </a>
         </li>
 
@@ -175,9 +175,9 @@
         </li>
 
         <li class="items-center">
-          <a [routerLink]="['/admin/meus-contratos']" class="text-xs uppercase py-3 font-bold block">
+          <a [routerLink]="['/admin/meus-contratos']" class="link-disabled text-xs uppercase py-3 font-bold block">
             <i class="fas fa-briefcase mr-2 text-sm text-blueGray-300"></i>
-            Documentos
+            Documentos <small>(em breve)</small>
           </a>
         </li>
 
@@ -220,7 +220,7 @@
           </a>
         </li>
 
-        <li class="items-center">
+        <li *ngIf="isContractor()" class="items-center">
           <a [routerLink]="['/admin/meu-perfil']" class="text-xs uppercase py-3 font-bold block" routerLinkActive
             #myProfile="routerLinkActive" [ngClass]="
             myProfile.isActive
@@ -234,8 +234,8 @@
           </a>
         </li>
 
-        <li class="items-center">
-          <a *ngIf="isClient()" [routerLink]="['/admin/dashboard']"
+        <li *ngIf="isClient()" class="items-center">
+          <a [routerLink]="['/admin/dashboard']"
             class="link-disabled text-xs uppercase py-3 font-bold block">
             <i class="fas fa-users mr-2 text-sm text-blueGray-300"></i>
             Equipe <small>(em breve)</small>

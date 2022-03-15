@@ -95,7 +95,7 @@ export const CONTRACT_STATUS = {
     },
     SELF_UPLOADED_CYCLE: {
         label: 'Ativo',
-        sub_label: 'Contrato importado',
+        sub_label: 'Contrato Ativo',
         color: 'text-teal-500',
         position: 999
     },

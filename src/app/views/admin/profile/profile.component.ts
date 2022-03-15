@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.rateTypeLabels = RATE_TYPE;
-   }
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(async (params) => {
@@ -35,5 +35,9 @@ export class ProfileComponent implements OnInit {
         this.workingExperienceList = workingExperienceList;
       }
     })
+  }
+
+  convertToArray(arrayString) {
+    return JSON.parse(arrayString);
   }
 }

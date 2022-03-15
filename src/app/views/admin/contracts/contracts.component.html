@@ -81,7 +81,7 @@
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 <span class="font-semibold" *ngIf="contract.paymentConfig">
                                     {{paymentCyclesValues[contract.paymentConfig.paymentCycle]}}<br />
-                                    <small>Venc.: <strong>{{dueDateLimitValues[contract.paymentConfig.dueDate]}}</strong></small>
+                                    <small style="font-size: 9px;">Venc.: <strong>{{dueDateLimitValues[contract.paymentConfig.dueDate]}}</strong></small>
                                 </span>
                                 <small *ngIf="!contract.paymentConfig" style="opacity: .7; font-weight: 400;">(Aguardando
                                     Configuração)</small>

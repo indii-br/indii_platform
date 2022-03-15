@@ -15,7 +15,11 @@ export class ContractService {
   async getContractById(contractId: string): Promise<any> {
     return this.supabaseService.supabase
       .from('contracts')
-      .select("*, paymentConfig!inner(*), inviteContractor!inner(*), company!inner(*)")
+      .select(`*, 
+        inviteContractor->contractor_invite(*), 
+        paymentConfig->contract_payment_config(*)
+        company:companies(*)
+      `)
       .eq('id', contractId)
       .single()
   }
@@ -23,7 +27,11 @@ export class ContractService {
   async getAllByCompany(companyId: string): Promise<any> {
     return this.supabaseService.supabase
       .from('contracts')
-      .select("*, company!inner(*), paymentConfig!inner(*), inviteContractor!inner(*)")
+      .select(`*, 
+        company!inner(*), 
+        inviteContractor->contractor_invite(*), 
+        paymentConfig->contract_payment_config(*)
+      `)
       .eq('company.id', companyId)
   }
 

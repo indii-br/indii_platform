@@ -20,6 +20,8 @@ export class SiteComponent implements OnInit {
   ngOnInit(): void { }
 
   onSubmit() {
+    console.log(this.contactForm.value)
+    console.log(this.contactForm.valid)
     if (!this.contactForm.valid) {
       Swal.fire({
         title: 'Preencha todos os campos para enviar!',

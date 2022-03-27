@@ -30,7 +30,6 @@ export class NewContractComponent implements OnInit {
 
   seniorityLevelList: Array<string> = [
     'Não se aplica',
-    'Junior',
     'Pleno',
     'Senior',
     'Lead/Leader',

@@ -1,3 +1,4 @@
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 
 declare var Swal: any;
@@ -7,11 +8,39 @@ declare var Swal: any;
   templateUrl: "./site.component.html",
 })
 export class SiteComponent implements OnInit {
-  constructor() {}
+  constructor(private http: HttpClient) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  successFormMsg(){
+  submitForm(name: string, email: string, subject: string, contactForm: any) {
+
+    if (name && name !== '' &&
+      email && email !== '' &&
+      subject && subject !== '') {
+
+      const body = new HttpParams()
+        .set('form-name', 'contact')
+        .append('name', name)
+        .append('email', email)
+        .append('subject', subject)
+
+      this.http
+        .post('/', body.toString(), { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+        .toPromise()
+        .then(res => this.successFormMsg())
+        .catch(err => console.log(err))
+
+    } else {
+      Swal.fire({
+        title: 'Preencha todos os campos para enviar!',
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonText: 'Voltar',
+      })
+    }
+  }
+
+  successFormMsg() {
     Swal.fire({
       title: 'Contato enviado com sucesso!',
       text: `Retornaremos em até 24 horas.`,

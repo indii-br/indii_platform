@@ -437,13 +437,13 @@
               <p class="leading-relaxed mt-1 mb-4 text-blueGray-500">
                 Preencha este formulário e retornaremos em 24 horas.
               </p>
-              <form name="contact" method="POST" data-netlify="true">
-                <input type="hidden" name="form-name" value="contact" /> 
+              <form #contactForm>
+                <input type="hidden" name="form-name" value="contact" />
                 <div class="relative w-full mb-3 mt-8">
                   <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="full-name">
                     Seu nome
                   </label>
-                  <input type="text" name="name"
+                  <input type="text"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     placeholder="Insira seu nome" />
                 </div>
@@ -452,7 +452,7 @@
                   <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="email">
                     Seu Email
                   </label>
-                  <input type="email" name="email"
+                  <input type="email" #formEmail
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     placeholder="Insira seu Email" />
                 </div>
@@ -461,14 +461,14 @@
                   <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="message">
                     Assunto
                   </label>
-                  <textarea rows="4" cols="80" name="subject"
+                  <textarea rows="4" cols="80" #formSubject
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                     placeholder="Fale um pouco sobre sua necessidade..."></textarea>
                 </div>
                 <div class="text-center mt-6">
-                  <button
+                  <button (click)="submitForm(formName.value, formEmail.value, formSubject.value, contactForm)"
                     class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="submit">
+                    type="button">
                     Enviar
                   </button>
                 </div>

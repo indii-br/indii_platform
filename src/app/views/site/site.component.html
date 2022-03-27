@@ -86,7 +86,7 @@
         </div>
       </div>
 
-      <div class="flex flex-wrap items-center mt-32">
+      <div id="for_companies" class="flex flex-wrap items-center mt-32">
         <div class="w-full md:w-5/12 px-4 mr-auto ml-auto">
           <div
             class="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
@@ -139,7 +139,7 @@
     <br />
   </section>
 
-  <section class="relative py-20">
+  <section id="for_contractors" class="relative py-20">
     <div class="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
       style="transform: translateZ(0)">
       <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
@@ -437,7 +437,8 @@
               <p class="leading-relaxed mt-1 mb-4 text-blueGray-500">
                 Preencha este formulário e retornaremos em 24 horas.
               </p>
-              <form name="contact" method="POST" netlify>
+              <form name="contact" method="POST" data-netlify="true">
+                <input type="hidden" name="form-name" value="contact" /> 
                 <div class="relative w-full mb-3 mt-8">
                   <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="full-name">
                     Seu nome

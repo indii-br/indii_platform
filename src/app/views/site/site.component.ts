@@ -12,8 +12,7 @@ export class SiteComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  submitForm(name: string, email: string, subject: string, contactForm: any) {
-
+  submitForm(name: string, email: string, subject: string) {
     if (name && name !== '' &&
       email && email !== '' &&
       subject && subject !== '') {

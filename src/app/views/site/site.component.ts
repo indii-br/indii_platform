@@ -45,6 +45,7 @@ export class SiteComponent implements OnInit {
           }
         },
         err => {
+          console.error(err);
           if (err instanceof ErrorEvent) {
             //client side error
             this.errorMsg()

@@ -453,6 +453,7 @@
 
               <!-- INIT FORM -->
               <form [formGroup]='contactForm' name="contact" id='contact-form' method="post" (ngSubmit)="onSubmit()">
+                <input type="hidden" name="form-name" value="contact" />
                 <div class="relative w-full mb-3 mt-8">
                   <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="full-name">
                     Seu nome

@@ -106,8 +106,7 @@
             Dê à sua equipe uma visão centralizada de tudo o que eles precisam. Gerencie pagamentos, contratos,
             benefícios(em breve) e muito mais. Está tudo lá.
           </p>
-          <a [routerLink]="['/']"
-            class="font-bold text-xs uppercase px-4 py-2 rounded-md text-white mt-8 cursor-pointer"
+          <a href="#contactForm" class="font-bold text-xs uppercase px-4 py-2 rounded-md text-white mt-8 cursor-pointer"
             style="background: #ea7c11">
             Quero saber mais&emsp;<i class="fa fa-paper-plane"></i>
           </a>
@@ -240,11 +239,12 @@
               </li>
             </ul>
           </div>
-          <a [routerLink]="['/']"
+          <button data-tf-slider="vTtWicXV" data-tf-width="550" data-tf-iframe-props="title=Join Us - Talent"
+            data-tf-medium="snippet"
             class="font-bold text-xs inline-block uppercase px-4 py-2 mt-8 rounded-md text-white cursor-pointer"
             style="background: #6366f1">
             Faça parte&emsp;<i class="fa fa-paper-plane"></i>
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -386,14 +386,14 @@
       </svg>
     </div>
 
-    <div class="container mx-auto px-4 lg:pt-24 lg:pb-64">
+    <div id="contactForm" class="container mx-auto px-4 lg:pt-24 lg:pb-64">
       <div class="flex flex-wrap text-center justify-center">
         <div class="w-full lg:w-6/12 px-4">
-          <h2 class="text-4xl font-semibold text-white">Faça tudo a com a Indii</h2>
+          <h2 class="text-4xl font-semibold text-white">Tudo que você precisa</h2>
           <p class="text-lg leading-relaxed mt-4 mb-4 text-blueGray-400">
             Se você quer contratar um prestador de serviços em São Paulo e um Freelancer em Salvador ou vinte PJ's
             espalhados pelo Brasil, você
-            pode genreciar os contratos e os pagamentos, todos juntos da sua conta INDII.<br /><br />
+            pode genreciar os contratos e os pagamentos, todos juntos da sua conta <b>INDII</b>.<br /><br />
 
             Nossa plataforma facilita o crescimento da sua equipe remota. <br /><b>Pronto para começar?</b>
           </p>
@@ -450,12 +450,14 @@
               <p class="leading-relaxed mt-1 mb-4 text-blueGray-500">
                 Preencha este formulário e retornaremos em 24 horas.
               </p>
-              <form name="contact" method="POST">
+
+              <!-- INIT FORM -->
+              <form [formGroup]='contactForm' name="contact" id='contact-form' method="post" (ngSubmit)="onSubmit()">
                 <div class="relative w-full mb-3 mt-8">
                   <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="full-name">
                     Seu nome
                   </label>
-                  <input type="text" #formName
+                  <input type="text" name="name"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     placeholder="Insira seu nome" />
                 </div>
@@ -464,7 +466,7 @@
                   <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="email">
                     Seu Email
                   </label>
-                  <input type="email" #formEmail
+                  <input type="email" name="email"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     placeholder="Insira seu Email" />
                 </div>
@@ -473,18 +475,20 @@
                   <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="message">
                     Assunto
                   </label>
-                  <textarea rows="4" cols="80" #formSubject
+                  <textarea rows="4" cols="80" name="message"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
                     placeholder="Fale um pouco sobre sua necessidade..."></textarea>
                 </div>
                 <div class="text-center mt-6">
-                  <button (click)="submitForm(formName.value, formEmail.value, formSubject.value)"
+                  <button
                     class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button">
+                    type="submit">
                     Enviar
                   </button>
                 </div>
               </form>
+              <!-- END FORM -->
+
             </div>
           </div>
         </div>

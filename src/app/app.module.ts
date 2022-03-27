@@ -1,12 +1,18 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { registerLocaleData } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxCurrencyModule } from "ngx-currency";
 import { AppRoutingModule } from "./app-routing.module";
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from "./app.component";
+
+import localePT from '@angular/common/locales/pt';
+registerLocaleData(localePT);
 
 // layouts
 import { AdminComponent } from "./layouts/admin/admin.component";
@@ -79,6 +85,11 @@ import { ContractorDocumentsComponent } from './views/admin/contractor-documents
 import { JobPageComponent } from './views/admin/job-page/job-page.component';
 import { SettingsContractorCompanyComponent } from './views/admin/settings/settings-contractor-company/settings-contractor-company.component';
 import { ProfileContractorComponent } from './views/admin/profile-contractor/profile-contractor.component';
+import { InvoicesComponent } from './views/admin/invoices/invoices.component';
+import { companyReducer } from "./stores/company.reducer";
+import { DocumentsListComponent } from './views/admin/contractor-documents/documents-list/documents-list.component';
+import { MyDocumentsComponent } from './views/admin/contractor-documents/my-documents/my-documents.component';
+import { BankAccountsComponent } from './views/admin/bank-accounts/bank-accounts.component';
 
 @NgModule({
   declarations: [
@@ -138,6 +149,10 @@ import { ProfileContractorComponent } from './views/admin/profile-contractor/pro
     JobPageComponent,
     SettingsContractorCompanyComponent,
     ProfileContractorComponent,
+    InvoicesComponent,
+    DocumentsListComponent,
+    MyDocumentsComponent,
+    BankAccountsComponent,
   ],
   imports: [
     BrowserModule, 
@@ -147,9 +162,11 @@ import { ProfileContractorComponent } from './views/admin/profile-contractor/pro
     NgSelectModule, 
     NgxCurrencyModule,
     FormsModule,
+    HttpClientModule,
     StoreModule.forRoot({ 
       user: userReducer,
-      profile: profileReducer
+      profile: profileReducer,
+      company: companyReducer
     })
   ],
   providers: [],

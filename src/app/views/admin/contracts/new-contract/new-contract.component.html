@@ -35,11 +35,26 @@
         </p>
       </section>
 
+      <h6 class="text-blueGray-400 text-sm font-bold uppercase"  *ngIf="!editingNewContract && contractData && contractData?.id">
+        Configurações do Contrato
+      </h6>
+
       <section class="w-full p-3" *ngIf="!editingNewContract && contractData && contractData?.id">
         <ul>
-          <li>Ciclo de pagamento: <strong>{{rateType[contractData.contractType].label}}</strong></li>
-          <li>Tipo de Contrato: <strong>{{contractModelType[contractData.contractModel].label}}</strong></li>
-          <li>Criado em: <strong>{{contractData.created_at | date: 'dd/MM/yyyy'}}</strong></li>
+          <li class="font-normal">
+            <span class="text-blueGray-600 uppercase text-xs">Ciclo de pagamento</span> <br />
+            <small class="font-semibold mt-1 text-sm">{{rateType[contractData.contractType].label}}</small>
+          </li>
+
+          <li class="mt-3 font-normal">
+            <span class="text-blueGray-600 uppercase text-xs">Tipo de Contrato</span> <br />
+            <small class="font-semibold mt-1 text-sm">{{contractModelType[contractData.contractModel].label}}</small>
+          </li>
+
+          <li class="mt-3 font-normal">
+            <span class="text-blueGray-600 uppercase text-xs">Criado em</span> <br />
+            <small class="font-semibold mt-1 text-sm">{{contractData.created_at | date: 'dd/MM/yyyy'}}</small>
+          </li>
         </ul>
       </section>
 
@@ -98,11 +113,11 @@
     <!-- INFO BLOCK -->
     <app-info-contract [contractData]="contractData"></app-info-contract>
 
-     <!-- CONTRACTOR AND INVITE | CONTRACT -->
-     <app-contractor-block *ngIf="showContractorBlock()" [contractData]="contractData"></app-contractor-block>
-     
-     <!-- CONTRACT BLOCK UPLOAD | CONTRACT -->
-     <app-upload-contract-block *ngIf="showContractorBlock()" [contractData]="contractData"></app-upload-contract-block>
+    <!-- CONTRACTOR AND INVITE | CONTRACT -->
+    <app-contractor-block *ngIf="showContractorBlock()" [contractData]="contractData"></app-contractor-block>
+
+    <!-- CONTRACT BLOCK UPLOAD | CONTRACT -->
+    <app-upload-contract-block *ngIf="showContractorBlock()" [contractData]="contractData"></app-upload-contract-block>
   </div>
 </div>
 

@@ -5,6 +5,12 @@
       placeholder="Insira seu nome completo" />
   </app-editable-input-block>
 
+  <app-editable-input-block [value]="userData.cpf" title="CPF" [editing]="editingSettingClient">
+    <input type="text" [value]="userData.cpf" #cpf (change)="setValue('cpf', cpf.value)"
+      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+      placeholder="Insira seu CPF" />
+  </app-editable-input-block>
+
   <app-editable-input-block [value]="userData.email" title="Email" [editing]="editingSettingClient">
     <input type="email" [value]="userData.email" #email (change)="setValue('email', email.value)"
       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"

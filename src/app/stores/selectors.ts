@@ -1,4 +1,5 @@
 export const SELECTORS = {
     USER: "user",
-    PROFILE: "profile"
+    PROFILE: "profile",
+    COMPANY: "company"
 }

@@ -2,8 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Session } from "@supabase/supabase-js";
 import { AuthService } from "src/app/services/auth.service";
+import { CompanyService } from "src/app/services/company.service";
 import { ProfileService } from "src/app/services/profile.service";
 import { UserService } from "src/app/services/user.service";
+import { hydrateCompany } from "src/app/stores/company.actions";
 import { hydrateProfile } from "src/app/stores/profile.actions";
 import { hydrateUser } from "src/app/stores/user.actions";
 import { USER_TYPES } from "src/app/utils/constants";
@@ -19,6 +21,7 @@ export class AdminComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private companyService: CompanyService,
     private profileService: ProfileService,
     private store: Store<any>
   ) {
@@ -39,12 +42,18 @@ export class AdminComponent implements OnInit {
       this.store.dispatch(hydrateUser(userData));
 
       if (this.isContractor()) {
-        const { data: profileData, error } = await this.profileService.getProfileByUserUuid()
+        const { data: profileData, errorProfile } = await this.profileService.getProfileByUserUuid()
 
         if (profileData) {
           this.store.dispatch(hydrateProfile(profileData));
         }
       }
+    }
+
+    const { data: companyData, errorCompany } = await this.companyService.getCompanyByUser()
+
+    if(companyData) {
+      this.store.dispatch(hydrateCompany(companyData));
     }
   }
 

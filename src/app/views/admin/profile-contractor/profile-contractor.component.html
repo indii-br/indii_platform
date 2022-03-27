@@ -123,7 +123,7 @@
                         <li class="mt-1" *ngIf="workEx.stillWorking">Até Hoje</li>
                         <li class="mt-1" *ngIf="!workEx.stillWorking">Até {{workEx.endAt | date: 'dd/MM/yyyy'}}</li>
                         <li (click)="deleteWorkExp(workEx.id)" class="text-red-500 mt-2 cursor-pointer">Deletar</li>
-                        <li (click)="editOrCreateWorkExpModal(workEx)" class="text-indigo-600 mt-2 cursor-pointer">Editar</li>
+                        <li (click)="editOrCreateWorkExpModal(workEx)" class="text-teal-500 mt-2 cursor-pointer">Editar</li>
                         <li *ngIf="i !== (workingExperienceList.length - 1)" class="w-full mt-4 border-b-1"
                             style="border: 1px solid #e1e7ee;"></li>
                     </ul>

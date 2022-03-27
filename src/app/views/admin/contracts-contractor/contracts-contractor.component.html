@@ -4,7 +4,7 @@
             <div class="rounded-t mb-0 px-4 py-3 border-0">
                 <div class="flex flex-wrap items-center">
                     <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                        <h3 class="font-semibold text-lg text-blueGray-700">
+                        <h3 class="font-semibold uppercase text-lg text-blueGray-700">
                             Meus Contratos
                         </h3>
                     </div>
@@ -16,7 +16,7 @@
                         <tr>
                             <th
                                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                Contratado
+                                Empresa
                             </th>
                             <th
                                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
@@ -44,8 +44,8 @@
                             <td
                                 class="cursor-pointer border-t-0 font-semibold px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 <span *ngIf="contract.contractor">
-                                    Rafael Bruno Silva<br />
-                                    <small>rafaelbruno.web@gmail.com</small>
+                                    {{contract.company.name}}<br />
+                                    <small>#{{contract.id}} - {{contract.contractName}}</small>
                                 </span>
                                 <span *ngIf="!contract.contractor">
                                     {{contract.contractName}}<br />

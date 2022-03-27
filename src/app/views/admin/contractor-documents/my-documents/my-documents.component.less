@@ -1,0 +1,50 @@
+[type="file"] {
+    height: 0.1px;
+    width: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    
+    + label {
+        background-color: #7b7dfa;
+        color: white;
+        cursor: pointer;
+        display: inline-block;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 700;
+        overflow: hidden;
+        padding: 0.625rem 1.25rem;
+        margin: 10px 20px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border-radius: 8px;
+        width: 100%;
+        
+        svg {
+            fill: currentColor;
+            height: 1em; width: 1em;
+            margin-top: -0.25em;
+            margin-right: 0.25em;
+            vertical-align: middle;
+        }
+        
+        &:hover {
+            background-color: #4f51f7;
+        }
+    }
+}
+
+.border-indigo-custom{
+    margin: 10px 30px;
+
+    border-color: #6366f1;
+    cursor: pointer;
+
+    &:hover{
+        opacity: .7;
+    }
+}
+
+

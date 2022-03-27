@@ -117,3 +117,10 @@ export const USER_TYPES = {
     CLIENT: 'CLIENT',
     CONTRACTOR: 'CONTRACTOR'
 }
+
+export const INVOICE_STATUS = {
+    WAITING: {
+        color: 'text-blueGray-500',
+        label: 'Em Aberto'
+    } 
+}

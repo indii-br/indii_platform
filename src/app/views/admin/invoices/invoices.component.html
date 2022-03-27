@@ -1,0 +1,126 @@
+<div *ngIf="!loading" class="flex flex-wrap mt-4">
+    <div class="w-full h-screen mb-4 px-4">
+        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
+            <div class="rounded-t mb-0 px-4 py-3 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                        <h3 class="font-semibold uppercase text-lg text-blueGray-700">
+                            Pagamentos
+                        </h3>
+                    </div>
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                        <!-- <button style="background-color: #ececec;"
+                            class="text-blueGray-500 text-xs font-semibold px-3 py-1 rounded outline-none mr-1 mb-1"
+                            type="button">
+                            Ver concluidos e arquivados
+                        </button> -->
+
+                        <!-- <button [routerLink]="['/admin/novo-contrato']"
+                            class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1"
+                            type="button">
+                            <i class="fa fa-plus"></i>
+                            <span class="ml-2">Criar Contrato</span>
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="block w-full overflow-x-auto">
+                <table class="items-center w-full bg-transparent border-collapse">
+                    <thead>
+                        <tr>
+                            <th
+                                class="px-1 text-center align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                <!-- <i class="fas cursor-pointer fa-square text-blueGray-300 text-2xl"></i> -->
+                            </th>
+                            <th
+                                class="px-1 text-center align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                ID
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Contratado
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Contrato
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Valor
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Vencimento
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Status
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let invoice of invoicesList">
+                            <td
+                                class="cursor-pointer border-t-0 font-semibold px-1 text-center align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                <i class="fas fa-square text-blueGray-300 text-2xl"></i>
+                            </td>
+                            <td
+                                class="font-semibold cursor-pointer text-center border-t-0 px-1 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                #{{invoice.id}}
+                            </td>
+                            <td
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                <img *ngIf="invoice.contractor.avatar" [src]="invoice.contractor.avatar"
+                                    class="h-12 w-12 bg-white rounded-full border" />
+                                <span *ngIf="!invoice.contractor.avatar"
+                                    class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
+                                    <i class="fas fa-user text-blueGray-400 text-2xl"></i>
+                                </span>
+                                <span class="ml-3 font-bold">
+                                    {{invoice.contractor.full_name}}<br />
+                                    <small>{{invoice.contract.contractorRole}}</small><br />
+                                    <small class="font-normal">{{invoice.contract.contractName}}</small>
+                                </span>
+                            </td>
+                            <td
+                                class="font-semibold cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{paymentCyclesValues[invoice.contract.paymentConfig.paymentCycle]}}<br />
+                                <small>
+                                    <a class="cursor-pointer mr-1"
+                                        style="color: rgba(37, 99, 235)">#{{invoice.contract.id}}</a>
+                                    Contrato {{rateTypes[invoice.contract.contractType].label}}
+                                </small>
+                            </td>
+                            <td
+                                class="border-t-0 text-sm px-6 align-middle border-l-0 border-r-0 font-semibold whitespace-nowrap p-4">
+                                {{invoice.amount | currency : 'R$'}}<br />
+                            </td>
+                            <td
+                                class="border-t-0 {{getDueDateColor(invoice.dueDate)}} capitalize font-semibold text-xs px-6 align-middle border-l-0 border-r-0 whitespace-nowrap p-4">
+                                {{invoice.dueDate | date: 'dd MMMM, yyyy': '' : 'pt-BR' }}
+                            </td>
+                            <td
+                                class="border-t-0 uppercase font-bold {{invoiceStatus[invoice.status].color}} px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{invoiceStatus[invoice.status].label}}
+                            </td>
+                            <td [routerLink]="['/admin/editar-contrato', invoice.id]"
+                                class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                <a class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                    Ver Fatura
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 *ngIf="!invoicesList || invoicesList.length === 0"
+                    class="text-blueGray-500 text-center p-8 font-semibold text-xl">
+                    Você não tem nenhum pagamento pendente
+                </h2>
+            </div>
+        </div>
+
+    </div>
+</div>

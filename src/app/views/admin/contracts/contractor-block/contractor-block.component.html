@@ -5,17 +5,39 @@
                 Profissional Contratado
             </h6>
             <div class="w-full text-center">
-                <a *ngIf="showInviteBtn" (click)="inviteContractor()"
+                <a *ngIf="showInviteBtn && !contractData.contractor" (click)="inviteContractor()"
                     class="text-indigo-600 w-full mb-6 bg-transparent border border-solid border-indigo-custom font-bold uppercase text-xs px-4 py-2 rounded outline-none">
                     <i class="fas fa-user mr-2"></i> Adicionar profissional ao contrato
                 </a>
 
-                <h6 *ngIf="showInvitedBlock"
-                    style="font-size: 11px; color: rgba(234, 88, 12)"
+                <h6 *ngIf="showInvitedBlock" style="font-size: 11px; color: rgba(234, 88, 12)"
                     class="w-full text-center mt-3 mb-6 font-semibold uppercase">
                     Aguardando profissional entrar no projeto<br />
-                    <span class="font-bold lowercase">{{contractData.inviteContractor.emailContractorToSendInvite}}</span>
+                    <span
+                        class="font-bold lowercase">{{contractData.inviteContractor.emailContractorToSendInvite}}</span>
                 </h6>
+
+                <table *ngIf="contractData.contractor" class="items-center w-full bg-transparent border-collapse">
+                    <tbody>
+                        <tr>
+                            <th
+                                class="border-t-0 cursor-pointer px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                <img *ngIf="contractData.contractor.avatar" [src]="contractData.contractor.avatar"
+                                    class="h-12 w-12 bg-white rounded-full border" />
+                                <span *ngIf="!contractData.contractor.avatar"
+                                    class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
+                                    <i class="fas fa-user text-blueGray-400 text-2xl"></i>
+                                </span>
+                                <span class="ml-3 font-bold text-blueGray-600">
+                                    {{contractData.contractor.full_name}}<br />
+                                    <small class="font-semibold">{{contractData.contractor.email}}</small><br />
+                                    <small class="font-semibold">{{contractData.contractor.cpf}}</small><br />
+                                    <small class="font-semibold">{{contractData.contractor.city}} / {{contractData.contractor.state}}</small>
+                                </span>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

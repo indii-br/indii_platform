@@ -1,0 +1,51 @@
+<td
+    class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+    <img *ngIf="contract.contractor && contract.contractor.avatar" [src]="contract.contractor.avatar"
+        class="h-12 w-12 bg-white rounded-full border" />
+    <span *ngIf="!contract.contractor || !contract.contractor.avatar"
+        class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
+        <i class="fas fa-user text-blueGray-400 text-2xl"></i>
+    </span>
+    <span class="ml-3">
+        {{contract.contractor.full_name}}<br />
+        <small>{{contract.contractor.email}}</small><br />
+        <small>CPF: {{contract.contractor.cpf}}</small><br />
+        <small>#{{contract.id}}</small>
+    </span>
+</td>
+
+<td class="font-normal border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+    <span *ngIf="!documentData.idDocument" class="withoutDocument">
+        <i class="fas fa-folder-open mr-1"></i>
+        Não enviado
+    </span>
+
+    <span (click)="viewDocument(documentData.idDocument)" *ngIf="documentData.idDocument" class="withDocument">
+        <i class="fas fa-id-card mr-1"></i>
+        Ver Documento
+    </span>
+</td>
+<td class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+    <span *ngIf="!documentData.cnpjDocument" class="withoutDocument">
+        <i class="fas fa-folder-open mr-1"></i>
+        Não enviado
+    </span>
+    <span (click)="viewDocument(documentData.cnpjDocument)" *ngIf="documentData.cnpjDocument" class="withDocument">
+        <i class="fas fa-id-card mr-1"></i>
+        Ver Documento
+    </span>
+</td>
+<td class="font-semibold border-t-0 text-xs px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">
+    <span *ngIf="!documentData.idAndPhoto" class="withoutDocument">
+        <i class="fas fa-folder-open mr-1"></i>
+        Não enviado
+    </span>
+    <span (click)="viewDocument(documentData.idAndPhoto)" *ngIf="documentData.idAndPhoto" class="withDocument">
+        <i class="fas fa-id-card mr-1"></i>
+        Ver Documento
+    </span>
+</td>
+<td
+    class="font-semibold 0 {{getDocumentStatus(documentData).color}} uppercase border-t-0 text-xs px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">
+    {{getDocumentStatus(documentData).status}}
+</td>

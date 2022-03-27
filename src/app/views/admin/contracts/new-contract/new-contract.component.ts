@@ -139,7 +139,15 @@ export class NewContractComponent implements OnInit {
   }
 
   async editContractInfo() {
-    const { data, error } = await this.contractService.updateContractData(this.contractToSaveOrUpdate, this.contractToSaveOrUpdate.id)
+
+    let contractToUpdate = Object.assign({}, this.contractToSaveOrUpdate);
+
+    delete contractToUpdate.inviteContractor;
+    delete contractToUpdate.paymentConfig;
+    delete contractToUpdate.contractor;
+    delete contractToUpdate.company;
+
+    const { data, error } = await this.contractService.updateContractData(contractToUpdate, this.contractToSaveOrUpdate.id)
     if (data) {
       this.contractData = data[0];
       this.contractToSaveOrUpdate = data[0];
@@ -155,10 +163,10 @@ export class NewContractComponent implements OnInit {
 
   getTitlePanel() {
     if (this.contractData && this.companyData?.id) {
-      return 'Editar Contrato | ' + this.contractData.contractName
+      return 'Editar Contrato - ' + this.contractData.contractName
     }
 
-    return 'Novo Contrato | ' + RATE_TYPE[this.selectedContractType].label
+    return 'Novo Contrato - ' + RATE_TYPE[this.selectedContractType].label
   }
 
   isMilestone() {

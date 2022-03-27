@@ -8,16 +8,6 @@ import { AuthComponent } from "./layouts/auth/auth.component";
 // admin views
 import { DashboardComponent } from "./views/admin/dashboard/dashboard.component";
 import { SettingsComponent } from "./views/admin/settings/settings.component";
-import { TablesComponent } from "./views/admin/tables/tables.component";
-
-// auth views
-import { LoginComponent } from "./views/auth/login/login.component";
-import { RegisterComponent } from "./views/auth/register/register.component";
-
-// no layouts views
-import { SiteComponent } from "./views/site/site.component";
-import { LandingComponent } from "./views/landing/landing.component";
-import { PublicProfileComponent } from "./views/public-profile/public-profile.component";
 import { NewContractComponent } from "./views/admin/contracts/new-contract/new-contract.component";
 import { ContractsComponent } from "./views/admin/contracts/contracts.component";
 import { JobsComponent } from "./views/admin/jobs/jobs.component";
@@ -28,6 +18,19 @@ import { JobsContractorComponent } from "./views/admin/jobs-contractor/jobs-cont
 import { ContractsContractorComponent } from "./views/admin/contracts-contractor/contracts-contractor.component";
 import { JobPageComponent } from "./views/admin/job-page/job-page.component";
 import { ProfileContractorComponent } from "./views/admin/profile-contractor/profile-contractor.component";
+
+// auth views
+import { LoginComponent } from "./views/auth/login/login.component";
+import { RegisterComponent } from "./views/auth/register/register.component";
+
+// no layouts views
+import { SiteComponent } from "./views/site/site.component";
+import { LandingComponent } from "./views/landing/landing.component";
+import { PublicProfileComponent } from "./views/public-profile/public-profile.component";
+import { InvoicesComponent } from "./views/admin/invoices/invoices.component";
+import { ContractorDocumentsComponent } from "./views/admin/contractor-documents/contractor-documents.component";
+import { MyDocumentsComponent } from "./views/admin/contractor-documents/my-documents/my-documents.component";
+import { BankAccountsComponent } from "./views/admin/bank-accounts/bank-accounts.component";
 
 const routes: Routes = [
   // admin views
@@ -48,6 +51,10 @@ const routes: Routes = [
       { path: "editar-oportunidade/:id", component: NewJobComponent },
       { path: "profile/:id", component: ProfileComponent },
       { path: "meu-perfil", component: ProfileContractorComponent },
+      { path: "pagamentos", component: InvoicesComponent },
+      { path: "documentos", component: ContractorDocumentsComponent },
+      { path: "minhas-contas", component: BankAccountsComponent },
+      { path: "meus-documentos", component: MyDocumentsComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ],
   },

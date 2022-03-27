@@ -1,0 +1,41 @@
+<div *ngIf="!loading" class="h-screen">
+    <div class="flex flex-wrap relative m-10 bg-white rounded-lg" style="padding: 10px 30px;">
+        <h6 class="w-full text-blueGray-600 text-left text-lg mt-3 mb-6 font-bold uppercase">
+            <span>Meus Documentos</span><br/>
+            <small class="font-normal text-md block" style="text-transform: none; line-height: 20px;">
+                Esses documentos serão exigidos pelo seu cliente para mitigar o seu risco e o dele. Os documentos são baseados nas leis locais do Brasil e na sua estrutura legal.
+            </small>
+        </h6>
+        <div *ngFor="let document of documentsToUpload" class="w-full lg:w-4/12 px-4 mt-5">
+            <div
+                class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
+                <div class="flex-auto px-1 py-2">
+                    <div class="flex flex-wrap pb-4">
+                        <h6 class="w-full text-blueGray-600 text-center text-sm mt-3 mb-6 font-bold uppercase">
+                            <span>{{document.title}}</span><br/>
+                            <small style="font-size: 10px; display: block; min-height: 40px;">{{document.subtitle}}</small>
+                        </h6>
+                        <div class="w-full text-center">
+                            <div *ngIf="!documentData[document.id]" class="flex justify-center">
+                                <input (change)="uploadedDocumentFile($event, document.id)" id="upload" type="file">
+    
+                                <label for="upload">
+                                    <i class="fas fa-file-upload text-4xl my-4"></i>
+                                    <br />
+                                    <span class="uppercase">Fazer Upload</span>
+                                </label>
+                            </div>
+    
+                            <div *ngIf="documentData[document.id]" class="flex justify-center">
+                                <a  (click)="viewDocument(documentData[document.id])"
+                                    class="text-indigo-600 w-full mb-6 bg-transparent border border-solid border-indigo-custom font-bold uppercase text-xs px-4 py-2 rounded outline-none">
+                                    <i class="fas fa-cloud-download-alt mr-2"></i> Ver Documento
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

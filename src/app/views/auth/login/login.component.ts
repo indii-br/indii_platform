@@ -58,4 +58,14 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  passwordModal() {
+    Swal.fire({
+      title: 'Esqueceu a senha?',
+      text: `Envie um email para contato@indii.com.br`,
+      icon: 'info',
+      showCancelButton: false,
+      confirmButtonText: 'ok',
+    })
+  }
+
 }

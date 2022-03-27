@@ -17,8 +17,9 @@ export class ContractService {
       .from('contracts')
       .select(`*, 
         inviteContractor->contractor_invite(*), 
-        paymentConfig->contract_payment_config(*)
-        company:companies(*)
+        paymentConfig->contract_payment_config(*),
+        company->companies(*),
+        contractor->user(id, full_name, email, cpf, city, state, avatar)
       `)
       .eq('id', contractId)
       .single()
@@ -28,9 +29,22 @@ export class ContractService {
     return this.supabaseService.supabase
       .from('contracts')
       .select(`*, 
-        company!inner(*), 
+        company->companies(*), 
         inviteContractor->contractor_invite(*), 
-        paymentConfig->contract_payment_config(*)
+        paymentConfig->contract_payment_config(*),
+        contractor->user(id, full_name, email, avatar, cpf)
+      `)
+      .eq('company.id', companyId)
+  }
+
+  async getAllWithContractorByCompany(companyId: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contracts')
+      .select(`*, 
+        company->companies(*), 
+        inviteContractor->contractor_invite(*), 
+        paymentConfig->contract_payment_config(*),
+        contractor->user(id, full_name, email, avatar)
       `)
       .eq('company.id', companyId)
   }

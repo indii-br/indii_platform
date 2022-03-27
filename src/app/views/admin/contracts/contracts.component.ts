@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { CompanyService } from 'src/app/services/company.service';
 import { ContractService } from 'src/app/services/contract.service';
+import { SELECTORS } from 'src/app/stores/selectors';
 import { CONTRACT_STATUS, DUE_DATE_LIMIT, PAYMENT_CYCLES, RATE_TYPE, SUBMIT_DOCUMENT_LIMIT } from 'src/app/utils/constants';
 import { convertArrayInObject } from 'src/app/utils/helpers';
 
@@ -25,18 +27,21 @@ export class ContractsComponent implements OnInit {
 
   constructor(
     private contractService: ContractService,
-    private companyService: CompanyService,
+    private store: Store<any>
   ) { }
 
   async ngOnInit() {
-    const { data: company, errorCompany } = await this.companyService.getCompanyByUser()
+    this.store
+      .select(SELECTORS.COMPANY)
+      .subscribe(async res => {
+        const company = res?.companyData
 
-    if (company) {
-      const { data: contractsList, error: errorContractList } = await this.contractService.getAllByCompany(company.id)
-      
-      this.contractList = contractsList
-      this.loading = true;
-    }
+        if (company) {
+          const { data: contractsList, error: errorContractList } = await this.contractService.getAllByCompany(company.id)
+
+          this.contractList = contractsList
+          this.loading = true;
+        }
+      })
   }
-
 }

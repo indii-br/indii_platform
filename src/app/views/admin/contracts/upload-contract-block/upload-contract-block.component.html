@@ -2,7 +2,8 @@
     <div class="flex-auto px-1 py-2">
         <div class="flex flex-wrap pb-4">
             <h6 class="w-full text-blueGray-400 text-center text-sm mt-3 mb-6 font-bold uppercase">
-                Carregar Contrato
+                <span *ngIf="!contractData.contractSelfUploaded">Carregar Contrato</span>
+                <span *ngIf="contractData.contractSelfUploaded">Ver Contrato</span>
             </h6>
             <div class="w-full text-center">
                 <div *ngIf="!contractData.contractSelfUploaded" class="flex justify-center">

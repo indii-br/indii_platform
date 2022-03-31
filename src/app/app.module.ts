@@ -90,6 +90,7 @@ import { companyReducer } from "./stores/company.reducer";
 import { DocumentsListComponent } from './views/admin/contractor-documents/documents-list/documents-list.component';
 import { MyDocumentsComponent } from './views/admin/contractor-documents/my-documents/my-documents.component';
 import { BankAccountsComponent } from './views/admin/bank-accounts/bank-accounts.component';
+import { InvoiceComponent } from "./views/admin/invoices/invoice/invoice.component";
 
 @NgModule({
   declarations: [
@@ -153,6 +154,7 @@ import { BankAccountsComponent } from './views/admin/bank-accounts/bank-accounts
     DocumentsListComponent,
     MyDocumentsComponent,
     BankAccountsComponent,
+    InvoiceComponent,
   ],
   imports: [
     BrowserModule, 

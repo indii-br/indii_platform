@@ -46,7 +46,7 @@
                             </th>
                             <th
                                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                Pagamento
+                                Criado em
                             </th>
                             <th
                                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
@@ -61,11 +61,13 @@
                         <tr *ngFor="let job of jobsList">
                             <td [routerLink]="['/admin/editar-oportunidade', job.id]"
                                 class="cursor-pointer border-t-0 font-bold px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{job.title}}
+                                {{job.title}}<br/>
+                                <small>{{job.seniorityLevel}}</small>
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{job.rate | currency : 'R$'}}
+                                {{job.rate | currency : 'R$'}} <br/>
+                                <small>{{job.contractType}}</small>
                             </td>
                             <td
                                 class=" {{jobStatusList[job.status].color}} font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -73,12 +75,12 @@
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{job.profileType}}<br/>
+                                {{job.profileType}}<br />
                                 <small class="lowercase">({{job.availabilityType}})</small>
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{job.contractType}}
+                                {{job.created_at | date : 'dd/MM/yyyy'}}
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -87,8 +89,10 @@
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                <a [routerLink]="['/admin/editar-oportunidade', job.id]"
-                                    class="text-indigo-600">Ver/Editar</a>
+                                <a  [routerLink]="['/admin/editar-oportunidade', job.id]"
+                                    class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                    Acessar
+                                </a>
                             </td>
                         </tr>
                     </tbody>

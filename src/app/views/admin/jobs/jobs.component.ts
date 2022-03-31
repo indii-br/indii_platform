@@ -44,12 +44,31 @@ export class JobsComponent implements OnInit {
   }
 
   getCountApplies(jobId, appliesListByCompany) {
-    if(!appliesListByCompany){
+    if (!appliesListByCompany) {
       return '<span>--</span>';
     }
-    const countApplies = appliesListByCompany.filter(apply => apply.job.id === jobId).length;
-    const appliesEl = (countApplies === 0) ? `<span>0</span>` : `<strong>${countApplies}</strong>`;
-    return appliesEl;
+
+    let userToRender = '';
+
+    const countAppliesList = appliesListByCompany.filter(apply => apply.job.id === jobId).slice(0, 4);
+
+    countAppliesList.forEach((apply, index) => {
+      const withMargin = (index > 0) ? '-ml-4' : '';
+
+      userToRender += `
+        <img
+          src="${apply.profile.user.avatar}"
+          alt="..."
+          class="w-10 h-10 rounded-full border-2 border-blueGray-50 shadow ${withMargin}"
+        />
+      `
+    });
+
+    return `
+        <div class="flex">
+          ${userToRender}
+        </div>
+      `;
   }
 
 }

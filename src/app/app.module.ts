@@ -91,6 +91,12 @@ import { DocumentsListComponent } from './views/admin/contractor-documents/docum
 import { MyDocumentsComponent } from './views/admin/contractor-documents/my-documents/my-documents.component';
 import { BankAccountsComponent } from './views/admin/bank-accounts/bank-accounts.component';
 import { InvoiceComponent } from "./views/admin/invoices/invoice/invoice.component";
+import { DashInvoicesComponent } from './views/admin/dashboard/dash-invoices/dash-invoices.component';
+import { DashAppliesComponent } from './views/admin/dashboard/dash-applies/dash-applies.component';
+import { DashHolidaysComponent } from './views/admin/dashboard/dash-holidays/dash-holidays.component';
+import { DashContractsPendingComponent } from './views/admin/dashboard/dash-contracts-pending/dash-contracts-pending.component';
+import { BackofficeComponent } from './views/backoffice/backoffice.component';
+import { NewClientComponent } from './views/backoffice/new-client/new-client.component';
 
 @NgModule({
   declarations: [
@@ -155,6 +161,12 @@ import { InvoiceComponent } from "./views/admin/invoices/invoice/invoice.compone
     MyDocumentsComponent,
     BankAccountsComponent,
     InvoiceComponent,
+    DashInvoicesComponent,
+    DashAppliesComponent,
+    DashHolidaysComponent,
+    DashContractsPendingComponent,
+    BackofficeComponent,
+    NewClientComponent,
   ],
   imports: [
     BrowserModule, 

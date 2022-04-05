@@ -23,7 +23,7 @@ export class AppliesService {
    async getAppliesByCompany(companyId: string): Promise<any> {
     return this.supabaseService.supabase
       .from('applications')
-      .select("*, job!inner(*, company!inner(*)), profile!inner(*, user!inner(avatar))")
+      .select("*, job!inner(*, company!inner(*)), profile!inner(*, user!inner(avatar, full_name))")
       .eq('job.company.id', companyId)
       .is('canceledAt', null)
   }

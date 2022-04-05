@@ -3,7 +3,7 @@
         <div class="flex flex-wrap items-center">
             <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                 <h6 class="text-blueGray-700 text-sm font-semibold">
-                    <i class="fas fa-users mr-2"></i>Interessados
+                    <i class="fas fa-users mr-2"></i>Candidatos
                 </h6>
             </div>
         </div>
@@ -12,7 +12,7 @@
 
         <h3 *ngIf="!appliesList || appliesList.length === 0" class="text-center p-5">
             <i style="font-size: 80px;" class="fas fa-users text-blueGray-300 mb-3"></i><br/>
-            <span class="text-sm text-blueGray-500">Nenhum interessado por aqui ainda :)</span>
+            <span class="text-sm text-blueGray-500">Nenhum candidato por aqui ainda :)</span>
         </h3>
 
         <table *ngIf="appliesList && appliesList.length !== 0" class="items-center w-full bg-transparent border-collapse">

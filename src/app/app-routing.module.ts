@@ -32,6 +32,7 @@ import { ContractorDocumentsComponent } from "./views/admin/contractor-documents
 import { MyDocumentsComponent } from "./views/admin/contractor-documents/my-documents/my-documents.component";
 import { BankAccountsComponent } from "./views/admin/bank-accounts/bank-accounts.component";
 import { InvoiceComponent } from "./views/admin/invoices/invoice/invoice.component";
+import { BackofficeComponent } from "./views/backoffice/backoffice.component";
 
 const routes: Routes = [
   // admin views
@@ -74,6 +75,7 @@ const routes: Routes = [
   },
   // no layout views
   { path: "public-profile", component: PublicProfileComponent },
+  { path: "backoffice", component: BackofficeComponent },
   { path: "landing", component: LandingComponent },
   { path: "", component: SiteComponent },
   { path: "**", redirectTo: "", pathMatch: "full" },

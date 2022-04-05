@@ -5,6 +5,10 @@ import { Component, OnInit, Input } from "@angular/core";
   templateUrl: "./card-stats.component.html",
 })
 export class CardStatsComponent implements OnInit {
+
+
+  @Input('isMoney') isMoney: boolean;
+
   @Input()
   get statSubtitle(): string {
     return this._statSubtitle;

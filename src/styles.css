@@ -49,3 +49,11 @@
 .swal-wide textarea{
     height: 125px!important;
 }
+
+.dash-stats-default-text{
+    color:#d86c00!important;
+}
+
+.dash-stats-default-bg{
+    background:#fcdab7!important;
+}

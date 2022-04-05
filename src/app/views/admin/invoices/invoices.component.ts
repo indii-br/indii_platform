@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { SELECTORS } from 'src/app/stores/selectors';
 import { INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
-import { convertArrayInObject } from 'src/app/utils/helpers';
+import { convertArrayInObject, getDueDateColor } from 'src/app/utils/helpers';
 
 @Component({
   selector: 'app-invoices',
@@ -13,7 +12,6 @@ import { convertArrayInObject } from 'src/app/utils/helpers';
   styleUrls: ['./invoices.component.less']
 })
 export class InvoicesComponent implements OnInit {
-
   loading: boolean = true;
 
   invoicesList: Array<any> = [{}];
@@ -23,6 +21,7 @@ export class InvoicesComponent implements OnInit {
   paymentCyclesValues: any = convertArrayInObject(PAYMENT_CYCLES)
 
   invoiceStatus: any = INVOICE_STATUS;
+  getDueDateColor: any = getDueDateColor;
 
   constructor(
     private store: Store<any>,
@@ -54,23 +53,4 @@ export class InvoicesComponent implements OnInit {
       }
     }
   }
-
-  getDueDateColor(dueDate){
-    const today = moment(moment().format("YYYY-MM-DD"), "YYYY-MM-DD");
-    const dueDateToCheck = moment(dueDate, "YYYY-MM-DD")
-    const diff = today.diff(dueDateToCheck)
-
-    if(diff === 0){
-      return 'text-orange-500'
-    }
-
-    if(diff < 0){
-      return ''
-    }
-
-    if(diff > 0){
-      return 'text-red-500'
-    }
-  }
-  
 }

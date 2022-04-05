@@ -1,17 +1,10 @@
-<div class="flex flex-wrap">
-  <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-    <!-- <app-card-line-chart></app-card-line-chart> -->
-    <app-card-page-visits></app-card-page-visits>
+<div *ngIf="isClient" class="flex flex-wrap">
+  <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 h-screen">
+    <app-dash-invoices></app-dash-invoices>
+    <app-dash-contracts-pending class="mt-4"></app-dash-contracts-pending>
   </div>
   <div class="w-full xl:w-4/12 px-4">
-    <app-card-bar-chart></app-card-bar-chart>
-  </div>
-</div>
-<div class="flex flex-wrap mt-4">
-  <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-    <app-card-page-visits></app-card-page-visits>
-  </div>
-  <div class="w-full xl:w-4/12 px-4">
-    <app-card-social-traffic></app-card-social-traffic>
+    <app-dash-applies></app-dash-applies>
+    <app-dash-holidays class="mt-4"></app-dash-holidays>
   </div>
 </div>

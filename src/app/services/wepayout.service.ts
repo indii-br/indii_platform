@@ -29,6 +29,7 @@ export class WepayoutService {
       .post(`${environment.wepayoutUrl}/payin/clients/${environment.wepayoutClientId}/recipients`, recipientData, { headers: headers })
       .toPromise()
   }
+  
   async updateRecipient(recipientData: any, recipientId: string): Promise<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

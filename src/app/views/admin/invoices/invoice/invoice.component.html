@@ -1,28 +1,172 @@
-<div class="flex flex-wrap">
+<div *ngIf="invoiceData" class="flex flex-wrap">
     <div class="w-full lg:w-8/12 px-4">
         <div
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
             <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
                 <div class="flex flex-wrap items-center">
                     <div class="relative w-full px-2 max-w-full flex-grow flex-1">
-                        <h6 class="text-blueGray-700 text-4xl font-semibold flex items-center" style="justify-content: space-between;">
+                        <h6 class="text-blueGray-600 text-4xl font-semibold flex items-center"
+                            style="justify-content: space-between;">
                             <span>
-                                <small class="text-blueGray-500 text-xl">R$</small> 5000,00
+                                <small class="text-blueGray-500 text-xl">R$</small> {{invoiceData.amount |
+                                currency:'':''}}
                             </span>
 
-                            <a class="text-white bg-blueGray-600 cursor-pointer text-xl font-bold uppercase px-3 py-1 rounded outline-none">
-                                Pagar Fatura
+                            <a
+                                class="text-white cursor-pointer bg-teal-500 text-lg font-bold uppercase px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                <i class="fas fa-hand-holding-usd"></i>&ensp;Pagar Fatura
                             </a>
                         </h6>
                     </div>
                 </div>
             </div>
             <div class="flex-auto px-4 pb-2 lg:px-10 py-10 pt-8">
-                <div class="flex flex-wrap pb-4">
+                <div class="flex flex-col flex-wrap pb-4">
+                    <h6 class="text-blueGray-600 uppercase text-sm font-semibold mb-6">
+                        Detalhes da fatura
+                    </h6>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>ID da fatura:</span><br />
+                        <strong class="pt-1 block">#{{invoiceData.id}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Data de criação:</span><br />
+                        <strong class="pt-1 block">{{invoiceData.created_at | date : 'dd/MM/yyyy'}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Vencimento:</span><br />
+                        <strong class="pt-1 block">{{invoiceData.dueDate | date : 'dd/MM/yyyy'}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>contrato:</span><br />
+                        <strong class="pt-1 block">#{{invoiceData.contract.id}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Ciclo de pagamento:</span><br />
+                        <strong class="pt-1 ">{{rateTypes[invoiceData.contract.contractType].label}}</strong>
+                        <strong class="pt-1 "> -
+                            {{paymentCyclesValues[invoiceData.contract.paymentConfig.paymentCycle]}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Descrição:</span><br />
+                        <strong class="pt-1 block break-words whitespace-pre-wrap" [innerHTML]="invoiceData.description"></strong>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
     <div class="w-full lg:w-4/12 px-4">
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-lg bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-700 uppercase text-xs font-semibold">
+                            <small>Status:</small><br />
+                            <span class="{{invoiceStatus[invoiceData.status].color}} text-lg font-bold">
+                                {{invoiceStatus[invoiceData.status].label}}
+                            </span>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-700 uppercase text-sm font-semibold">
+                            Contratado
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-auto pb-2 pt-8" style="padding-left: 25px; padding-right: 25px;">
+                <div class="flex flex-wrap pb-2">
+                    <span class="flex">
+                        <img *ngIf="invoiceData.contractor && invoiceData.contractor.avatar"
+                            [src]="invoiceData.contractor.avatar" class="h-12 w-12 bg-white rounded-full border" />
+                        <span *ngIf="!invoiceData.contractor || !invoiceData.contractor.avatar"
+                            class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
+                            <i class="fas fa-user text-blueGray-400 text-2xl"></i>
+                        </span>
+                        <span class="ml-3 text-blueGray-500 text-sm">
+                            <span class="font-semibold block">{{invoiceData.contractor.full_name}}</span>
+                            <small>{{invoiceData.contractor.email}}</small><br />
+                            <small>#{{invoiceData.contractor.id}}</small>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-600 text-sm font-semibold">
+                            <span class="uppercase">Itens Anexados</span><br />
+                            <small class="text-blueGray-500" style="font-size: 10px;">Nota Fiscal, Planilhas,
+                                Documentos, Anexos, etc</small>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-auto pb-4 pt-8" style="padding-left: 25px; padding-right: 25px;">
+                <div class="flex flex-wrap pb-4">
+                    <span *ngFor="let attach of invoiceData.attachments" class="flex">
+                        <span class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
+                            <i class="fas fa-paperclip text-blueGray-400 text-2xl"></i>
+                        </span>
+                        <span class="ml-3 text-blueGray-600 text-sm">
+                            <span class="font-semibold block text-indigo-600 cursor-pointer">
+                                {{attach}}
+                                <i class="fas fa-external-link-alt ml-1" style="font-size: 9px;"></i>
+                            </span>
+                        </span>
+                    </span>
+
+                    <div *ngIf="!invoiceData.attachments || invoiceData.attachments.length === 0" class="text-blueGray-700 px-6 py-4 border-0 rounded relative mb-4 w-full"
+                        style="background-color: gainsboro;">
+                        <span *ngIf="!invoiceData.wePayoutKey"
+                            class="inline-block align-middle mr-8 text-sm w-full text-left">
+                            <i class="fas fa-paperclip mr-2"></i> Nenhum anexo!
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-600 text-sm font-semibold">
+                            <span class="uppercase">Histórico</span>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-auto pb-2 pt-8" style="padding-left: 25px; padding-right: 25px;">
+                <div class="flex flex-wrap pb-4">
+                    <div class="text-blueGray-700 px-6 py-4 border-0 rounded relative mb-4 w-full"
+                        style="background-color: gainsboro;">
+                        <span *ngIf="!invoiceData.wePayoutKey"
+                            class="inline-block align-middle mr-8 text-sm w-full text-left">
+                            <i class="fas fa-history mr-2"></i> Nenhum histórico!
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

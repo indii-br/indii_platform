@@ -1,3 +1,6 @@
+import * as moment from "moment";
+import { USER_TYPES } from "./constants";
+
 export const convertArrayInObject = (array: Array<any>) => {
     const obj = {};
 
@@ -27,4 +30,30 @@ export const downloadBlob = (blob, name = 'file.txt') => {
     );
   
     document.body.removeChild(link);
+  }
+
+  export const isClient = (user) => {
+    return user.userType === USER_TYPES.CLIENT;
+  }
+
+  export const isContractor = (user) => {
+    return user.userType === USER_TYPES.CONTRACTOR;
+  }
+
+  export const getDueDateColor = (dueDate) => {
+    const today = moment(moment().format("YYYY-MM-DD"), "YYYY-MM-DD");
+    const dueDateToCheck = moment(dueDate, "YYYY-MM-DD")
+    const diff = today.diff(dueDateToCheck)
+
+    if(diff === 0){
+      return 'text-orange-500'
+    }
+
+    if(diff < 0){
+      return ''
+    }
+
+    if(diff > 0){
+      return 'text-red-500'
+    }
   }

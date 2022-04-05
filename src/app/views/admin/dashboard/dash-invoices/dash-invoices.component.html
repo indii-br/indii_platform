@@ -1,0 +1,83 @@
+<div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+    <div class="rounded-t mb-0 px-2 py-3 border-0">
+        <div class="flex flex-wrap items-center">
+            <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                <h3 class="font-semibold uppercase text-xs text-blueGray-700">Faturas Abertas</h3>
+            </div>
+            <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                <button [routerLink]="['/admin/pagamentos']" 
+                    class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button">
+                    Ver todas ({{invoicesListSize}})
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="block w-full overflow-x-auto">
+
+        <h3 *ngIf="!invoicesList || invoicesList.length === 0" class="text-center p-5">
+            <i style="font-size: 80px;" class="fas fa-receipt text-blueGray-300 mb-3"></i><br />
+            <span class="text-sm text-blueGray-500">Nenhuma fatura por aqui ainda :)</span><br />
+            <a [routerLink]="['/admin/nova-oportunidade']"
+                class="text-indigo-600 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                <i class="fa fa-plus"></i>
+                <span class="ml-1">Criar Contrato</span>
+            </a>
+        </h3>
+
+        <table *ngIf="invoicesList && invoicesList.length !== 0" class="items-center w-full bg-transparent border-collapse">
+            <thead>
+                <tr>
+                    <th
+                        class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        Contratado
+                    </th>
+                    <th
+                        class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        Valor
+                    </th>
+                    <th
+                        class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        Status
+                    </th>
+                    <th
+                        class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        Vencimento
+                    </th>
+                    <th
+                        class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let invoice of invoicesList">
+                    <th
+                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                        {{invoice.contractor.full_name}}<br />
+                        <small class="font-normal">{{invoice.contract.contractName}}</small>
+                    </th>
+                    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        {{invoice.amount | currency: 'R$'}}<br />
+                        <small
+                            class="font-normal">{{paymentCyclesValues[invoice.contract.paymentConfig.paymentCycle]}}</small><br />
+                        <small class="font-normal">{{rateTypes[invoice.contract.contractType].label}}</small>
+                    </td>
+                    <td
+                        class="{{invoiceStatus[invoice.status].color}} uppercase border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        {{invoiceStatus[invoice.status].label}}
+                    </td>
+                    <td
+                        class="border-t-0 {{getDueDateColor(invoice.dueDate)}} capitalize font-semibold text-xs px-6 align-middle border-l-0 border-r-0 whitespace-nowrap p-4">
+                        {{invoice.dueDate | date: 'dd MMMM, yyyy': '' : 'pt-BR' }}
+                    </td>
+                    <td [routerLink]="['/admin/invoice', invoice.id]"
+                      class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <a style="font-size: 11px;" class="text-indigo-600 text-xs font-semibold cursor-pointer">VER
+                            FATURA</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

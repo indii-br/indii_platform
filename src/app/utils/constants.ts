@@ -120,7 +120,11 @@ export const USER_TYPES = {
 
 export const INVOICE_STATUS = {
     WAITING: {
-        color: 'text-blueGray-500',
+        color: 'text-yellow-500',
+        label: 'Em Processamento'
+    },
+    OPEN: {
+        color: 'text-orange-600',
         label: 'Em Aberto'
-    } 
+    }
 }

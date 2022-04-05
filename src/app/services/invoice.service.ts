@@ -21,4 +21,15 @@ export class InvoiceService {
       `)
       .eq('company.id', companyId)
   }
+
+  async getInvoicetById(invoiceId: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('invoices')
+      .select(`*, 
+        contract->contracts(*, paymentConfig->contract_payment_config(*)), 
+        company->companies(*),
+        contractor->users(id, full_name, email, avatar)
+      `)
+      .eq('id', invoiceId)
+  }
 }

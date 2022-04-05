@@ -1,0 +1,28 @@
+<div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
+    <div class="rounded-t mb-0 px-2 py-3 border-0">
+        <div class="flex flex-wrap items-center">
+            <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                <h6 class="text-blueGray-700 uppercase text-xs font-semibold">
+                    Feriados Nacionais Próximos
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="block w-full overflow-x-auto" style="padding-bottom: 15px;">
+        <h6 *ngIf="!holidaysList || holidaysList.length === 0" class="text-center text-xs text-blueGray-500 uppercase p-4">
+            Nenhum Feriado Próximo
+        </h6>
+        <table class="items-center w-full bg-transparent border-collapse">
+            <tbody>
+                <tr *ngFor="let holiday of holidaysList">
+                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-1 text-left flex items-center" style="font-size: 11px;">
+                        <span class="font-semibold text-blueGray-600">
+                            {{holiday.name}}<br />
+                            <small class="font-normal">{{holiday.date | date : 'dd/MM/yyyy'}}</small><br/>
+                        </span>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

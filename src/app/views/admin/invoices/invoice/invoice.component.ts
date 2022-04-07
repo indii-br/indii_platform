@@ -30,7 +30,11 @@ export class InvoiceComponent implements OnInit {
         this.invoiceData = data[0];
       }
     })
-    
   }
 
+  goToPayment(invoice: any) {
+  }
+
+  goToReceipt(invoice: any) {
+  }
 }

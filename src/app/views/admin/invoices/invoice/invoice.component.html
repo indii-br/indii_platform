@@ -12,9 +12,14 @@
                                 currency:'':''}}
                             </span>
 
-                            <a
+                            <a *ngIf="!invoiceData.paidAt" (click)="goToPayment(invoiceData)"
                                 class="text-white cursor-pointer bg-teal-500 text-lg font-bold uppercase px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
                                 <i class="fas fa-hand-holding-usd"></i>&ensp;Pagar Fatura
+                            </a>
+
+                            <a *ngIf="invoiceData.paidAt" (click)="goToReceipt(invoiceData)"
+                                class="text-white cursor-pointer bg-indigo-500 text-lg font-bold uppercase px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                <i class="fas fa-receipt"></i>&ensp;Ver Comprovante
                             </a>
                         </h6>
                     </div>

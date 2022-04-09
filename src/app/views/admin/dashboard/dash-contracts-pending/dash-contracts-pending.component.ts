@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { ContractService } from 'src/app/services/contract.service';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { SELECTORS } from 'src/app/stores/selectors';
-import { CONTRACT_STATUS, INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
+import { CONTRACT_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
 import { convertArrayInObject } from 'src/app/utils/helpers';
 
 @Component({
@@ -38,7 +38,7 @@ export class DashContractsPendingComponent implements OnInit {
           this.contractsListSize = contractsList.length;
           this.contractsList = contractsList
           .filter(contract => {
-            return contract.status !== 'SELF_UPLOADED_CYCLE' &&
+            return contract.status !== 'PAYMENT_CYCLE' &&
               contract.status !== 'ARCHIVED' && 
               contract.status !== 'DONE'
           })

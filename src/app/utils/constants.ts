@@ -93,7 +93,7 @@ export const CONTRACT_STATUS = {
         color: 'text-orange-500',
         position: 4
     },
-    SELF_UPLOADED_CYCLE: {
+    PAYMENT_CYCLE: {
         label: 'Ativo',
         sub_label: 'Contrato Ativo',
         color: 'text-teal-500',
@@ -119,12 +119,8 @@ export const USER_TYPES = {
 }
 
 export const INVOICE_STATUS = {
-    WAITING: {
+    PAYIN_CREATED: {
         color: 'text-yellow-500',
         label: 'Em Processamento'
-    },
-    OPEN: {
-        color: 'text-orange-600',
-        label: 'Em Aberto'
     }
 }

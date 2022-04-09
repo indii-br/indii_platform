@@ -116,7 +116,7 @@ export class ContractService {
     return this.supabaseService.supabase
       .from('contracts')
       .update({
-        status: 'SELF_UPLOADED_CYCLE',
+        status: 'PAYMENT_CYCLE',
         contractSelfUploaded: contractUrl
       })
       .eq("id", contractId)

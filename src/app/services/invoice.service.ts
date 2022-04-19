@@ -1,5 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
 import { SupabaseService } from './supabase.service';
 
@@ -9,6 +11,7 @@ import { SupabaseService } from './supabase.service';
 export class InvoiceService {
   constructor(
     private supabaseService: SupabaseService,
+    private http: HttpClient
   ) { }
 
   async getInvoicetByCompany(companyId: string): Promise<any> {
@@ -31,5 +34,19 @@ export class InvoiceService {
         contractor->users(id, full_name, email, avatar)
       `)
       .eq('id', invoiceId)
+  }
+
+  async goToPaymentInvoice(invoiceId: string): Promise<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+
+    const data = {
+      invoiceId: invoiceId,
+    }
+
+    return this.http
+      .post(`${environment.api}/invoice/generate-payin-wepayout`, data, { headers: headers })
+      .toPromise()
   }
 }

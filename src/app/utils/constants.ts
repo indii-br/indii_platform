@@ -120,7 +120,13 @@ export const USER_TYPES = {
 
 export const INVOICE_STATUS = {
     PAYIN_CREATED: {
+        status: 'PAYIN_CREATED',
         color: 'text-yellow-500',
-        label: 'Em Processamento'
+        label: 'Em Aberto'
+    },
+    PAYIN_PAID: {
+        status: 'PAYIN_PAID',
+        color: 'text-teal-500',
+        label: 'Pago'
     }
 }

@@ -20,6 +20,16 @@ export class WepayoutService {
       .toPromise()
   }
 
+  async getInvoiceByKey(key: string): Promise<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${environment.wepayoutKey}`
+    })
+    return this.http
+      .get(`${environment.wepayoutUrl}/payin/key/${key}`, { headers: headers })
+      .toPromise()
+  }
+
   async createNewRecipient(recipientData: any): Promise<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

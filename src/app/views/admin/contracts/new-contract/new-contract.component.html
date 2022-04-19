@@ -78,7 +78,7 @@
           placeholder="Ex: Full-stack Developer, Designer, Programador(a), Copywriter, etc" />
       </app-editable-input-block>
 
-      <app-editable-input-block [value]="contractData?.seniorityLevel" title="Nível de Senioridade"
+      <app-editable-input-block [value]="contractData?.seniorityLevel" title="Nível de Senioridade do contratado"
         [editing]="editingNewContract">
         <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedSeniorityLevel"
           (change)="setValue('seniorityLevel', selectedSeniorityLevel)">

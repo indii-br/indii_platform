@@ -57,3 +57,11 @@
 .dash-stats-default-bg{
     background:#fcdab7!important;
 }
+
+.green-btn{
+    background: rgb(13, 148, 136, .7);
+}
+
+.green-btn:hover{
+    background: rgb(13, 148, 136, 1);
+}

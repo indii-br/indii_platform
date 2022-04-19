@@ -5,6 +5,7 @@ import { ContractService } from "src/app/services/contract.service";
 import { InvoiceService } from "src/app/services/invoice.service";
 import { JobService } from "src/app/services/job.service";
 import { SELECTORS } from "src/app/stores/selectors";
+import { INVOICE_STATUS } from "src/app/utils/constants";
 
 @Component({
   selector: "app-header-stats",
@@ -65,7 +66,7 @@ export class HeaderStatsComponent implements OnInit {
 
             const PENDING_AMOUNT = invoiceList
               .filter(invoice => {
-                return invoice.status === 'OPEN'
+                return invoice.status === INVOICE_STATUS.PAYIN_CREATED.status
               })
               .map(invoice => invoice.amount)
 
@@ -77,7 +78,7 @@ export class HeaderStatsComponent implements OnInit {
 
             const PAID_AMOUNT = invoiceList
               .filter(invoice => {
-                return invoice.status === 'PAID'
+                return invoice.status === INVOICE_STATUS.PAYIN_PAID.status
               })
               .map(invoice => invoice.amount)
 

@@ -97,6 +97,8 @@ import { DashHolidaysComponent } from './views/admin/dashboard/dash-holidays/das
 import { DashContractsPendingComponent } from './views/admin/dashboard/dash-contracts-pending/dash-contracts-pending.component';
 import { BackofficeComponent } from './views/backoffice/backoffice.component';
 import { NewClientComponent } from './views/backoffice/new-client/new-client.component';
+import { PayInvoiceComponent } from './views/admin/invoices/pay-invoice/pay-invoice.component';
+import { MyInvoicesComponent } from './views/admin/my-invoices/my-invoices.component';
 
 @NgModule({
   declarations: [
@@ -167,6 +169,8 @@ import { NewClientComponent } from './views/backoffice/new-client/new-client.com
     DashContractsPendingComponent,
     BackofficeComponent,
     NewClientComponent,
+    PayInvoiceComponent,
+    MyInvoicesComponent,
   ],
   imports: [
     BrowserModule, 

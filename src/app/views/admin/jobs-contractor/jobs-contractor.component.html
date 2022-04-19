@@ -46,19 +46,21 @@
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{job.rate | currency : 'R$'}}<br/>
+                                {{job.rate | currency : 'R$'}}<br />
                                 <small>{{job.contractType}} </small>
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 {{job.profileType}}<br />
-                                <small class="capitalize">100% Remoto</small><br/>
+                                <small class="capitalize">100% Remoto</small><br />
                                 <small class="lowercase">({{job.availabilityType}})</small>
                             </td>
-                            <td
-                                class="font-bold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                <a [routerLink]="['/admin/oportunidade', job.id]" class="text-indigo-600">Ver
-                                    Oportunidade</a>
+                            <td [routerLink]="['/admin/oportunidade', job.id]"
+                                class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                <a
+                                    class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                    Ver Oportunidade
+                                </a>
                             </td>
                         </tr>
                     </tbody>
@@ -84,9 +86,8 @@
                     <thead class="thead-light">
                         <tr>
                             <th
-                                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                <strong>{{myAppliesList.length}}</strong> {{(myAppliesList.length === 1) ? 'Candidatura'
-                                : 'Candidaturas'}}
+                                class="px-6 uppercase bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-normal text-left">
+                                <strong>Suas candidaturas</strong>
                             </th>
                         </tr>
                     </thead>

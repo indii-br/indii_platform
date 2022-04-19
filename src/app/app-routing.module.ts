@@ -33,6 +33,7 @@ import { MyDocumentsComponent } from "./views/admin/contractor-documents/my-docu
 import { BankAccountsComponent } from "./views/admin/bank-accounts/bank-accounts.component";
 import { InvoiceComponent } from "./views/admin/invoices/invoice/invoice.component";
 import { BackofficeComponent } from "./views/backoffice/backoffice.component";
+import { PayInvoiceComponent } from "./views/admin/invoices/pay-invoice/pay-invoice.component";
 
 const routes: Routes = [
   // admin views
@@ -55,6 +56,7 @@ const routes: Routes = [
       { path: "meu-perfil", component: ProfileContractorComponent },
       { path: "pagamentos", component: InvoicesComponent },
       { path: "invoice/:id", component: InvoiceComponent },
+      { path: "pagar-fatura/:key", component: PayInvoiceComponent },
       { path: "documentos", component: ContractorDocumentsComponent },
       { path: "minhas-contas", component: BankAccountsComponent },
       { path: "meus-documentos", component: MyDocumentsComponent },

@@ -83,9 +83,11 @@
                                 {{contractStatus[contract.status].label}}<br />
                                 <small>({{contractStatus[contract.status].sub_label}})</small>
                             </td>
-                            <td
+                            <td [routerLink]="['/admin/invoice', contract.id]"
                                 class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                <a class="text-indigo-600">Acessar</a>
+                                <a class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                    Acessar
+                                </a>
                             </td>
                         </tr>
                     </tbody>

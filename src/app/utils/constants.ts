@@ -24,9 +24,9 @@ export const RATE_TYPE = {
     FIXED: {
         label: 'Fixo',
     },
-    INDII: {
-        label: 'Indii Squad'
-    },
+    // INDII: {
+    //     label: 'Indii Squad'
+    // },
     MILESTONE: {
         label: 'Por Entrega'
     }

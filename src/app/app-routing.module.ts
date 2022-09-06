@@ -21,7 +21,9 @@ import { ProfileContractorComponent } from "./views/admin/profile-contractor/pro
 
 // auth views
 import { LoginComponent } from "./views/auth/login/login.component";
-import { RegisterComponent } from "./views/auth/register/register.component";
+
+//signup views
+import { CreateContractorComponent } from "./views/signup/create-contractor/create-contractor.component";
 
 // no layouts views
 import { SiteComponent } from "./views/site/site.component";
@@ -34,6 +36,9 @@ import { BankAccountsComponent } from "./views/admin/bank-accounts/bank-accounts
 import { InvoiceComponent } from "./views/admin/invoices/invoice/invoice.component";
 import { BackofficeComponent } from "./views/backoffice/backoffice.component";
 import { PayInvoiceComponent } from "./views/admin/invoices/pay-invoice/pay-invoice.component";
+import { MyContractComponent } from "./views/admin/contracts-contractor/my-contract/my-contract.component";
+import { ContractorInvoiceComponent } from "./views/admin/invoices/contractor-invoice/contractor-invoice.component";
+import { MyInvoicesComponent } from "./views/admin/invoices/my-invoices/my-invoices.component";
 
 const routes: Routes = [
   // admin views
@@ -45,6 +50,8 @@ const routes: Routes = [
       { path: "settings", component: SettingsComponent },
       { path: "contratos", component: ContractsComponent },
       { path: "meus-contratos", component: ContractsContractorComponent },
+      { path: "m/contrato/:id", component: MyContractComponent },
+      { path: "m/invoice/:id", component: ContractorInvoiceComponent },
       { path: "novo-contrato", component: NewContractComponent },
       { path: "editar-contrato/:id", component: NewContractComponent },
       { path: "oportunidades", component: JobsComponent },
@@ -54,8 +61,9 @@ const routes: Routes = [
       { path: "editar-oportunidade/:id", component: NewJobComponent },
       { path: "profile/:id", component: ProfileComponent },
       { path: "meu-perfil", component: ProfileContractorComponent },
-      { path: "pagamentos", component: InvoicesComponent },
+      { path: "faturas", component: InvoicesComponent },
       { path: "invoice/:id", component: InvoiceComponent },
+      { path: "meus-pagamentos", component: MyInvoicesComponent },
       { path: "pagar-fatura/:key", component: PayInvoiceComponent },
       { path: "documentos", component: ContractorDocumentsComponent },
       { path: "minhas-contas", component: BankAccountsComponent },
@@ -69,12 +77,19 @@ const routes: Routes = [
     component: AuthComponent,
     children: [
       { path: "login", component: LoginComponent },
-      { path: "register", component: RegisterComponent },
       { path: "alterar-senha", component: ResetPasswordComponent },
       { path: "alterar-senha/:token", component: ResetPasswordComponent },
       { path: "", redirectTo: "login", pathMatch: "full" },
     ],
   },
+    // signup views
+    {
+      path: "signup",
+      component: AuthComponent,
+      children: [
+        { path: "contractor", component: CreateContractorComponent },
+      ],
+    },
   // no layout views
   { path: "public-profile", component: PublicProfileComponent },
   { path: "backoffice", component: BackofficeComponent },

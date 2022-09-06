@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ContractService } from 'src/app/services/contract.service';
 import { SELECTORS } from 'src/app/stores/selectors';
+import { distinctArray } from 'src/app/utils/helpers';
 
 @Component({
   selector: 'app-contractor-documents',
@@ -26,8 +27,7 @@ export class ContractorDocumentsComponent implements OnInit {
 
         if (company) {
           const { data: contractsList, error: errorContractList } = await this.contractService.getAllByCompany(company.id)
-
-          this.contractList = contractsList.filter(contract => contract.contractor)
+          this.contractList = distinctArray(contractsList.filter(contract => contract.contractor), 'contractor')
           this.loading = true;
         }
       })

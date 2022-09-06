@@ -14,6 +14,7 @@ export class JobsContractorComponent implements OnInit {
 
   loading: boolean = false
   jobDataList: Array<any>;
+  jobDataListToSearch: Array<any>;
 
   profile: any;
   myAppliesList: Array<any>;
@@ -44,6 +45,7 @@ export class JobsContractorComponent implements OnInit {
 
     if (jobDataList) {
       this.jobDataList = jobDataList;
+      this.jobDataListToSearch = Object.assign(jobDataList, {});
       this.loading = true;
     }
 
@@ -64,6 +66,19 @@ export class JobsContractorComponent implements OnInit {
     if (error) {
       console.log(error);
       this.toastrService.error("Erro ao recuperar candidaturas!")
+    }
+  }
+
+  simpleSearch(searchValue: any) {
+    const jobDataList = Object.assign(this.jobDataListToSearch, {})
+
+    if (searchValue.length >= 3 && this.myAppliesList) {
+      this.jobDataList = jobDataList.filter(value => {
+        const textValue = JSON.stringify(value);
+        return textValue.toLowerCase().indexOf(searchValue.toLowerCase()) > -1;
+      });
+    } else {
+      this.jobDataList = jobDataList;
     }
   }
 

@@ -9,8 +9,20 @@
             placeholder="Insira o valor a ser pago (R$)" />
 
         <span *ngIf="contractData.contractType === 'FIXED'" class="font-semibold text-xs text-indigo-600">
-            Info: Insira o valor fixo a ser pago em cada ciclo de pagamentos.
+            Insira o valor <b>FIXO</b> a ser pago em cada ciclo de pagamentos.
         </span>
+
+        <span *ngIf="contractData.contractType === 'HOURLY'" class="font-semibold text-xs text-indigo-600">
+            Insira o valor <b>POR HORA</b> a ser pago em cada ciclo de pagamentos.
+        </span>
+    </app-editable-input-block>
+
+    <app-editable-input-block *ngIf="contractData.contractType === 'HOURLY'" [value]="paymentData?.maxHoursPerCycle"
+        title="Máximo de horas por ciclo de pagamento" [editing]="editingPaymentContract">
+        <input type="number" [value]="contractData?.maxHoursPerCycle" #maxHoursPerCycle
+            (change)="setValue('maxHoursPerCycle', maxHoursPerCycle.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            placeholder="Quantidade máxima de horas por ciclo de pagamento" />
     </app-editable-input-block>
 
     <app-editable-input-block [value]="paymentCyclesValues[paymentData?.paymentCycle]" title="Ciclo de Pagamentos"
@@ -26,17 +38,17 @@
             <span class="text-xs inline-block mr-5 align-middle">
                 <i class="fas fa-history mr-2"></i>
             </span>
-            <span *ngIf="isMonthly() && isFixed()" class="text-xs inline-block align-middle mr-8">
-                <b class="capitalize">Ciclo Mensal: </b> A fatura do contrato será gerada no último dia de cada mês
+            <span *ngIf="isMonthly()" class="text-xs inline-block align-middle mr-8">
+                <b class="capitalize">Ciclo Mensal: </b> A fatura do contrato será gerada no último dia de cada mês.
             </span>
-            <span *ngIf="isBiWeekly() && isFixed()" class="text-xs inline-block align-middle mr-8">
+            <span *ngIf="isBiWeekly()" class="text-xs inline-block align-middle mr-8">
                 <b class="capitalize">Ciclo Quinzenal: </b> A fatura do contrato será gerada no Sábado da última semana
-                da
-                quinzena
+                da quinzena.
             </span>
-            <span *ngIf="isWeekly() && isFixed()" class="text-xs inline-block align-middle mr-8">
-                <b class="capitalize">Ciclo Semanal: </b> A fatura do contrato será gerada todo Sábado
+            <span *ngIf="isWeekly()" class="text-xs inline-block align-middle mr-8">
+                <b class="capitalize">Ciclo Semanal: </b> A fatura do contrato será gerada todo Sábado.
             </span>
+            <small> Vencimento da fatura em <strong>3 dias</strong>.</small>
         </div>
     </section>
 
@@ -53,13 +65,13 @@
         </div>
     </app-editable-input-block> -->
 
-    <app-editable-input-block [value]="dueDateLimitValues[paymentData?.dueDate]" title="Vencimento da fatura"
+    <!-- <app-editable-input-block [value]="dueDateLimitValues[paymentData?.dueDate]" title="Vencimento da fatura"
         [editing]="editingPaymentContract">
-        <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedDueDate"
+        <ng-select class="disabled" placeholder="Selecione uma opção" [(ngModel)]="selectedDueDate"
             (change)="setValue('dueDate', selectedDueDate)">
             <ng-option *ngFor="let dueDate of dueDateLimit" [value]="dueDate.key">{{dueDate.label}}
             </ng-option>
         </ng-select>
-    </app-editable-input-block>
+    </app-editable-input-block> -->
 
 </app-editable-painel>

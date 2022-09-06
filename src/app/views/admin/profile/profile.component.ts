@@ -25,9 +25,11 @@ export class ProfileComponent implements OnInit {
     this.route.params.subscribe(async (params) => {
       const profileId = params['id'];
 
-      const { data: profile, error } = await this.profileService.getProfileById(profileId);
+      const { data: profiles, error } = await this.profileService.getProfileById(profileId);
 
-      if (profile) {
+      if (profiles && profiles.length !== 0) {
+        const profile = profiles[0];
+        
         this.profileData = profile;
 
         const { data: workingExperienceList, errorWE } = await this.profileService.getWorkExpByUser(profile.user.id)

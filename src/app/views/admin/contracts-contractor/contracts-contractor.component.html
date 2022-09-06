@@ -14,21 +14,17 @@
                 <table class="items-center w-full bg-transparent border-collapse">
                     <thead>
                         <tr>
-                            <th
+                            <th style="padding-left: 30px"
                                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                                 Empresa
                             </th>
                             <th
                                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                Cargo
+                                Posição
                             </th>
                             <th
                                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                                 Pagamento
-                            </th>
-                            <th
-                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                Ciclo
                             </th>
                             <th
                                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
@@ -42,50 +38,44 @@
                     <tbody>
                         <tr *ngFor="let contract of myContractsList">
                             <td
-                                class="cursor-pointer border-t-0 font-semibold px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                <span *ngIf="contract.contractor">
-                                    {{contract.company.name}}<br />
-                                    <small>#{{contract.id}} - {{contract.contractName}}</small>
+                                class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                <span class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
+                                    <i class="fas fa-building text-blueGray-400 text-2xl"></i>
                                 </span>
-                                <span *ngIf="!contract.contractor">
-                                    {{contract.contractName}}<br />
-                                    <small style="opacity: .7; font-weight: bold; color: tomato">(Aguardando
-                                        Contratado)</small>
+                                <span class="ml-3">
+                                    {{contract.company.name}}<br />
+                                    <small>{{contract.contractName}}</small><br />
                                 </span>
                             </td>
                             <td
                                 class="font-normal border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 {{contract.contractorRole}}<br />
-                                <small>{{contract.seniorityLevel}}</small>
+                                <small>{{contract.seniorityLevel}}</small><br />
+                                <small>({{contract.contractName}})</small>
                             </td>
                             <td
                                 class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{rateTypes[contract.contractType].label}}<br />
                                 <small *ngIf="!contract.paymentConfig"
                                     style="opacity: .7; font-weight: 400;">(Aguardando Configuração)</small>
                                 <span *ngIf="contract.paymentConfig"
-                                    style="font-weight: bold;">{{contract.paymentConfig.rate | currency : 'R$'}}</span>
-                            </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                <span class="font-semibold" *ngIf="contract.paymentConfig">
-                                    {{paymentCyclesValues[contract.paymentConfig.paymentCycle]}}<br />
-                                    <small>Venc.:
+                                    style="font-weight: bold;">{{contract.paymentConfig.rate | currency :
+                                    'R$'}}</span><br />
+                                <span class="font-normal" *ngIf="contract.paymentConfig">
+                                    {{paymentCyclesValues[contract.paymentConfig.paymentCycle]}} -
+                                    {{rateTypes[contract.contractType].label}}<br />
+                                    <small style="font-size: 9px;">Venc.:
                                         <strong>{{dueDateLimitValues[contract.paymentConfig.dueDate]}}</strong></small>
                                 </span>
-                                <small *ngIf="!contract.paymentConfig"
-                                    style="opacity: .7; font-weight: 400;">(Aguardando
-                                    Configuração)</small>
                             </td>
                             <td
-                                class="font-semibold border-t-0 text-xs {{contractStatus[contract.status].color}} px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">
-                                <!-- {{job.contractType}} -->
+                                class="font-semibold border-t-0 text-sm {{contractStatus[contract.status].color}} px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">
                                 {{contractStatus[contract.status].label}}<br />
                                 <small>({{contractStatus[contract.status].sub_label}})</small>
                             </td>
-                            <td [routerLink]="['/admin/invoice', contract.id]"
+                            <td
                                 class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                <a class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                <a [routerLink]="['/admin/m/contrato', contract.id]"
+                                    class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
                                     Acessar
                                 </a>
                             </td>
@@ -94,12 +84,7 @@
                 </table>
                 <h2 *ngIf="!myContractsList || myContractsList.length === 0"
                     class="text-blueGray-500 text-center p-8 font-semibold text-xl">
-                    Você não participa de nenhum contrato ainda<br />
-                    <small class="text-sm">
-                        <a [routerLink]="['/admin/oportunidades-abertas']" style="color: rgb(99, 102, 241);">
-                            <span>Ver oportunidades Abertas</span>
-                        </a>
-                    </small>
+                    Você não tem nenhum contrato ativo
                 </h2>
             </div>
         </div>

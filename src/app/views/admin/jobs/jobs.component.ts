@@ -44,7 +44,7 @@ export class JobsComponent implements OnInit {
   }
 
   getCountApplies(jobId, appliesListByCompany) {
-    if (!appliesListByCompany) {
+    if (!appliesListByCompany || appliesListByCompany.length === 0) {
       return '<span>--</span>';
     }
 

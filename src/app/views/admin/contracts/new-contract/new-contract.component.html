@@ -23,7 +23,7 @@
             <div
               class="text-center relative m-aut border-coolGray-600 py-6 cursor-pointer shadow-lg border-2 w-full h-96 text-blueGray-600 rounded-lg selectBoxType">
               <h6 class="font-semibold mb-3 pt-6">Contrato Próprio</h6>
-              <p class="text-xs leading-4 px-6">Utilize seu próprio contrato, fazendo o upload dele pela plataforma.</p>
+              <p class="text-xs leading-4 px-6">Utilize seu próprio contrato assinado, fazendo o upload dele pela plataforma.</p>
               <span class="selected-label text-white"><i class="fas fa-check mr-1"></i> Selecionado</span>
             </div>
           </div>
@@ -78,7 +78,7 @@
           placeholder="Ex: Full-stack Developer, Designer, Programador(a), Copywriter, etc" />
       </app-editable-input-block>
 
-      <app-editable-input-block [value]="contractData?.seniorityLevel" title="Nível de Senioridade do contratado"
+      <app-editable-input-block [value]="contractData?.seniorityLevel" title="Nível de Senioridade do profissional"
         [editing]="editingNewContract">
         <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedSeniorityLevel"
           (change)="setValue('seniorityLevel', selectedSeniorityLevel)">
@@ -93,7 +93,7 @@
           placeholder="Ex: Landing Page, Consultoria de Marketing, Aplicativo MVP, Time de TI" />
       </app-editable-input-block>
 
-      <a (click)="setEndDate()"
+      <a (click)="setEndDate()" *ngIf="!contractData?.endAt"
         class="text-indigo-600 mb-6 bg-transparent border border-solid border-indigo-custom hover:text-white font-bold uppercase text-xs px-4 py-2 rounded outline-none">Configurar
         Data de Termino do contrato</a>
 
@@ -117,7 +117,7 @@
     <app-contractor-block *ngIf="showContractorBlock()" [contractData]="contractData"></app-contractor-block>
 
     <!-- CONTRACT BLOCK UPLOAD | CONTRACT -->
-    <app-upload-contract-block *ngIf="showContractorBlock()" [contractData]="contractData"></app-upload-contract-block>
+    <app-upload-contract-block *ngIf="showImportContractBlock()" [contractData]="contractData"></app-upload-contract-block>
   </div>
 </div>
 

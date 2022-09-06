@@ -1,115 +1,159 @@
-<div *ngIf="loading && profile" class="flex flex-wrap h-screen">
-    <div class="w-full lg:w-8/12 px-4">
-        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
-            <div class="rounded-t mb-0 px-4 py-3 border-0">
-                <div class="flex flex-wrap items-center">
-                    <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                        <h3 class="font-semibold uppercase text-lg text-blueGray-700">
-                            Oportunidades em aberto
+<section class="h-screen">
+    <div *ngIf="loading && profile" class="flex flex-wrap">
+        <div style="width: 100%">
+            <div class="w-full lg:w-12/12 px-4">
+                <div *ngIf="loading && profile"
+                    class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
+                    <div class="block w-full overflow-x-auto">
+                        <h3 *ngIf="!myAppliesList || myAppliesList.length === 0" class="text-center p-5">
+                            <i style="font-size: 60px;" class="fas fa-briefcase text-blueGray-300 mb-3"></i><br />
+                            <span class="text-sm text-blueGray-500">Nenhuma candidatura por aqui ainda :)</span>
                         </h3>
+
+                        <table *ngIf="myAppliesList && myAppliesList.length !== 0"
+                            class="items-center w-full bg-transparent border-collapse">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th
+                                        class="px-6 uppercase bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-normal text-left">
+                                        <strong>Suas candidaturas</strong>
+                                    </th>
+                                    <th
+                                        class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                        Valor
+                                    </th>
+                                    <th
+                                        class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                        Formato
+                                    </th>
+                                    <th
+                                        class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let apply of myAppliesList">
+                                    <th [routerLink]="['/admin/oportunidade', apply.job.id]"
+                                        class="border-t-0 cursor-pointer px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                        <!-- <img [src]="apply.profile.user.avatar" class="h-12 w-12 bg-white rounded-full border" /> -->
+                                        <span *ngIf="!apply.job.company.logo"
+                                            class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
+                                            <i class="fas fa-building text-blueGray-400 text-2xl"></i>
+                                        </span>
+                                        <span class="ml-3 font-bold text-blueGray-600">
+                                            {{apply.job.title}}<br />
+                                            <small>{{apply.job.company.name}}</small><br />
+                                            <small>{{apply.created_at | date : 'dd/MM/yyyy HH:mm'}}</small>
+                                        </span>
+                                    </th>
+                                    <td
+                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                        {{apply.job.rate | currency : 'R$'}}<br />
+                                    </td>
+                                    <td
+                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                        {{apply.job.profileType}}<br />
+                                        <small class="lowercase">({{apply.job.availabilityType}})</small>
+                                    </td>
+                                    <td [routerLink]="['/admin/oportunidade', apply.job.id]"
+                                        class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                        <a
+                                            class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                            Acessar
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="block w-full overflow-x-auto">
-                <table class="items-center w-full bg-transparent border-collapse">
-                    <thead>
-                        <tr>
-                            <th
-                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                Oportunidade
-                            </th>
-                            <th
-                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                Valor
-                            </th>
-                            <th
-                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                Formato
-                            </th>
-                            <th
-                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let job of jobDataList">
-                            <td [routerLink]="['/admin/editar-oportunidade', job.id]"
-                                class="border-t-0 cursor-pointer px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                                <span *ngIf="!job.company.logo"
-                                    class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
-                                    <i class="fas fa-building text-blueGray-400 text-2xl"></i>
-                                </span>
-                                <span class="ml-3 font-bold text-blueGray-600">
-                                    {{job.title}}<br />
-                                    <small>{{job.company.name}}</small>
-                                </span>
-                            </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{job.rate | currency : 'R$'}}<br />
-                                <small>{{job.contractType}} </small>
-                            </td>
-                            <td
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{job.profileType}}<br />
-                                <small class="capitalize">100% Remoto</small><br />
-                                <small class="lowercase">({{job.availabilityType}})</small>
-                            </td>
-                            <td [routerLink]="['/admin/oportunidade', job.id]"
-                                class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                <a
-                                    class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
-                                    Ver Oportunidade
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h2 *ngIf="!jobDataList || jobDataList.length === 0"
-                    class="text-blueGray-500 text-center p-8 font-semibold text-xl">
-                    Nenhuma oportunidade em aberto :(
-                </h2>
+            <div class="w-full lg:w-12/12 px-4">
+                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
+                    <div style="background-color: #f8fafc;" class="rounded-t mb-0 py-4 border-0">
+                        <div class="flex flex-wrap items-center">
+                            <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                                <input (keyup)="simpleSearch(searchIp.value)" #searchIp type="text"
+                                    placeholder="Buscar (ex: Designer, React, UX, Full-stack) "
+                                    class="px-3 py-4 placeholder-blueGray-400 border-gray-300 text-blueGray-600 relative bg-white rounded text-base shadow outline-none focus:outline-none focus:shadow-outline w-full" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block w-full overflow-x-auto">
+                        <table class="items-center w-full bg-transparent border-collapse">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                        Oportunidade Abertas
+                                    </th>
+                                    <th
+                                        class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                        Valor
+                                    </th>
+                                    <th
+                                        class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                        Formato
+                                    </th>
+                                    <th
+                                        class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let job of jobDataList">
+                                    <td [routerLink]="['/admin/editar-oportunidade', job.id]"
+                                        class="border-t-0 cursor-pointer px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
+                                        <span *ngIf="!job.company.logo"
+                                            class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
+                                            <i class="fas fa-building text-blueGray-400 text-2xl"></i>
+                                        </span>
+                                        <span class="ml-3 font-semibold text-blueGray-600">
+                                            {{job.title}}<br />
+                                            <small>{{job.company.name}}</small>
+                                        </span>
+                                    </td>
+                                    <td
+                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                        {{job.rate | currency : 'R$'}}<br />
+                                        <small>{{job.contractType}} </small>
+                                    </td>
+                                    <td
+                                        class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                        {{job.profileType}}<br />
+                                        <small class="capitalize">100% Remoto</small><br />
+                                        <small class="lowercase">({{job.availabilityType}})</small>
+                                    </td>
+                                    <td [routerLink]="['/admin/oportunidade', job.id]"
+                                        class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                        <a
+                                            class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                            Ver detalhes
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h2 *ngIf="!jobDataList || jobDataList.length === 0"
+                            class="text-blueGray-500 text-center p-8 font-semibold text-xl">
+                            Nenhuma oportunidade encontrada :(
+                        </h2>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="w-full lg:w-4/12 px-4">
-        <div *ngIf="loading && profile"
-            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
-            <div class="block w-full overflow-x-auto">
-                <h3 *ngIf="!myAppliesList || myAppliesList.length === 0" class="text-center p-5">
-                    <i style="font-size: 80px;" class="fas fa-briefcase text-blueGray-300 mb-3"></i><br />
-                    <span class="text-sm text-blueGray-500">Nenhuma candidatura por aqui ainda :)</span>
-                </h3>
 
-                <table *ngIf="myAppliesList && myAppliesList.length !== 0"
-                    class="items-center w-full bg-transparent border-collapse">
-                    <thead class="thead-light">
-                        <tr>
-                            <th
-                                class="px-6 uppercase bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-normal text-left">
-                                <strong>Suas candidaturas</strong>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let apply of myAppliesList">
-                            <th
-                                class="border-t-0 cursor-pointer px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                                <!-- <img [src]="apply.profile.user.avatar" class="h-12 w-12 bg-white rounded-full border" /> -->
-                                <span *ngIf="!apply.job.company.logo"
-                                    class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
-                                    <i class="fas fa-building text-blueGray-400 text-2xl"></i>
-                                </span>
-                                <span class="ml-3 font-bold text-blueGray-600">
-                                    {{apply.job.title}}<br />
-                                    <small>{{apply.job.company.name}}</small><br />
-                                    <small>{{apply.created_at | date : 'dd/MM/yyyy HH:mm'}}</small>
-                                </span>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white" *ngIf="!profile">
+        <img class="empty-cat-img" src="../../../../assets/img/ginger-cat-camera-access.png" alt="">
+        <h2 style="width: 100%; margin-bottom: 60px;"
+            class="text-blueGray-500 text-center font-semibold text-xl uppercase">
+            Configure seu perfil para acessar as oportunidades!<br />
+            <small class="text-sm">
+                <a [routerLink]="['/admin/meu-perfil']" style="color: rgb(99, 102, 241);">
+                    <span class="ml-2">Configurar perfil</span>
+                </a>
+            </small>
+        </h2>
     </div>
-</div>
+</section>

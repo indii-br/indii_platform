@@ -17,7 +17,6 @@ export class ProfileService {
       .from('profiles')
       .select("*, user!inner(*)")
       .eq('id', profileId)
-      .single()
   }
 
   async getProfileByUserUuid(): Promise<any> {
@@ -25,7 +24,6 @@ export class ProfileService {
       .from('profiles')
       .select("*, user!inner(*)")
       .eq('user.uuid', this.authService.session.user.id)
-      .single()
   }
 
   async updateProfileData(profileToUpdate: any, id: string): Promise<any> {
@@ -35,8 +33,14 @@ export class ProfileService {
       .eq("id", id)
   }
 
-  // WORKING EXPERIENCE AREA
+  async saveProfileData(profileToSave: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('profiles')
+      .insert(profileToSave)
+  }
 
+  // WORKING EXPERIENCE AREA
+  // DEPRECATED
   async getWorkExpByUser(userId): Promise<any> {
     return this.supabaseService.supabase
       .from('working_experience')
@@ -44,20 +48,17 @@ export class ProfileService {
       .eq('user.id', userId)
       .order('startedAt', { ascending: true })
   }
-
   async saveWorkExpData(WorkExpToSave: any): Promise<any> {
     return this.supabaseService.supabase
       .from('working_experience')
       .insert(WorkExpToSave)
   }
-
   async updateWorkExpData(WorkExpToUpdate: any, id: string): Promise<any> {
     return this.supabaseService.supabase
       .from('working_experience')
       .update(WorkExpToUpdate)
       .eq("id", id)
   }
-
   async deleteWorkExpData(id: string): Promise<any> {
     return this.supabaseService.supabase
       .from('working_experience')

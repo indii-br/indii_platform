@@ -15,7 +15,7 @@ export class ProfileContractorComponent implements OnInit {
   editingProfile: boolean = false;
   loaded: boolean = false;
 
-  profileData: any = {};
+  profileData: any = { headline: '', bio: '', linkedin: '' };
   workingExperienceList: Array<any>;
   profileToUpdate: any = {};
 
@@ -54,16 +54,17 @@ export class ProfileContractorComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const { data: profileData, error } = await this.profileService.getProfileByUserUuid();
+    const { data: profilesData, error } = await this.profileService.getProfileByUserUuid();
 
-    if (profileData && profileData) {
-      this.profileData = profileData
+    if (profilesData && profilesData.length !== 0) {
+      this.profileData = profilesData[0];
       this.setInitValues();
 
       this.getWorkExp();
 
       this.loaded = true;
     } else {
+      this.loaded = true;
       this.editingProfile = true;
     }
   }
@@ -84,14 +85,19 @@ export class ProfileContractorComponent implements OnInit {
     this.selectedSkillsList = JSON.parse(this.profileData.skills);
   }
 
+  setHideCancel(){
+    return !this.profileData || !this.profileData.id;
+  }
+
   updateOrSaveProfile() {
     if (this.profileData && this.profileData.id) {
       this.editProfile()
+    }else{
+      this.saveProfile()
     }
   }
 
   async editProfile() {
-    console.log(this.profileData.links)
     const profileToUpdate = Object.assign(this.profileToUpdate, {
       minRate: this.selectedMinRate,
       maxRate: this.selectedMaxRate,
@@ -111,6 +117,26 @@ export class ProfileContractorComponent implements OnInit {
     }
   }
 
+  async saveProfile() {
+    const profileToUpdate = Object.assign(this.profileToUpdate, {
+      minRate: this.selectedMinRate,
+      maxRate: this.selectedMaxRate,
+      links: this.profileToUpdate.links
+    })
+
+    const { data, error } = await this.profileService.saveProfileData(profileToUpdate)
+    if (data) {
+      this.profileData = data[0];
+      this.editingProfile = false;
+      this.toastrService.success('Perfil salvo com sucesso!')
+    }
+    if (error) {
+      console.log(error)
+      this.editingProfile = true;
+      this.toastrService.error('Erro ao Editar!')
+    }
+  }
+
   removeLinkFromListToSave(linkIndex: number) {
     this.profileData.links.splice(linkIndex, 1);
     this.profileToUpdate['links'] = this.profileData.links;
@@ -120,8 +146,9 @@ export class ProfileContractorComponent implements OnInit {
     const { value: url } = await Swal.fire({
       input: 'text',
       inputLabel: 'Insira links relevantes para seu perfil!',
-      inputPlaceholder: 'ex: Linkedin Profile, Site pessoal, Portfolio, etc...',
+      inputPlaceholder: 'ex: Site pessoal, Portfolio, etc...',
       showCancelButton: true,
+      customClass: 'swal-wide',
       confirmButtonText: 'Adicionar Link',
       cancelButtonText: 'Cancelar'
     })
@@ -133,7 +160,6 @@ export class ProfileContractorComponent implements OnInit {
   }
 
   async editOrCreateWorkExpModal(workExp?: any) {
-
     let workExpDataToSaveOrUpdate: any = {
       title: "",
       company: "",

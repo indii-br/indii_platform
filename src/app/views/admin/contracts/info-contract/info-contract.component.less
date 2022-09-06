@@ -1,9 +1,25 @@
-.li-done{
+.li-done {
     color: #10b981!important;
     .fa-check-circle {
         display: inline-block!important;
     }
     .fa-circle {
         display: none!important;
+    }
+}
+
+.step-line {
+    height: 12px;
+    display: block;
+    width: 1px;
+    background-color: #94a3b8;
+    opacity: .5;
+    margin-left: 5px;
+    margin-top: 8px;
+}
+
+.li-default:last-of-type {
+    .step-line {
+        display: none;
     }
 }

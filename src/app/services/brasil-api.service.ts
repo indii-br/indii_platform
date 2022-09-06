@@ -20,4 +20,14 @@ export class BrasilApiService {
       .get(`${this.url}/feriados/v1/${new Date().getFullYear()}`, { headers: headers })
       .toPromise()
   }
+
+  async getCnpj(cnpj: string): Promise<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+
+    return this.http
+      .get(`${this.url}/cnpj/v1/${cnpj}`, { headers: headers })
+      .toPromise()
+  }
 }

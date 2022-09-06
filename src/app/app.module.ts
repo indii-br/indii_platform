@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxCurrencyModule } from "ngx-currency";
 import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from '@angular/common/http';
+import {IMaskModule} from 'angular-imask';
 
 import { AppComponent } from "./app.component";
 
@@ -25,7 +26,6 @@ import { TablesComponent } from "./views/admin/tables/tables.component";
 
 // auth views
 import { LoginComponent } from "./views/auth/login/login.component";
-import { RegisterComponent } from "./views/auth/register/register.component";
 
 // no layouts views
 import { SiteComponent } from "./views/site/site.component";
@@ -98,7 +98,12 @@ import { DashContractsPendingComponent } from './views/admin/dashboard/dash-cont
 import { BackofficeComponent } from './views/backoffice/backoffice.component';
 import { NewClientComponent } from './views/backoffice/new-client/new-client.component';
 import { PayInvoiceComponent } from './views/admin/invoices/pay-invoice/pay-invoice.component';
-import { MyInvoicesComponent } from './views/admin/my-invoices/my-invoices.component';
+import { MyContractComponent } from './views/admin/contracts-contractor/my-contract/my-contract.component';
+import { DashContractorInvoicesComponent } from './views/admin/dashboard/dash-contractor-invoices/dash-contractor-invoices.component';
+import { DashContractorOnboardingComponent } from './views/admin/dashboard/dash-contractor-onboarding/dash-contractor-onboarding.component';
+import { ContractorInvoiceComponent } from './views/admin/invoices/contractor-invoice/contractor-invoice.component';
+import { MyInvoicesComponent } from "./views/admin/invoices/my-invoices/my-invoices.component";
+import { CreateContractorComponent } from './views/signup/create-contractor/create-contractor.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +133,6 @@ import { MyInvoicesComponent } from './views/admin/my-invoices/my-invoices.compo
     SettingsComponent,
     TablesComponent,
     LoginComponent,
-    RegisterComponent,
     SiteComponent,
     LandingComponent,
     ProfileComponent,
@@ -171,6 +175,11 @@ import { MyInvoicesComponent } from './views/admin/my-invoices/my-invoices.compo
     NewClientComponent,
     PayInvoiceComponent,
     MyInvoicesComponent,
+    MyContractComponent,
+    DashContractorInvoicesComponent,
+    DashContractorOnboardingComponent,
+    ContractorInvoiceComponent,
+    CreateContractorComponent,
   ],
   imports: [
     BrowserModule, 
@@ -182,6 +191,7 @@ import { MyInvoicesComponent } from './views/admin/my-invoices/my-invoices.compo
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    IMaskModule,
     StoreModule.forRoot({ 
       user: userReducer,
       profile: profileReducer,

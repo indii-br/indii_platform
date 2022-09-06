@@ -1,6 +1,6 @@
 <div class="flex flex-wrap">
   <div class="w-full lg:w-8/12 px-4">
-    <app-editable-painel [title]="getTitle()" [editing]="editingBankAccount" (isEditing)="setEditing($event)"
+    <app-editable-painel [title]="getTitle()" [hideCancel]="setHideCancel()" [editing]="editingBankAccount" (isEditing)="setEditing($event)"
       (onSave)="updateOrSaveBankAccount()">
       <app-editable-input-block [value]="selectedBankAccount?.name" title="Banco" [editing]="editingBankAccount">
         <div class="flex flex-wrap">
@@ -18,50 +18,67 @@
         </div>
       </app-editable-input-block>
 
-      <app-editable-input-block [value]="bankAccountData?.document" title="Documento do titular da conta"
-        [editing]="editingBankAccount">
-        <input type="text" [value]="bankAccountData?.document" #document (change)="setValue('document', document.value)"
-          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow  w-full ease-linear"
-          placeholder="Insira o documento do titular da conta" />
-          <!-- <small style="font-size: 11px;">*não é permitido utilizar o mesmo documento para contas diferentes cadastradas na plataforma</small> -->
-      </app-editable-input-block>
+      <div class="flex flex-wrap w-full">
+        <div class="lg:w-6/12">
+          <app-editable-input-block [value]="bankAccountData?.documentType" title="Tipo de documento"
+            [editing]="editingBankAccount">
+            <ng-select placeholder="Selecione o tipo do documento" [(ngModel)]="selectedDocumentType"
+              (change)="setValue('documentType', selectedDocumentType)">
+              <ng-option *ngFor="let dType of selectedDocumentTypeList" [value]="dType.key">{{dType.value}}</ng-option>
+            </ng-select>
+          </app-editable-input-block>
+        </div>
+        <div class="lg:w-6/12">
+          <app-editable-input-block [value]="bankAccountData?.document" title="Documento do titular da conta"
+            [editing]="editingBankAccount">
+            <input type="text" [value]="bankAccountData?.document" #document
+              (change)="setValue('document', document.value)"
+              class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow  w-full ease-linear"
+              placeholder="Insira o documento do titular da conta" />
+            <!-- <small style="font-size: 11px;">*não é permitido utilizar o mesmo documento para contas diferentes cadastradas na plataforma</small> -->
+          </app-editable-input-block>
+        </div>
+      </div>
 
-      <app-editable-input-block [value]="bankAccountData?.documentType" title="Tipo de documento"
-        [editing]="editingBankAccount">
-        <ng-select placeholder="Selecione o tipo do documento" [(ngModel)]="selectedDocumentType"
-          (change)="setValue('documentType', selectedDocumentType)">
-          <ng-option *ngFor="let dType of selectedDocumentTypeList" [value]="dType.key">{{dType.value}}</ng-option>
-        </ng-select>
-      </app-editable-input-block>
+      <div class="flex flex-wrap w-full">
+        <div class="lg:w-6/12">
+          <app-editable-input-block [value]="bankAccountData?.bankBranch" title="Agência"
+            [editing]="editingBankAccount">
+            <input type="text" [value]="bankAccountData?.bankBranch" #bankBranch
+              (change)="setValue('bankBranch', bankBranch.value)"
+              class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow  w-full ease-linear"
+              placeholder="Insira o numero da agência sem dígito" />
+          </app-editable-input-block>
+        </div>
+        <div class="lg:w-6/12">
+          <app-editable-input-block [value]="bankAccountData?.bankBranchDigit" title="Dígito da agência"
+            [editing]="editingBankAccount">
+            <input type="text" [value]="bankAccountData?.bankBranchDigit" #bankBranchDigit
+              (change)="setValue('bankBranchDigit', bankBranchDigit.value)"
+              class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow  w-full ease-linear"
+              placeholder="Insira o dígito da agência" />
+          </app-editable-input-block>
+        </div>
+      </div>
 
-      <app-editable-input-block [value]="bankAccountData?.bankBranch" title="Agência" [editing]="editingBankAccount">
-        <input type="text" [value]="bankAccountData?.bankBranch" #bankBranch
-          (change)="setValue('bankBranch', bankBranch.value)"
-          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow  w-full ease-linear"
-          placeholder="Insira o numero da agência sem dígito" />
-      </app-editable-input-block>
-
-      <app-editable-input-block [value]="bankAccountData?.bankBranchDigit" title="Dígito da agência"
-        [editing]="editingBankAccount">
-        <input type="text" [value]="bankAccountData?.bankBranchDigit" #bankBranchDigit
-          (change)="setValue('bankBranchDigit', bankBranchDigit.value)"
-          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow  w-full ease-linear"
-          placeholder="Insira o dígito da agência" />
-      </app-editable-input-block>
-
-      <app-editable-input-block [value]="bankAccountData?.account" title="Conta" [editing]="editingBankAccount">
-        <input type="text" [value]="bankAccountData?.account" #account (change)="setValue('account', account.value)"
-          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow  w-full ease-linear"
-          placeholder="Insira a conta sem dígito" />
-      </app-editable-input-block>
-
-      <app-editable-input-block [value]="bankAccountData?.accountDigit" title="Dígito da Conta"
-        [editing]="editingBankAccount">
-        <input type="text" [value]="bankAccountData?.accountDigit" #accountDigit
-          (change)="setValue('accountDigit', accountDigit.value)"
-          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow  w-full ease-linear"
-          placeholder="Insira o numero da conta" />
-      </app-editable-input-block>
+      <div class="flex flex-wrap w-full">
+        <div class="lg:w-6/12">
+          <app-editable-input-block [value]="bankAccountData?.account" title="Conta" [editing]="editingBankAccount">
+            <input type="text" [value]="bankAccountData?.account" #account (change)="setValue('account', account.value)"
+              class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow  w-full ease-linear"
+              placeholder="Insira a conta sem dígito" />
+          </app-editable-input-block>
+        </div>
+        <div class="lg:w-6/12">
+          <app-editable-input-block [value]="bankAccountData?.accountDigit" title="Dígito da Conta"
+            [editing]="editingBankAccount">
+            <input type="text" [value]="bankAccountData?.accountDigit" #accountDigit
+              (change)="setValue('accountDigit', accountDigit.value)"
+              class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow  w-full ease-linear"
+              placeholder="Insira o numero da conta" />
+          </app-editable-input-block>
+        </div>
+      </div>
 
       <app-editable-input-block [value]="accountTypeNames[bankAccountData?.accountType]" title="Tipo de Conta"
         [editing]="editingBankAccount">
@@ -86,7 +103,7 @@
         <div class="flex flex-wrap items-center">
           <div class="relative w-full px-4 max-w-full flex-grow flex-1">
             <h6 class="text-blueGray-700 text-sm font-semibold">
-              <i class="fas fa-university mr-2"></i>Contas Cadastradas
+              <i class="fas fa-university mr-2"></i>Sua conta bancária
             </h6>
           </div>
         </div>
@@ -95,33 +112,21 @@
 
         <h3 *ngIf="!myBankAccounts || myBankAccounts.length === 0" class="text-center p-5">
           <i style="font-size: 80px;" class="fas fa-university text-blueGray-300 mb-3"></i><br />
-          <span class="text-sm text-blueGray-500">Nenhuma conta cadastrada por aqui ainda :)</span>
+          <span class="text-sm text-blueGray-500">Nenhuma conta bancária configurada :(</span>
         </h3>
 
         <table *ngIf="myBankAccounts && myBankAccounts.length !== 0"
           class="items-center w-full bg-transparent border-collapse">
-          <thead class="thead-light">
-            <tr>
-              <th
-                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                <strong>{{myBankAccounts.length}}</strong> {{(myBankAccounts.length === 1) ?
-                'Conta Bancária' :
-                'Contas Bancárias'}}
-              </th>
-            </tr>
-          </thead>
           <tbody>
             <tr *ngFor="let bank of myBankAccounts">
               <th
-                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
                 <span class="ml-3 font-bold text-blueGray-600">
                   {{bank.bankName}}<br />
                   <small>Ag.: {{bank.bankBranch}} - {{bank.bankBranchDigit}}</small><br />
                   <small>Conta: {{bank.account}} - {{bank.accountDigit}}</small><br />
                   <small>PIX: {{bank.pixKey}}</small><br />
                   <small>Doc.: {{bank.document}}</small><br /><br />
-                  <a (click)="deactivateBankAccount(bank.id)" class="text-xs font-semibold block uppercase cursor-pointer text-red-500">Desativar Conta</a>
-                  <a (click)="setBankAccountToEdit(bank)" class="text-xs font-semibold block uppercase mt-3 cursor-pointer text-teal-500">Editar</a>
                 </span>
               </th>
             </tr>

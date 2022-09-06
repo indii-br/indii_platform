@@ -26,4 +26,10 @@ export class UserService {
       .update(userToUpdate)
       .eq("id", id)
   }
+
+  async createUser(userToSave: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('users')
+      .insert(userToSave)
+  }
 }

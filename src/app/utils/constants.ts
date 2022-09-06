@@ -32,6 +32,12 @@ export const RATE_TYPE = {
     }
 }
 
+export const CONTRACT_TYPES = {
+    HOURLY: 'HOURLY',
+    FIXED: 'FIXED',
+    MILESTONE: 'MILESTONE'
+}
+
 export const PAYMENT_CYCLES = [
     {
         key: 'WEEKLY',

@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
-import { AuthService } from './auth.service';
 import { SupabaseService } from './supabase.service';
 
 @Injectable({
@@ -18,20 +16,42 @@ export class InvoiceService {
     return this.supabaseService.supabase
       .from('invoices')
       .select(`*, 
-        contract->contracts(*, paymentConfig->contract_payment_config(*)), 
-        company->companies(*),
-        contractor->users(id, full_name, email, avatar)
+        contract!inner(*, paymentConfig!inner(*)), 
+        company!inner(*),
+        contractor!inner(id, full_name, email, avatar)
       `)
       .eq('company.id', companyId)
+  }
+
+  async getInvoicetByContractor(contractorUserId: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('invoices')
+      .select(`*, 
+        contract!inner(*, paymentConfig!inner(*)), 
+        company!inner(*),
+        contractor!inner(id, full_name, email, avatar)
+      `)
+      .eq('contractor.id', contractorUserId)
+  }
+
+  async getInvoiceByContract(contractId: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('invoices')
+      .select(`*, 
+        contract!inner(*, paymentConfig!inner(*)), 
+        company!inner(*),
+        contractor!inner(id, full_name, email, avatar)
+      `)
+      .eq('contract.id', contractId)
   }
 
   async getInvoicetById(invoiceId: string): Promise<any> {
     return this.supabaseService.supabase
       .from('invoices')
       .select(`*, 
-        contract->contracts(*, paymentConfig->contract_payment_config(*)), 
-        company->companies(*),
-        contractor->users(id, full_name, email, avatar)
+        contract!inner(*, paymentConfig!inner(*)), 
+        company!inner(*),
+        contractor!inner(id, full_name, email, avatar)
       `)
       .eq('id', invoiceId)
   }
@@ -48,5 +68,12 @@ export class InvoiceService {
     return this.http
       .post(`${environment.api}/invoice/generate-payin-wepayout`, data, { headers: headers })
       .toPromise()
+  }
+
+  async updateNFSeInvoice(nfseAttachment: any, id: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('invoices')
+      .update({ nfseAttachment: nfseAttachment })
+      .eq("id", id)
   }
 }

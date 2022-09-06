@@ -20,14 +20,24 @@ export class LoginComponent implements OnInit {
 
   async signInWithEmail(email: string, pass: string) {
     if (!email || !pass) {
-      alert('Insira o seu usuário e senha')
+      Swal.fire({
+        title: 'Insira o seu usuário e senha',
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      })
       return;
     }
 
     const { user, error } = await this.authService.signInWithEmail(email, pass)
 
     if (error) {
-      alert('Erro ao efetuar login')
+      Swal.fire({
+        title: 'Usuário ou senha incorreto',
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonText: 'Ok',
+      })
     }
 
     if (user) {

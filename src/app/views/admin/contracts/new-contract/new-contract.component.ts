@@ -162,7 +162,7 @@ export class NewContractComponent implements OnInit {
 
   getTitlePanel() {
     if (this.contractData && this.companyData?.id) {
-      return 'Editar Contrato - ' + this.contractData.contractName
+      return this.contractData.contractName
     }
 
     return 'Novo Contrato - ' + RATE_TYPE[this.selectedContractType].label
@@ -207,7 +207,7 @@ export class NewContractComponent implements OnInit {
     return this.contractData &&
     this.contractData.id &&
     this.contractData.paymentConfig &&
-    (this.companyData.inviteContractor || this.contractData.contractor) &&
+    (this.contractData.inviteContractor || this.contractData.contractor) &&
     this.contractData.contractType !== 'MILESTONE';
   }
 }

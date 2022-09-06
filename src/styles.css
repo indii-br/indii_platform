@@ -59,9 +59,43 @@
 }
 
 .green-btn{
-    background: rgb(13, 148, 136, .7);
+    background: rgb(13, 148, 136, .9);
 }
 
 .green-btn:hover{
     background: rgb(13, 148, 136, 1);
+}
+
+.avatar-svg svg{
+    width: 100%;
+}
+
+.bg-indigo-400{
+    background-color: rgba(129, 140, 248, var(--tw-bg-opacity));
+}
+
+.text-green-500{
+    color:rgb(13, 175, 72);
+}
+
+.divider-invoice{
+    width: 100%;
+    height: 1px; 
+    background-color: rgb(231, 231, 231); 
+    display: block; 
+    margin: 2px 0;
+}
+
+.dash-bg-admin{
+    background-color: #f1f5f9; 
+    padding-bottom: 30px;
+}
+
+.swal-wide{
+    width: 50%!important;
+}
+
+.swal-wide input[type=text]{
+    width: 80%!important;
+    margin: 30px auto;
 }

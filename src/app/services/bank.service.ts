@@ -15,7 +15,7 @@ export class BankService {
     return this.supabaseService.supabase
       .from('bank_accounts')
       .select(`*, 
-        user->users(id, full_name, email, avatar)
+        user!inner(id, full_name, email, avatar)
       `)
       .is('active', true)
       .eq('user.id', userId)

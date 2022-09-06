@@ -27,8 +27,9 @@ export class PaymentBlockComponent implements OnInit {
   submitDocumentsLimit: any = SUBMIT_DOCUMENT_LIMIT
   submitDocumentsLimitValues: any = convertArrayInObject(SUBMIT_DOCUMENT_LIMIT)
 
-  dueDateLimit: any = DUE_DATE_LIMIT
-  dueDateLimitValues: any = convertArrayInObject(DUE_DATE_LIMIT)
+  // TODO: FIXO EM 3 DIAS [3_DAYS] no BANCO DE DADOS
+  // dueDateLimitValues: any = convertArrayInObject(DUE_DATE_LIMIT)
+  // dueDateLimit: any = DUE_DATE_LIMIT[3]
 
   paymentData: any = {}
   paymentToSaveOrUpdate: any = {};

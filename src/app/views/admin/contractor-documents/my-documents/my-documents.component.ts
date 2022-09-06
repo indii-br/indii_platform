@@ -26,13 +26,8 @@ export class MyDocumentsComponent implements OnInit {
     },
     {
       title: 'CNPJ',
-      subtitle: 'Insira o Cartão de CNPJ ou Contrato Social',
+      subtitle: 'Insira seu Cartão de CNPJ',
       id: 'cnpjDocument'
-    },
-    {
-      title: 'Foto e Documento',
-      subtitle: 'Insira uma foto sua segurando seu documento de identidade',
-      id: 'idAndPhoto'
     }
   ]
 

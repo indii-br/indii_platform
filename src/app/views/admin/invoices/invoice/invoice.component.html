@@ -1,4 +1,4 @@
-<div *ngIf="invoiceData" class="flex flex-wrap">
+<div *ngIf="invoiceData" class="flex flex-wrap" style="padding-bottom: 100px">
     <div class="w-full lg:w-8/12 px-4">
         <div
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
@@ -12,9 +12,13 @@
                                 currency:'':''}}
                             </span>
 
-                            <a *ngIf="!invoiceData.paidAt" (click)="goToPayment(invoiceData)"
+                            <!-- <a *ngIf="!invoiceData.paidAt" (click)="goToPayment(invoiceData)"
                                 class="text-white cursor-pointer green-btn text-lg font-bold uppercase px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
                                 <i class="fas fa-hand-holding-usd"></i>&ensp;Pagar Fatura
+                            </a> -->
+
+                            <a class="btn-indico-with-border bg-transparent border border-solid font-bold uppercase text-sm px-6 py-3 rounded outline-none mr-1 mb-1 ease-linear">
+                                Aprovar Fatura
                             </a>
 
                             <a *ngIf="invoiceData.paidAt" (click)="goToReceipt(invoiceData)"
@@ -60,7 +64,8 @@
 
                     <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
                         <span>Descrição:</span><br />
-                        <strong class="pt-1 block break-words whitespace-pre-wrap" [innerHTML]="invoiceData.description"></strong>
+                        <strong class="pt-1 block break-words whitespace-pre-wrap"
+                            [innerHTML]="invoiceData.description"></strong>
                     </p>
                 </div>
             </div>
@@ -86,7 +91,7 @@
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
             <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
                 <div class="flex flex-wrap items-center">
-                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                    <div class="relative w-full px-1 max-w-full flex-grow flex-1">
                         <h6 class="text-blueGray-700 uppercase text-sm font-semibold">
                             Contratado
                         </h6>
@@ -104,8 +109,8 @@
                         </span>
                         <span class="ml-3 text-blueGray-500 text-sm">
                             <span class="font-semibold block">{{invoiceData.contractor.full_name}}</span>
+                            <small>{{invoiceData.contract.contractorRole}}</small><br />
                             <small>{{invoiceData.contractor.email}}</small><br />
-                            <small>#{{invoiceData.contractor.id}}</small>
                         </span>
                     </span>
                 </div>
@@ -116,59 +121,25 @@
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
             <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
                 <div class="flex flex-wrap items-center">
-                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                    <div class="relative w-full px-1 max-w-full flex-grow flex-1">
                         <h6 class="text-blueGray-600 text-sm font-semibold">
-                            <span class="uppercase">Itens Anexados</span><br />
-                            <small class="text-blueGray-500" style="font-size: 10px;">Nota Fiscal, Planilhas,
-                                Documentos, Anexos, etc</small>
+                            <span class="uppercase">Nota Fiscal</span><br />
+                            <small class="text-blueGray-500" style="font-size: 10px;">Nota Fiscal de Serviço ref. a essa
+                                fatura</small>
                         </h6>
                     </div>
                 </div>
             </div>
-            <div class="flex-auto pb-4 pt-8" style="padding-left: 25px; padding-right: 25px;">
-                <div class="flex flex-wrap pb-4">
-                    <span *ngFor="let attach of invoiceData.attachments" class="flex">
-                        <span class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
-                            <i class="fas fa-paperclip text-blueGray-400 text-2xl"></i>
-                        </span>
-                        <span class="ml-3 text-blueGray-600 text-sm">
-                            <span class="font-semibold block text-indigo-600 cursor-pointer">
-                                {{attach}}
-                                <i class="fas fa-external-link-alt ml-1" style="font-size: 9px;"></i>
-                            </span>
-                        </span>
-                    </span>
-
-                    <div *ngIf="!invoiceData.attachments || invoiceData.attachments.length === 0" class="text-blueGray-700 px-6 py-4 border-0 rounded relative mb-4 w-full"
-                        style="background-color: gainsboro;">
-                        <span class="inline-block align-middle mr-8 text-sm w-full text-left">
-                            <i class="fas fa-paperclip mr-2"></i> Nenhum anexo!
-                        </span>
-                    </div>
+            <div class="w-full text-center mb-3 mt-2">
+                <div *ngIf="!invoiceData.nfseAttachment" class="flex justify-center">
+                    <span class="font-normal p-3 text-orange-500">Aguardando Nota Fiscal!</span>
                 </div>
-            </div>
-        </div>
 
-        <div
-            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
-            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
-                <div class="flex flex-wrap items-center">
-                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
-                        <h6 class="text-blueGray-600 text-sm font-semibold">
-                            <span class="uppercase">Histórico</span>
-                        </h6>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-auto pb-2 pt-8" style="padding-left: 25px; padding-right: 25px;">
-                <div class="flex flex-wrap pb-4">
-                    <div class="text-blueGray-700 px-6 py-4 border-0 rounded relative mb-4 w-full"
-                        style="background-color: gainsboro;">
-                        <span *ngIf="!invoiceData.wePayoutKey || !invoiceData.statusHistory"
-                            class="inline-block align-middle mr-8 text-sm w-full text-left">
-                            <i class="fas fa-history mr-2"></i> Nenhum histórico!
-                        </span>
-                    </div>
+                <div *ngIf="invoiceData.nfseAttachment" class="flex justify-center">
+                    <a (click)="viewNFSe(invoiceData.nfseAttachment)"
+                        class="text-indigo-600 w-full mb-6 bg-transparent border border-solid border-indigo-custom font-bold uppercase text-xs px-4 py-2 rounded outline-none">
+                        <i class="fas fa-cloud-download-alt mr-2"></i> Ver Nota Fiscal
+                    </a>
                 </div>
             </div>
         </div>

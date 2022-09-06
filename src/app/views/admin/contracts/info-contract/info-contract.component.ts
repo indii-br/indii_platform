@@ -22,7 +22,7 @@ export class InfoContractComponent implements OnInit {
       position: 3
     },
     {
-      label: "Carregar Contrato",
+      label: "Carregar Contratos",
       position: 4
     }
   ];

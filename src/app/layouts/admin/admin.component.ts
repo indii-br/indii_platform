@@ -42,9 +42,11 @@ export class AdminComponent implements OnInit {
       this.store.dispatch(hydrateUser(userData));
 
       if (this.isContractor()) {
-        const { data: profileData, errorProfile } = await this.profileService.getProfileByUserUuid()
+        const { data: profilesData, errorProfile } = await this.profileService.getProfileByUserUuid()
 
-        if (profileData) {
+        if (profilesData && profilesData.length !== 0) {
+          const profileData = profilesData[0];
+          
           this.store.dispatch(hydrateProfile(profileData));
         }
       }

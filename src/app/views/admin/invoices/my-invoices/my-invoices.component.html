@@ -1,0 +1,104 @@
+<div *ngIf="!loading" class="flex flex-wrap mt-4">
+    <div class="w-full h-screen mb-4 px-4">
+        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
+            <div class="rounded-t mb-0 px-4 py-3 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                        <h3 class="font-semibold uppercase text-lg text-blueGray-700">
+                            Meu Pagamentos
+                        </h3>
+                    </div>
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                        <!-- <button style="background-color: #ececec;"
+                            class="text-blueGray-500 text-xs font-semibold px-3 py-1 rounded outline-none mr-1 mb-1"
+                            type="button">
+                            Ver concluidos e arquivados
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="block w-full overflow-x-auto">
+                <table class="items-center w-full bg-transparent border-collapse">
+                    <thead>
+                        <tr>
+                            <th
+                                class="px-1 text-center align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                ID
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Empresa
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Contrato
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Valor
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Status
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let invoice of myInvoicesList">
+                            <td
+                                class="font-semibold cursor-pointer text-center border-t-0 px-1 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                #{{invoice.id}}
+                            </td>
+                            <td
+                                class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                <span class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
+                                    <i class="fas fa-building text-blueGray-400 text-2xl"></i>
+                                </span>
+                                <span class="ml-3">
+                                    {{invoice.company.name}}<br />
+                                    <small>{{invoice.contract.contractName}}</small><br />
+                                </span>
+                            </td>
+                            <td
+                                class="font-normal cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{paymentCyclesValues[invoice.contract.paymentConfig.paymentCycle]}}<br />
+                                <small>
+                                    Contrato {{rateTypes[invoice.contract.contractType].label}}
+                                </small>
+                            </td>
+                            <td
+                                class="border-t-0 text-xs px-6 align-middle border-l-0 border-r-0 whitespace-nowrap p-4">
+                                <span class="font-semibold text-sm">{{invoice.amount | currency : 'R$'}}</span><br />
+                                <span class="divider-invoice"></span>
+                                <small>Vencimento:</small><br />
+                                <small class="{{getDueDateColor(invoice.dueDate)}}">{{invoice.dueDate | date: 'dd MMMM,
+                                    yyyy': '' : 'pt-BR' }}</small>
+                            </td>
+                            <td
+                                class="border-t-0 uppercase {{invoiceStatus[invoice.status].color}} px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{invoiceStatus[invoice.status].label}}
+                                <span class="divider-invoice"></span>
+                                <strong [innerHTML]="checkInvoice(invoice)"></strong>
+                            </td>
+                            <td
+                                class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                <a [routerLink]="['/admin/m/invoice', invoice.id]"
+                                    class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                    Solicitar Pagamento
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 *ngIf="!myInvoicesList || myInvoicesList.length === 0"
+                    class="text-blueGray-500 text-center p-8 font-semibold text-xl">
+                    Você não tem nenhum pagamento pendente
+                </h2>
+            </div>
+        </div>
+
+    </div>
+</div>

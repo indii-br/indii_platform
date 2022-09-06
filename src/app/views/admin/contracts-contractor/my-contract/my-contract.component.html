@@ -1,0 +1,161 @@
+<div *ngIf="contractData" class="flex flex-wrap h-screen">
+    <div class="w-full xl:w-6/12 px-4">
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-600 text-2xl font-semibold flex items-center">
+                            {{contractData.contractName}}
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-auto px-4 pb-2 lg:px-10 py-10 pt-8">
+                <div class="flex flex-col flex-wrap pb-4">
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Status:</span><br />
+                        <strong
+                            class="pt-1 block {{contractStatus[contractData.status].color}}">{{contractStatus[contractData.status].label}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>ID do Contrato:</span><br />
+                        <strong class="pt-1 block">#{{contractData.id}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Empresa:</span><br />
+                        <strong class="pt-1 block">{{contractData.company.name}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Posição:</span><br />
+                        <strong class="pt-1 block">
+                            {{contractData.contractorRole}}<br />
+                            <small>({{contractData.seniorityLevel}})</small>
+                        </strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Data de inicio:</span><br />
+                        <strong class="pt-1 block">{{contractData.startAt | date : 'dd/MM/yyyy'}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Data de conclusão:</span><br />
+                        <strong *ngIf="contractData.endAt" class="pt-1 block">{{contractData.endAt | date :
+                            'dd/MM/yyyy'}}</strong>
+                        <strong *ngIf="!contractData.endAt" class="pt-1 block">--</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Ciclo de pagamento:</span><br />
+                        <strong class="pt-1 ">{{paymentCyclesValues[contractData.paymentConfig.paymentCycle]}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Tipo de pagamento:</span><br />
+                        <strong class="pt-1 ">{{rateTypes[contractData.contractType].label}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Valor do contrato:</span><br />
+                        <strong class="pt-1 ">{{contractData.paymentConfig.rate | currency :
+                            'R$'}}&emsp;/&emsp;{{rateTypes[contractData.contractType].label}}</strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Vencimento:</span><br />
+                        <strong class="pt-1 ">{{dueDateLimitValues[contractData.paymentConfig.dueDate]}}</strong>
+                    </p>
+
+                    <!-- <small *ngIf="!contract.paymentConfig"
+                                    style="opacity: .7; font-weight: 400;">(Aguardando Configuração)</small>
+                                <span *ngIf="contract.paymentConfig"
+                                    style="font-weight: bold;">{{contract.paymentConfig.rate | currency :
+                                    'R$'}}</span><br />
+                                <span class="font-normal" *ngIf="contract.paymentConfig">
+                                    {{paymentCyclesValues[contract.paymentConfig.paymentCycle]}} -
+                                    {{rateTypes[contract.contractType].label}}<br />
+                                    <small style="font-size: 9px;">Venc.:
+                                        <strong></strong></small>
+                                </span> -->
+
+                    <p *ngIf="contractData.contractSelfUploaded" class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span class="block" style="margin-bottom: 8px">
+                            Documentos Assinados: <br />
+                            <small class="lowercase">*Clique para baixar</small>
+                        </span>
+                        <a class="font-bold cursor-pointer" style="color: rgb(87, 87, 253);"><i
+                                class="fas fa-cloud-download-alt"></i>&ensp;{{documentNameFormat(contractData.contractSelfUploaded)}}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full xl:w-6/12 px-4">
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-600 text-2xl font-semibold flex items-center">
+                            <i class="fas fa-file-invoice-dollar"></i>&ensp;Pagamentos
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-auto lg:px-2 py-2 pt-2">
+                <h2 *ngIf="!invoicesListByContract || invoicesListByContract.length === 0"
+                    class="text-blueGray-500 text-center p-8 font-semibold text-xl">
+                    Você não tem nenhum pagamento para esse contrato ainda
+                </h2>
+                
+                <table *ngIf="invoicesListByContract && invoicesListByContract.length !== 0"
+                    class="items-center w-full bg-transparent border-collapse">
+                    <thead class="thead-light">
+                        <tr>
+                            <th
+                                class="px-6 uppercase bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-normal text-left">
+                                <strong>#</strong>
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Status
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let invoice of invoicesListByContract">
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                <small>#{{invoice.id}}</small><br/>
+                                <b>{{invoice.amount | currency : 'R$'}}</b><br/>
+                                <span class="divider-invoice"></span>
+                                <small>Vencimento:</small><br/>
+                                <small class="{{getDueDateColor(invoice.dueDate)}}">{{invoice.dueDate | date: 'dd MMMM, yyyy': '' : 'pt-BR' }}</small>
+                            </td>
+                            <td
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                <small class="uppercase">{{invoiceStatus[invoice.status].label}}</small><br/>
+                                <span class="divider-invoice"></span>
+                                <span [innerHTML]="checkInvoice(invoice)"></span>
+                            </td>
+                            <td
+                                class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                <a [routerLink]="['/admin/m/invoice', invoice.id]"
+                                    class="text-white bg-indigo-400 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                    Solicitar
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

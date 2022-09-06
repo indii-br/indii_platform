@@ -1,4 +1,4 @@
-<div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+<div *ngIf="!loading" class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
     <div class="rounded-t mb-0 px-2 py-3 border-0">
         <div class="flex flex-wrap items-center">
             <div class="relative w-full px-4 max-w-full flex-grow flex-1">
@@ -50,7 +50,6 @@
                         <span *ngIf="contract.contractor">
                             #{{contract.id}} - {{contract?.contractor.full_name}}<br />
                             <small class="font-normal">{{contract.contractName}}</small><br />
-                            <small>#{{contract.id}}</small>
                         </span>
                         <span class="font-normal" *ngIf="!contract.contractor">
                             #{{contract.id}} - {{contract.contractName}}<br />

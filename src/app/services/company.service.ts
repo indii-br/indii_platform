@@ -26,4 +26,10 @@ export class CompanyService {
       .update(companiesToUpdate)
       .eq("id", id)
   }
+
+  async createCompany(companyToSave: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('companies')
+      .insert(companyToSave)
+  }
 }

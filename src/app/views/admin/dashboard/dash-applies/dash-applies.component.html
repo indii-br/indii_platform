@@ -3,7 +3,7 @@
         <div class="flex flex-wrap items-center">
             <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                 <h6 class="text-blueGray-700 uppercase text-xs font-semibold">
-                    Oportunidades Abertas
+                    Candidatos
                 </h6>
             </div>
         </div>
@@ -11,7 +11,7 @@
     <div class="block w-full overflow-x-auto">
 
         <h3 *ngIf="!appliesList || appliesList.length === 0" class="text-center p-5">
-            <i style="font-size: 80px;" class="fas fa-ghost text-blueGray-300 mb-3"></i><br />
+            <i style="font-size: 80px; opacity: .4;" class="fas fa-ghost text-blueGray-300 mb-3"></i><br />
             <span class="text-sm text-blueGray-500">Nenhum candidato por aqui ainda :)</span><br />
             <a [routerLink]="['/admin/nova-oportunidade']"
                 class="text-indigo-600 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
@@ -38,8 +38,8 @@
                         <span class="ml-3 font-semibold text-blueGray-600">
                             {{apply.profile.user.full_name}}<br />
                             <small class="font-normal">{{apply.profile.headline}}</small><br />
-                            <small class="font-normal">{{apply.created_at | date : 'dd/MM/yyyy HH:mm'}}</small><br/>
-                            <small style="font-size: 9px;" class="font-normal">Op.: #{{apply.job.id}} - {{apply.job.title}}</small><br />
+                            <small class="font-normal">{{apply.created_at | date : 'dd/MM/yyyy'}}</small><br/>
+                            <small style="font-size: 9px;" class="font-normal">Op. {{apply.job.id}}: {{apply.job.title}}</small><br />
                         </span>
                     </th>
                 </tr>

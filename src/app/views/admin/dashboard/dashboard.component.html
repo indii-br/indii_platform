@@ -1,10 +1,23 @@
-<div *ngIf="isClient" class="flex flex-wrap">
-  <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 h-screen">
-    <app-dash-invoices></app-dash-invoices>
-    <app-dash-contracts-pending class="mt-4"></app-dash-contracts-pending>
+<section class="h-screen">
+  <div *ngIf="isClient" class="flex flex-wrap dash-bg-admin">
+    <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+      <app-dash-invoices></app-dash-invoices>
+      <app-dash-contracts-pending class="mt-4"></app-dash-contracts-pending>
+    </div>
+    <div class="w-full xl:w-4/12 px-4">
+      <app-dash-applies></app-dash-applies>
+      <app-dash-holidays class="mt-4"></app-dash-holidays>
+    </div>
   </div>
-  <div class="w-full xl:w-4/12 px-4">
-    <app-dash-applies></app-dash-applies>
-    <app-dash-holidays class="mt-4"></app-dash-holidays>
+  
+  <div *ngIf="isContractor" class="flex flex-wrap">
+    <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+      <app-dash-contractor-invoices></app-dash-contractor-invoices>
+    </div>
+    <div class="w-full xl:w-4/12 px-4">
+      <app-dash-contractor-onboarding></app-dash-contractor-onboarding>
+      <app-dash-holidays class="mt-4"></app-dash-holidays>
+    </div>
   </div>
-</div>
+  
+</section>

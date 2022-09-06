@@ -57,3 +57,17 @@ export const downloadBlob = (blob, name = 'file.txt') => {
       return 'text-red-500'
     }
   }
+
+  export const distinctArray = (listToDistinct: Array<any>, attrToDistinct: string) => {
+    const uniqArray = [];
+
+    listToDistinct.filter((item) => {
+      var i = uniqArray.findIndex(x => (x[attrToDistinct].id == item[attrToDistinct].id));
+      if(i <= -1){
+        uniqArray.push(item);
+      }
+      return null;
+    });
+
+    return uniqArray;
+  }

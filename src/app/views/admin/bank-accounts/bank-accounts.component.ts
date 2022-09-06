@@ -82,6 +82,8 @@ export class BankAccountsComponent implements OnInit {
 
     if (data) {
       this.myBankAccounts = data;
+      this.setBankAccountToEdit(this.myBankAccounts[0]);
+      this.editingBankAccount = false;
     }
   }
 
@@ -102,6 +104,10 @@ export class BankAccountsComponent implements OnInit {
     }
     this.selectedAccountType = this.bankAccountToSaveOrUpdate.accountType;
     this.selectedDocumentType = this.bankAccountToSaveOrUpdate.documentType;
+  }
+
+  setHideCancel(){
+    return !this.bankAccountData || !this.bankAccountData.id
   }
 
   updateOrSaveBankAccount() {

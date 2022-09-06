@@ -42,17 +42,7 @@ export class ContractsContractorComponent implements OnInit {
         this.user = res?.userData
 
         if (this.user) {
-          const { data: myContractsList, errorContracts } = await this.contractService.getAllByContractor(this.user.id)
-
-          if (myContractsList) {
-            this.myContractsList = myContractsList;
-            this.loading = true;
-          }
-
-          if (errorContracts) {
-            console.error(errorContracts);
-            this.toastrService.error("Erro ao carregar contratos")
-          }
+          this.getAllContracts(this.user.id)
 
           const { data: myInvitesList, errorInvites } = await this.contractService.getAllInvitesByContractorEmail(this.user.email)
 
@@ -77,6 +67,7 @@ export class ContractsContractorComponent implements OnInit {
 
                   if (dataUpdateContract) {
                     this.toastrService.success("Entrou no projeto!")
+                    this.getAllContracts(this.user.id)
                   }
 
                   if (errorOnUpdateContract) {
@@ -100,4 +91,17 @@ export class ContractsContractorComponent implements OnInit {
       })
   }
 
+  async getAllContracts(userId: string) {
+    const { data: myContractsList, errorContracts } = await this.contractService.getAllByContractor(userId)
+
+    if (myContractsList) {
+      this.myContractsList = myContractsList;
+      this.loading = true;
+    }
+
+    if (errorContracts) {
+      console.error(errorContracts);
+      this.toastrService.error("Erro ao carregar contratos")
+    }
+  }
 }

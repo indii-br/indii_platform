@@ -10,7 +10,6 @@
         {{contract.contractor.full_name}}<br />
         <small>{{contract.contractor.email}}</small><br />
         <small>CPF: {{contract.contractor.cpf}}</small><br />
-        <small>#{{contract.id}}</small>
     </span>
 </td>
 
@@ -31,16 +30,6 @@
         Não enviado
     </span>
     <span (click)="viewDocument(documentData.cnpjDocument)" *ngIf="documentData.cnpjDocument" class="withDocument">
-        <i class="fas fa-id-card mr-1"></i>
-        Ver Documento
-    </span>
-</td>
-<td class="font-semibold border-t-0 text-xs px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">
-    <span *ngIf="!documentData.idAndPhoto" class="withoutDocument">
-        <i class="fas fa-folder-open mr-1"></i>
-        Não enviado
-    </span>
-    <span (click)="viewDocument(documentData.idAndPhoto)" *ngIf="documentData.idAndPhoto" class="withDocument">
         <i class="fas fa-id-card mr-1"></i>
         Ver Documento
     </span>

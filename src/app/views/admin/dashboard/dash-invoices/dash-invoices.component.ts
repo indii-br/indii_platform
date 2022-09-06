@@ -4,6 +4,7 @@ import { InvoiceService } from 'src/app/services/invoice.service';
 import { SELECTORS } from 'src/app/stores/selectors';
 import { INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
 import { convertArrayInObject, getDueDateColor } from 'src/app/utils/helpers';
+import { CHECK_INVOICE } from 'src/app/utils/invoicesUtil';
 
 @Component({
   selector: 'app-dash-invoices',
@@ -14,13 +15,15 @@ export class DashInvoicesComponent implements OnInit {
 
   invoicesList: Array<any>;
   invoicesListSize: number;
-  loading: boolean =  false;
+  loading: boolean =  true;
 
   invoiceStatus: any = INVOICE_STATUS;
   rateTypes: any = RATE_TYPE;
   paymentCyclesValues: any = convertArrayInObject(PAYMENT_CYCLES)
 
   getDueDateColor: any = getDueDateColor;
+
+  checkInvoice: any = CHECK_INVOICE;
 
   constructor(
     private store: Store<any>,
@@ -38,7 +41,7 @@ export class DashInvoicesComponent implements OnInit {
 
           this.invoicesListSize = invoicesList.length;
           this.invoicesList = invoicesList.slice(0, 5);
-          this.loading = true;
+          this.loading = false;
         }
       })
   }

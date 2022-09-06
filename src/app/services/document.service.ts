@@ -14,7 +14,7 @@ export class DocumentService {
     return this.supabaseService.supabase
       .from('contractor_documents')
       .select(`*, 
-        contractor->user(*)
+        contractor!inner(*)
       `)
       .eq('contractor.id', contractorId)
   }

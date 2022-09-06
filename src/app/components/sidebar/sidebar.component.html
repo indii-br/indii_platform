@@ -108,22 +108,7 @@
                 </li>
 
                 <li class="items-center">
-                    <a [routerLink]="['/admin/documentos']" class="text-xs uppercase py-3 font-bold block"
-                        routerLinkActive #adminDocuments="routerLinkActive" [ngClass]="
-                        adminDocuments.isActive
-                            ? 'text-red-600 hover:text-red-700'
-                            : 'text-blueGray-700 hover:text-blueGray-500'
-                        ">
-                        <span class="icon-wrap">
-                            <i class="fas fa-id-card text-sm" [ngClass]="
-                            adminDocuments.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
-                        </span>
-                        Documentos
-                    </a>
-                </li>
-
-                <li class="items-center">
-                    <a [routerLink]="['/admin/pagamentos']" class="text-xs uppercase py-3 font-bold block"
+                    <a [routerLink]="['/admin/faturas']" class="text-xs uppercase py-3 font-bold block"
                         routerLinkActive #adminPayments="routerLinkActive" [ngClass]="
                             adminPayments.isActive
                             ? 'text-red-600 hover:text-red-700'
@@ -134,7 +119,7 @@
                             <i class="fas fa-dollar-sign text-sm" [ngClass]="
                             adminPayments.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
                         </span>
-                        Pagamentos
+                        Faturas
                     </a>
                 </li>
 
@@ -153,6 +138,30 @@
                         Oportunidades
                     </a>
                 </li>
+
+                <li class="items-center">
+                    <a [routerLink]="['/admin/documentos']" class="text-xs uppercase py-3 font-bold block"
+                        routerLinkActive #adminDocuments="routerLinkActive" [ngClass]="
+                        adminDocuments.isActive
+                            ? 'text-red-600 hover:text-red-700'
+                            : 'text-blueGray-700 hover:text-blueGray-500'
+                        ">
+                        <span class="icon-wrap">
+                            <i class="fas fa-id-card text-sm" [ngClass]="
+                            adminDocuments.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+                        </span>
+                        Compliance
+                    </a>
+                </li>
+                <!-- 
+                <li class="items-center">
+                    <a [routerLink]="['/admin/dashboard']" class="link-disabled text-xs uppercase py-3 font-bold block">
+                        <span class="icon-wrap">
+                            <i class="fas fa-star text-sm text-blueGray-300"></i>
+                        </span>
+                        Squads <small>(em breve)</small>
+                    </a>
+                </li> -->
             </ul>
 
             <ul *ngIf="isContractor()" class="md:flex-col md:min-w-full flex flex-col list-none">
@@ -218,22 +227,18 @@
                 </li>
 
                 <li class="items-center">
-                    <a [routerLink]="['/admin/dashboard']" class="text-xs uppercase py-3 font-bold block">
+                    <a [routerLink]="['/admin/meus-pagamentos']" class="text-xs uppercase py-3 font-bold block"
+                        routerLinkActive #adminMyInvoices="routerLinkActive" [ngClass]="
+                        adminMyInvoices.isActive
+                            ? 'text-red-600 hover:text-red-700'
+                            : 'text-blueGray-700 hover:text-blueGray-500'
+                        ">
                         <span class="icon-wrap">
                             <i class="fas fa-briefcase text-sm text-blueGray-300"></i>
                         </span>
                         Pagamentos
                     </a>
                 </li>
-
-                <!-- <li class="items-center">
-                    <a [routerLink]="['/admin/dashboard']" class="text-xs uppercase py-3 font-bold block">
-                        <span class="icon-wrap">
-                            <i class="fas fa-star text-sm text-blueGray-300"></i>
-                        </span>
-                        Em Breve
-                    </a>
-                </li> -->
             </ul>
 
             <!-- Divider -->
@@ -245,23 +250,6 @@
             <!-- Navigation -->
 
             <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-                <li class="items-center">
-                    <a [routerLink]="['/admin/settings']" class="text-xs uppercase py-3 font-bold block"
-                        routerLinkActive #adminSettings="routerLinkActive" [ngClass]="
-                        adminSettings.isActive
-                            ? 'text-red-600 hover:text-red-700'
-                            : 'text-blueGray-700 hover:text-blueGray-500'
-                        ">
-
-                        <span class="icon-wrap">
-                            <i class="fas fa-tools text-sm" [ngClass]="
-                            adminSettings.isActive ? 'opacity-75' : 'text-blueGray-300'
-                            "></i>
-                        </span>
-                        Configurações
-                    </a>
-                </li>
-
                 <li *ngIf="isContractor()" class="items-center">
                     <a [routerLink]="['/admin/minhas-contas']" class="text-xs uppercase py-3 font-bold block"
                         routerLinkActive #myBankAccounts="routerLinkActive" [ngClass]="
@@ -273,7 +261,7 @@
                             <i class="fas fa-university text-sm" [ngClass]="
                             myBankAccounts.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
                         </span>
-                        Contas Bancárias
+                        Conta Bancária
                     </a>
                 </li>
 
@@ -297,7 +285,33 @@
                         <span class="icon-wrap">
                             <i class="fas fa-users text-sm text-blueGray-300"></i>
                         </span>
+                        Cobranças <small>(em breve)</small>
+                    </a>
+                </li>
+
+                <li *ngIf="isClient()" class="items-center">
+                    <a [routerLink]="['/admin/dashboard']" class="link-disabled text-xs uppercase py-3 font-bold block">
+                        <span class="icon-wrap">
+                            <i class="fas fa-users text-sm text-blueGray-300"></i>
+                        </span>
                         Equipe <small>(em breve)</small>
+                    </a>
+                </li>
+
+                <li class="items-center">
+                    <a [routerLink]="['/admin/settings']" class="text-xs uppercase py-3 font-bold block"
+                        routerLinkActive #adminSettings="routerLinkActive" [ngClass]="
+                        adminSettings.isActive
+                            ? 'text-red-600 hover:text-red-700'
+                            : 'text-blueGray-700 hover:text-blueGray-500'
+                        ">
+
+                        <span class="icon-wrap">
+                            <i class="fas fa-tools text-sm" [ngClass]="
+                            adminSettings.isActive ? 'opacity-75' : 'text-blueGray-300'
+                            "></i>
+                        </span>
+                        Configurações
                     </a>
                 </li>
 

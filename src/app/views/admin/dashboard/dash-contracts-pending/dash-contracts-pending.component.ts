@@ -15,7 +15,7 @@ export class DashContractsPendingComponent implements OnInit {
 
   contractsList: Array<any>;
   contractsListSize: number;
-  loading: boolean =  false;
+  loading: boolean =  true;
 
   contractStatus: any = CONTRACT_STATUS;
   rateTypes: any = RATE_TYPE;
@@ -43,7 +43,7 @@ export class DashContractsPendingComponent implements OnInit {
               contract.status !== 'DONE'
           })
           .slice(0, 5);
-          this.loading = true;
+          this.loading = false;
         }
       })
   }

@@ -5,6 +5,7 @@ import { InvoiceService } from 'src/app/services/invoice.service';
 import { SELECTORS } from 'src/app/stores/selectors';
 import { INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
 import { convertArrayInObject, getDueDateColor } from 'src/app/utils/helpers';
+import { CHECK_INVOICE } from 'src/app/utils/invoicesUtil';
 
 @Component({
   selector: 'app-invoices',
@@ -14,7 +15,7 @@ import { convertArrayInObject, getDueDateColor } from 'src/app/utils/helpers';
 export class InvoicesComponent implements OnInit {
   loading: boolean = true;
 
-  invoicesList: Array<any> = [{}];
+  invoicesList: Array<any> = [];
   company: any;
 
   rateTypes: any = RATE_TYPE;
@@ -22,6 +23,8 @@ export class InvoicesComponent implements OnInit {
 
   invoiceStatus: any = INVOICE_STATUS;
   getDueDateColor: any = getDueDateColor;
+  
+  checkInvoice: any = CHECK_INVOICE;
 
   constructor(
     private store: Store<any>,
@@ -43,7 +46,6 @@ export class InvoicesComponent implements OnInit {
       const {data: invoicesList, error} = await this.invoiceService.getInvoicetByCompany(company.id);
       this.loading = false;
       if(invoicesList){
-        console.log(invoicesList)
         this.invoicesList = invoicesList;
       }
 

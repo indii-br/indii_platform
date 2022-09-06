@@ -6,7 +6,7 @@
                 Esses documentos serão exigidos pelo seu cliente para mitigar o seu risco e o dele. Os documentos são baseados nas leis locais do Brasil e na sua estrutura legal.
             </small>
         </h6>
-        <div *ngFor="let document of documentsToUpload" class="w-full lg:w-4/12 px-4 mt-5">
+        <div *ngFor="let document of documentsToUpload" class="w-full lg:w-6/12 px-4 mt-5">
             <div
                 class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
                 <div class="flex-auto px-1 py-2">
@@ -28,8 +28,9 @@
     
                             <div *ngIf="documentData[document.id]" class="flex justify-center">
                                 <a  (click)="viewDocument(documentData[document.id])"
-                                    class="text-indigo-600 w-full mb-6 bg-transparent border border-solid border-indigo-custom font-bold uppercase text-xs px-4 py-2 rounded outline-none">
-                                    <i class="fas fa-cloud-download-alt mr-2"></i> Ver Documento
+                                    class="change-upload-btn text-indigo-600 w-full mb-6 bg-transparent border border-solid border-indigo-custom font-bold uppercase text-xs rounded outline-none">
+                                    <i class="fas fa-cloud-download-alt"></i>
+                                    Ver Documento
                                 </a>
                             </div>
                         </div>

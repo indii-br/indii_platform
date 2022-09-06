@@ -5,7 +5,7 @@
                 <div class="flex flex-wrap items-center">
                     <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                         <h3 class="font-semibold uppercase text-lg text-blueGray-700">
-                            Pagamentos
+                            Faturas
                         </h3>
                     </div>
                     <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
@@ -50,10 +50,6 @@
                             </th>
                             <th
                                 class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                                Vencimento
-                            </th>
-                            <th
-                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                                 Status
                             </th>
                             <th
@@ -89,26 +85,27 @@
                                 class="font-semibold cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 {{paymentCyclesValues[invoice.contract.paymentConfig.paymentCycle]}}<br />
                                 <small>
-                                    <a class="cursor-pointer mr-1"
-                                        style="color: rgba(37, 99, 235)">#{{invoice.contract.id}}</a>
                                     Contrato {{rateTypes[invoice.contract.contractType].label}}
                                 </small>
                             </td>
                             <td
-                                class="border-t-0 text-sm px-6 align-middle border-l-0 border-r-0 font-semibold whitespace-nowrap p-4">
-                                {{invoice.amount | currency : 'R$'}}<br />
-                            </td>
-                            <td
-                                class="border-t-0 {{getDueDateColor(invoice.dueDate)}} capitalize font-semibold text-xs px-6 align-middle border-l-0 border-r-0 whitespace-nowrap p-4">
-                                {{invoice.dueDate | date: 'dd MMMM, yyyy': '' : 'pt-BR' }}
+                                class="border-t-0 text-xs px-6 align-middle border-l-0 border-r-0 whitespace-nowrap p-4">
+                                <span class="font-semibold text-sm">{{invoice.amount | currency : 'R$'}}</span><br />
+                                <span class="divider-invoice"></span>
+                                <small>Vencimento:</small><br />
+                                <small class="{{getDueDateColor(invoice.dueDate)}}">{{invoice.dueDate | date: 'dd MMMM,
+                                    yyyy': '' : 'pt-BR' }}</small>
                             </td>
                             <td
                                 class="border-t-0 uppercase font-bold {{invoiceStatus[invoice.status].color}} px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 {{invoiceStatus[invoice.status].label}}
+                                <span class="divider-invoice"></span>
+                                <span [innerHTML]="checkInvoice(invoice)"></span>
                             </td>
                             <td [routerLink]="['/admin/invoice', invoice.id]"
                                 class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                                <a class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                <a
+                                    class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
                                     Ver Fatura
                                 </a>
                             </td>

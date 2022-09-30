@@ -5,6 +5,8 @@ import { CompanyService } from 'src/app/services/company.service';
 import { ContractService } from 'src/app/services/contract.service';
 import { CONTRACT_MODEL_TYPE, RATE_TYPE } from 'src/app/utils/constants';
 
+declare var Swal: any;
+
 @Component({
   selector: 'app-new-contract',
   templateUrl: './new-contract.component.html',
@@ -65,13 +67,7 @@ export class NewContractComponent implements OnInit {
       if (contractId) {
         this.editingNewContract = false;
 
-        const { data: contractData, error } = await this.contractService.getContractById(contractId)
-
-        if (contractData) {
-          this.contractData = contractData;
-          this.contractToSaveOrUpdate = contractData;
-          this.selectedContractType = contractData.contractType
-        }
+        this.getContractData(contractId);
       }
     });
 
@@ -79,6 +75,16 @@ export class NewContractComponent implements OnInit {
 
     if (data) {
       this.companyData = data;
+    }
+  }
+
+  async getContractData(contractId: string) {
+    const { data: contractData, error } = await this.contractService.getContractById(contractId)
+
+    if (contractData) {
+      this.contractData = contractData;
+      this.contractToSaveOrUpdate = contractData;
+      this.selectedContractType = contractData.contractType
     }
   }
 
@@ -109,7 +115,7 @@ export class NewContractComponent implements OnInit {
     let isSelfUploaded = false;
 
     if (this.selectedModelOfContract === 'SELF_UPLOADED_CONTRACT') {
-      status = 'SELF_UPLOADED_WAITING_CONFIG_PAYMENT';
+      status = 'WAITING_CONFIG_PAYMENT';
       isSelfUploaded = true;
     } else {
       status = 'WAITING_CONFIG_PAYMENT';
@@ -190,24 +196,49 @@ export class NewContractComponent implements OnInit {
     this.hideCancel = false;
   }
 
-  showPaymentBlock(){
+  showPaymentBlock() {
     return this.contractData &&
-    this.contractData.id &&
-    this.contractData.contractType !== 'MILESTONE';
+      this.contractData.id &&
+      this.contractData.contractType !== 'MILESTONE';
   }
 
-  showContractorBlock(){
+  showContractorBlock() {
     return this.contractData &&
-    this.contractData.id &&
-    this.contractData.paymentConfig &&
-    this.contractData.contractType !== 'MILESTONE';
+      this.contractData.id &&
+      this.contractData.paymentConfig &&
+      this.contractData.contractType !== 'MILESTONE';
   }
 
-  showImportContractBlock(){
+  showImportContractBlock() {
     return this.contractData &&
-    this.contractData.id &&
-    this.contractData.paymentConfig &&
-    (this.contractData.inviteContractor || this.contractData.contractor) &&
-    this.contractData.contractType !== 'MILESTONE';
+      this.contractData.id &&
+      this.contractData.paymentConfig &&
+      (this.contractData.inviteContractor || this.contractData.contractor) &&
+      this.contractData.contractType !== 'MILESTONE';
+  }
+
+  async archiveContract(id: string) {
+    Swal.fire({
+      title: 'Você tem certeza disso?',
+      text: "Para reativar um contrato arquivado entre em contato com o suporte!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, arquivar contrato!',
+      cancelButtonText: 'Não'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data, error } = await this.contractService.archiveContract(id)
+
+        if (data) {
+          this.getContractData(id)
+          this.toastrService.success('Arquivado com sucesso!')
+        }
+        
+        if (error) {
+          console.log(error)
+          this.toastrService.error('Erro ao arquivar contrato!')
+        }
+      }
+    })
   }
 }

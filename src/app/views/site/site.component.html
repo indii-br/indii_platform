@@ -132,7 +132,7 @@
                 </div>
                 <div>
                   <h4 class="text-blueGray-500">
-                    Pagamentos em massa e individuais
+                    Apenas uma fatura por todos os profissionais
                   </h4>
                 </div>
               </div>
@@ -147,7 +147,7 @@
                 </div>
                 <div>
                   <h4 class="text-blueGray-500">
-                    Assinatura de contratos e templates
+                    Assinatura de contratos (em breve)
                   </h4>
                 </div>
               </div>
@@ -297,8 +297,7 @@
               </li>
             </ul>
           </div>
-          <button data-tf-slider="vTtWicXV" data-tf-width="550" data-tf-iframe-props="title=Join Us - Talent"
-            data-tf-medium="snippet"
+          <button [routerLink]="['/signup/contractor']"
             class="font-bold text-xs inline-block uppercase px-4 py-2 mt-8 rounded-md text-white cursor-pointer"
             style="background: #6366f1">
             Faça parte&emsp;<i class="fa fa-paper-plane"></i>
@@ -318,14 +317,13 @@
           <div class="md:pr-12">
             <div
               class="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
-              <i class="fas fa-file-alt text-xl"></i>
+              <i class="fas fa-question text-xl"></i>
             </div>
-            <h3 class="text-3xl font-semibold">Por que escolher a <u style="text-decoration-color: #f97316;">INDII</u>
+            <h3 class="text-3xl font-semibold"><u style="text-decoration-color: #f97316;">Como Funciona</u>
             </h3>
             <p class="mt-4 text-lg leading-relaxed text-blueGray-500">
               A INDII permite que founders de startups, consultorias de tecnologia, grande e pequenas empresas contratem
-              os melhores talentos globais, gerenciem pagamentos e contratos com facilidade e garantem a conformidade
-              com as leis trabalhistas nacionais.<br />
+              os melhores talentos globais, gerenciem pagamentos e contratos com facilidade.<br />
               Veja como é simples:
             </p>
             <ul class="list-none mt-6">
@@ -364,7 +362,7 @@
                     </span>
                   </div>
                   <div>
-                    <h4 class="text-blueGray-500">Use nosso template de contrato ou faça upload do seu próprio assinado.</h4>
+                    <h4 class="text-blueGray-500">Faça upload do seu contrato e assine.</h4>
                   </div>
                 </div>
               </li>
@@ -424,7 +422,7 @@
           <p class="text-lg leading-relaxed mt-4 mb-4 text-blueGray-400">
             Se você quer contratar um prestador de serviços em São Paulo e um Freelancer em Salvador ou vinte PJ's
             espalhados pelo Brasil, você
-            pode gerenciar os contratos e os pagamentos, todos juntos da sua conta <b>INDII</b>.<br /><br />
+            pode gerenciar os contratos e pagamentos, todos juntos na sua conta <b>INDII</b>.<br /><br />
 
             Nossa plataforma facilita o crescimento da sua equipe remota. <br /><b>Pronto para começar?</b>
           </p>
@@ -441,6 +439,8 @@
               <h4 class="text-2xl font-semibold">Fale com nosso time</h4>
               <p class="leading-relaxed mt-1 mb-4 text-blueGray-500">
                 Preencha este formulário e retornaremos em 24 horas.
+                <br/>
+                Ou envie um email para <strong>contato@indii.com.br</strong>
               </p>
 
               <!-- INIT FORM -->

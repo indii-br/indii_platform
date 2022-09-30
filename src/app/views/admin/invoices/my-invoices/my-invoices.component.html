@@ -1,4 +1,4 @@
-<div *ngIf="!loading" class="flex flex-wrap mt-4">
+<div *ngIf="!loading" class="flex flex-wrap mt-4" style="margin-bottom: 100px;">
     <div class="w-full h-screen mb-4 px-4">
         <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
             <div class="rounded-t mb-0 px-4 py-3 border-0">
@@ -72,22 +72,27 @@
                             <td
                                 class="border-t-0 text-xs px-6 align-middle border-l-0 border-r-0 whitespace-nowrap p-4">
                                 <span class="font-semibold text-sm">{{invoice.amount | currency : 'R$'}}</span><br />
-                                <span class="divider-invoice"></span>
-                                <small>Vencimento:</small><br />
-                                <small class="{{getDueDateColor(invoice.dueDate)}}">{{invoice.dueDate | date: 'dd MMMM,
-                                    yyyy': '' : 'pt-BR' }}</small>
+                                <span *ngIf="isOpen(invoice)">
+                                    <span class="divider-invoice"></span>
+                                    <small>Vencimento:</small><br />
+                                    <small class="{{getDueDateColor(invoice.dueDate)}}">{{invoice.dueDate | date: 'dd
+                                        MMMM,
+                                        yyyy': '' : 'pt-BR' }}</small>
+                                </span>
                             </td>
                             <td
                                 class="border-t-0 uppercase {{invoiceStatus[invoice.status].color}} px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{invoiceStatus[invoice.status].label}}
-                                <span class="divider-invoice"></span>
-                                <strong [innerHTML]="checkInvoice(invoice)"></strong>
+                                <strong>{{invoiceStatus[invoice.status].label}}</strong>
+                                <span *ngIf="isOpen(invoice)">
+                                    <span class="divider-invoice"></span>
+                                    <strong [innerHTML]="checkInvoice(invoice)"></strong>
+                                </span>
                             </td>
                             <td
                                 class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                                 <a [routerLink]="['/admin/m/invoice', invoice.id]"
                                     class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
-                                    Solicitar Pagamento
+                                    Acessar Pagamento
                                 </a>
                             </td>
                         </tr>

@@ -1,4 +1,4 @@
-<div *ngIf="invoiceData" class="flex flex-wrap">
+<div *ngIf="invoiceData" class="flex flex-wrap" style="padding-bottom: 80px;">
     <div class="w-full lg:w-8/12 px-4">
         <div
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
@@ -12,10 +12,10 @@
                                 currency:'':''}}
                             </span>
 
-                            <a
+                            <!-- <a
                                 class="text-white cursor-pointer bg-indigo-500 text-sm font-bold uppercase px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
                                 <i class="fas fa-hand-holding-usd"></i>&ensp;Solicitar Pagamento
-                            </a>
+                            </a> -->
 
                             <!-- <a *ngIf="invoiceData.paidAt" (click)="goToReceipt(invoiceData)"
                                 class="text-white cursor-pointer bg-indigo-500 text-lg font-bold uppercase px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
@@ -87,7 +87,8 @@
                             <small>Status:</small><br />
                             <span class="{{invoiceStatus[invoiceData.status].color}} text-lg font-bold">
                                 {{invoiceStatus[invoiceData.status].label}}
-                            </span>
+                            </span><br/>
+                            <span [innerHTML]="checkInvoice(invoiceData)"></span>
                         </h6>
                     </div>
                 </div>
@@ -108,7 +109,7 @@
                 </div>
             </div>
             <div class="w-full text-center mb-3 mt-2">
-                <div *ngIf="!invoiceData.nfseAttachment" class="flex justify-center">
+                <div *ngIf="!invoiceData.nfseAttachment && isOpen(invoiceData)" class="flex justify-center">
                     <input (change)="uploadNFSeFile($event)" id="upload" type="file">
 
                     <label for="upload">
@@ -118,12 +119,69 @@
                     </label>
                 </div>
 
+                <div *ngIf="!isOpen(invoiceData)" class="text-center text-red-500">
+                    Fatura Arquivada
+                </div>
+
                 <div *ngIf="invoiceData.nfseAttachment" class="flex justify-center">
                     <a (click)="viewNFSe(invoiceData.nfseAttachment)"
                         class="text-indigo-600 w-full mb-6 bg-transparent border border-solid border-indigo-custom font-bold uppercase text-xs px-4 py-2 rounded outline-none">
                         <i class="fas fa-cloud-download-alt mr-2"></i> Ver Nota Fiscal
                     </a>
                 </div>
+            </div>
+        </div>
+
+        <div *ngIf="isHourly()"
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-1 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-600 text-sm font-semibold">
+                            <span class="uppercase">Horas Trabalhadas</span><br />
+                            <small class="text-blueGray-500 font-normal" style="font-size: 10px;">Adicione as horas trabalhadas
+                                referentes a esta fatura</small><br />
+                            <p *ngIf="contractData" class="text-xs text-left text-blueGray-500 font-normal">
+                                *maxímo de horas permitido: <b>{{contractData?.paymentConfig?.maxHoursPerCycle}}h</b>
+                            </p>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!editingHoursWork" class="flex-auto py-6 px-6">
+                <form>
+                    <div class="relative w-full mb-1 mt-1">
+                        <input type="number" #hoursWorked [value]="invoiceData?.hoursToInvoice"
+                            class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-600 bg-white rounded text-sm shadow w-full"
+                            placeholder="Insira as horas trabalhadas" />
+                    </div>
+                </form>
+                <div class="text-left mt-4 save-block">
+                    <button (click)="editingHoursWork = !editingHoursWork"
+                        class="cancel-btn text-xs font-bold uppercase px-2 py-2 rounded shadow outline-none mb-1"
+                        type="button">
+                        Cancelar
+                    </button>
+                    <button style="margin-left: 10px;" (click)="editHours(hoursWorked.value)"
+                        class="bg-indigo-500 text-white text-xs font-bold uppercase px-2 py-2 rounded shadow outline-none mr-1 mb-1"
+                        type="button">
+                        Salvar
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="editingHoursWork" class="flex-auto py-6 px-6">
+                <h4 *ngIf="invoiceData?.hoursToInvoice"
+                    class="text-2xl text-center mb-4 font-semibold text-blueGray-800 lowercase">
+                    {{invoiceData?.hoursToInvoice}} <small class="font-normal text-md">horas</small>
+                </h4>
+                <h4 *ngIf="!invoiceData?.hoursToInvoice" class="text-sm text-center mb-5 text-blueGray-800 uppercase">
+                    Nenhuma hora configurada
+                </h4>
+                <button (click)="editingHoursWork = !editingHoursWork"
+                    class="cancel-btn text-xs font-bold uppercase px-2 py-2 rounded shadow outline-none mb-1"
+                    type="button">
+                    <i class="fas fa-edit"></i>&ensp;Editar
+                </button>
             </div>
         </div>
     </div>

@@ -66,7 +66,7 @@ export class ContractService {
     return this.supabaseService.supabase
       .from('contracts')
       .update({
-        status: 'SELF_UPLOADED_WAITING_CONTRACTOR',
+        status: 'WAITING_CONTRACTOR',
         paymentConfig: paymentConfigId
       })
       .eq("id", contractId)
@@ -106,7 +106,7 @@ export class ContractService {
     return this.supabaseService.supabase
       .from('contracts')
       .update({
-        status: 'SELF_UPLOADED_WAITING_UPLOAD_CONTRACT',
+        status: 'WAITING_UPLOAD_CONTRACT',
         inviteContractor: inviteContractorId
       })
       .eq("id", contractId)
@@ -131,6 +131,16 @@ export class ContractService {
       .eq("id", contractId)
   }
 
+  async archiveContract(id: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contracts')
+      .update({
+        statusCode: 400,
+        status: 'ARCHIVED',
+        archivedAt: new Date()
+      })
+      .eq("id", id)
+  }
 
   // CONTRACTOR AREA
   async getAllByContractor(userId: string): Promise<any> {

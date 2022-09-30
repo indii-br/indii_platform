@@ -82,7 +82,7 @@
                     placeholder="Insira o valor (R$)" />
 
                 <h6 *ngIf="rateToCheck" class="text-blueGray-600 text-sm mt-3 mb-6 font-bold capitalize">
-                    Sob Consulta
+                    Combinar com contratado
                 </h6>
             </div>
 
@@ -99,13 +99,13 @@
                 </ng-select>
             </app-editable-input-block>
 
-            <app-editable-input-block [value]="jobData?.meetingTimeType" title="Horários para Reuniões"
+            <!-- <app-editable-input-block [value]="jobData?.meetingTimeType" title="Horários para Reuniões"
                 [editing]="editingNewJob">
                 <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedMeetingTimeType"
                     (change)="setValue('meetingTimeType', selectedMeetingTimeType)">
                     <ng-option *ngFor="let mType of meetingTimeType" [value]="mType">{{mType}}</ng-option>
                 </ng-select>
-            </app-editable-input-block>
+            </app-editable-input-block> -->
 
         </app-editable-painel>
     </div>
@@ -117,7 +117,7 @@
                     <ul class="w-full list-disc text-blueGray-600 text-xs">
                         <li><strong>Criado em:</strong> {{jobData.created_at | date : 'dd/MM/yyyy' }}</li>
                         <li><strong>Status:</strong> <span
-                                class="{{jobStatusList[jobData.status].color}} text-sm font-semibold ml-2">{{jobStatusList[jobData.status].label}}</span>
+                                class="{{jobStatusList[jobData.statusCode].color}} text-sm font-semibold ml-2">{{jobStatusList[jobData.statusCode].label}}</span>
                         </li>
                         <li *ngIf="jobData.status !== 'ARCHIVED'" class="mt-5">
                             <button (click)="closeJob(jobData.id)" style="background-color: tomato;"

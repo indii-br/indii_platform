@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { URL_INDII_API } from '../utils/constants';
 import { AuthService } from './auth.service';
 import { SupabaseService } from './supabase.service';
 
@@ -9,10 +11,16 @@ export class UserService {
 
   constructor(
     private supabaseService: SupabaseService,
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient
   ) { }
 
   async getUserByUUID(): Promise<any> {
+    if (!this.authService.user) {
+      window.location.replace("/")
+      return
+    }
+
     return this.supabaseService.supabase
       .from('users')
       .select("*")
@@ -31,5 +39,13 @@ export class UserService {
     return this.supabaseService.supabase
       .from('users')
       .insert(userToSave)
+  }
+
+  async getOnboardingData(userId: string) {
+    return this.http
+      .get(`${URL_INDII_API}/onboarding/${userId}`, {
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .toPromise()
   }
 }

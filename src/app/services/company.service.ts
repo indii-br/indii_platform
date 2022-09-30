@@ -20,6 +20,13 @@ export class CompanyService {
       .single()
   }
 
+  async getCompanyByContractor(contractorId): Promise<any> {
+    return this.supabaseService.supabase
+      .from('companies')
+      .select("*")
+      .eq('owner', contractorId)
+  }
+
   async updateCompaniesData(companiesToUpdate: any, id: string): Promise<any> {
     return this.supabaseService.supabase
       .from('companies')

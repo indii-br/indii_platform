@@ -44,10 +44,10 @@ export class DashContractorInvoicesComponent implements OnInit {
 
   async getAllInvoicesByContractor(company: any){
     if(company){
-      const {data: myInvoicesList, error} = await this.invoiceService.getInvoicetByContractor(company.id);
+      const {data: myInvoicesList, error} = await this.invoiceService.getInvoicesByContractor(company.id);
       this.loading = false;
       if(myInvoicesList){
-        this.myInvoicesList = myInvoicesList;
+        this.myInvoicesList = myInvoicesList.slice(0, 5);
         this.myInvoicesListSize = myInvoicesList.length;
       }
 

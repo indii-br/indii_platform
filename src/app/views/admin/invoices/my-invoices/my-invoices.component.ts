@@ -43,7 +43,7 @@ export class MyInvoicesComponent implements OnInit {
 
   async getAllInvoicesByContractor(company: any){
     if(company){
-      const {data: myInvoicesList, error} = await this.invoiceService.getInvoicetByContractor(company.id);
+      const {data: myInvoicesList, error} = await this.invoiceService.getInvoicesByContractor(company.id);
       this.loading = false;
       if(myInvoicesList){
         this.myInvoicesList = myInvoicesList;
@@ -54,5 +54,9 @@ export class MyInvoicesComponent implements OnInit {
         this.toastrService.error("Erro ao recuperar seus pagamentos!")
       }
     }
+  }
+
+  isOpen(invoice: any) {
+    return invoice.statusCode < 400;
   }
 }

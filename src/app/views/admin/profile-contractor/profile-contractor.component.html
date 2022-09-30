@@ -1,10 +1,24 @@
-<div *ngIf="loaded" class="flex flex-wrap h-screen">
+<div *ngIf="loaded" class="flex flex-wrap">
     <div class="w-full px-4">
-        <app-editable-painel [editing]="editingProfile" title="Meu Perfil" [hideCancel]="setHideCancel()" (isEditing)="setEditing($event)"
-            (onSave)="updateOrSaveProfile()">
+        <app-editable-painel [editing]="editingProfile" title="Meu Perfil" [hideCancel]="setHideCancel()"
+            (isEditing)="setEditing($event)" (onSave)="updateOrSaveProfile()">
 
-            <app-editable-input-block [value]="profileData?.linkedin" title="Linkedin"
-                [editing]="editingProfile">
+            <div class="w-full flex flex-wrap flex-row edit-img-block">
+                <div class="flex">
+                    <img alt="..." [src]="getAvatarImg()"
+                    class="shadow-xl rounded-full h-auto border-none mb-36 max-w-150-px" />
+                </div>
+
+                <div class="flex self-center">
+                    <input (change)="uploadedAvatar($event)" id="upload" type="file">
+
+                    <label for="upload">
+                        <span class="uppercase"><i class="fas fa-camera"></i>&emsp;Alterar foto</span>
+                    </label>
+                </div>
+            </div>
+
+            <app-editable-input-block [value]="profileData?.linkedin" title="Linkedin" [editing]="editingProfile">
                 <input type="text" [value]="profileData?.linkedin" #linkedin
                     (change)="setValue('linkedin', linkedin?.value)"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"

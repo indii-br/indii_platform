@@ -34,11 +34,12 @@ import { ContractorDocumentsComponent } from "./views/admin/contractor-documents
 import { MyDocumentsComponent } from "./views/admin/contractor-documents/my-documents/my-documents.component";
 import { BankAccountsComponent } from "./views/admin/bank-accounts/bank-accounts.component";
 import { InvoiceComponent } from "./views/admin/invoices/invoice/invoice.component";
-import { BackofficeComponent } from "./views/backoffice/backoffice.component";
-import { PayInvoiceComponent } from "./views/admin/invoices/pay-invoice/pay-invoice.component";
 import { MyContractComponent } from "./views/admin/contracts-contractor/my-contract/my-contract.component";
 import { ContractorInvoiceComponent } from "./views/admin/invoices/contractor-invoice/contractor-invoice.component";
 import { MyInvoicesComponent } from "./views/admin/invoices/my-invoices/my-invoices.component";
+import { BillingComponent } from "./views/admin/billing/billing.component";
+import { SquadsComponent } from "./views/admin/squads/squads.component";
+import { ViewDetailsBillComponent } from "./views/admin/billing/view-details-bill/view-details-bill.component";
 
 const routes: Routes = [
   // admin views
@@ -64,10 +65,12 @@ const routes: Routes = [
       { path: "faturas", component: InvoicesComponent },
       { path: "invoice/:id", component: InvoiceComponent },
       { path: "meus-pagamentos", component: MyInvoicesComponent },
-      { path: "pagar-fatura/:key", component: PayInvoiceComponent },
       { path: "documentos", component: ContractorDocumentsComponent },
       { path: "minhas-contas", component: BankAccountsComponent },
       { path: "meus-documentos", component: MyDocumentsComponent },
+      { path: "billing", component: BillingComponent },
+      { path: "billing-details/:id", component: ViewDetailsBillComponent },
+      { path: "squads", component: SquadsComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ],
   },
@@ -92,7 +95,6 @@ const routes: Routes = [
     },
   // no layout views
   { path: "public-profile", component: PublicProfileComponent },
-  { path: "backoffice", component: BackofficeComponent },
   { path: "landing", component: LandingComponent },
   { path: "", component: SiteComponent },
   { path: "**", redirectTo: "", pathMatch: "full" },

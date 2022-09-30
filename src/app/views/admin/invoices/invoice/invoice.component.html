@@ -17,14 +17,21 @@
                                 <i class="fas fa-hand-holding-usd"></i>&ensp;Pagar Fatura
                             </a> -->
 
-                            <a class="btn-indico-with-border bg-transparent border border-solid font-bold uppercase text-sm px-6 py-3 rounded outline-none mr-1 mb-1 ease-linear">
+                            <a (click)="approveInvoice(invoiceData.id)" *ngIf="invoiceData.statusCode <= 200"
+                                class="btn-green-with-border bg-transparent border border-solid font-bold uppercase text-sm px-6 py-3 rounded outline-none mr-1 mb-1 ease-linear">
                                 Aprovar Fatura
                             </a>
 
-                            <a *ngIf="invoiceData.paidAt" (click)="goToReceipt(invoiceData)"
+                            <a (click)="removeApproval(invoiceData.id)" *ngIf="invoiceData.statusCode === 210"
+                                style="font-size: 10px"
+                                class="btn-indico-with-border bg-transparent border border-solid font-bold uppercase text-xs px-3 py-1 rounded outline-none mr-1 mb-1 ease-linear">
+                                Remover aprovação
+                            </a>
+
+                            <!-- <a *ngIf="invoiceData.paidAt" (click)="goToReceipt(invoiceData)"
                                 class="text-white cursor-pointer bg-indigo-500 text-lg font-bold uppercase px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
                                 <i class="fas fa-receipt"></i>&ensp;Ver Comprovante
-                            </a>
+                            </a> -->
                         </h6>
                     </div>
                 </div>
@@ -62,10 +69,24 @@
                             {{paymentCyclesValues[invoiceData.contract.paymentConfig.paymentCycle]}}</strong>
                     </p>
 
+                    <p *ngIf="isHourly()" class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>valor hora:</span><br />
+                        <strong class="pt-1 block">R${{invoiceData.contract.paymentConfig.rate}}.00</strong>
+                    </p>
+
                     <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
                         <span>Descrição:</span><br />
                         <strong class="pt-1 block break-words whitespace-pre-wrap"
                             [innerHTML]="invoiceData.description"></strong>
+                    </p>
+
+                    <p *ngIf="invoiceData.statusCode < 400"
+                        class="danger-zone-block uppercase text-xs font-normal mb-4">
+                        <strong>Danger Zone:</strong><br />
+                        <a (click)="archiveInvoice(invoiceData.id)"
+                            class="danger-zone-btn bg-transparent inline-flex border border-solid font-bold uppercase text-xs px-4 py-2 mt-2 rounded outline-none ease-linear">
+                            Arquivar Fatura
+                        </a>
                     </p>
                 </div>
             </div>
@@ -80,8 +101,12 @@
                         <h6 class="text-blueGray-700 uppercase text-xs font-semibold">
                             <small>Status:</small><br />
                             <span class="{{invoiceStatus[invoiceData.status].color}} text-lg font-bold">
-                                {{invoiceStatus[invoiceData.status].label}}
-                            </span>
+                                {{invoiceStatus[invoiceData.status].label}}<br />
+                                <small class="text-xs font-normal lowercase">
+                                    {{invoiceStatus[invoiceData.status].description}}
+                                </small>
+                            </span><br />
+                            <span [innerHTML]="checkInvoice(invoiceData)"></span>
                         </h6>
                     </div>
                 </div>
@@ -89,7 +114,7 @@
         </div>
         <div
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
-            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-3 border-0">
                 <div class="flex flex-wrap items-center">
                     <div class="relative w-full px-1 max-w-full flex-grow flex-1">
                         <h6 class="text-blueGray-700 uppercase text-sm font-semibold">
@@ -119,27 +144,46 @@
 
         <div
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
-            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+            <div class="rounded-lg bg-white mb-0 px-6 py-6 border-0">
                 <div class="flex flex-wrap items-center">
-                    <div class="relative w-full px-1 max-w-full flex-grow flex-1">
-                        <h6 class="text-blueGray-600 text-sm font-semibold">
-                            <span class="uppercase">Nota Fiscal</span><br />
-                            <small class="text-blueGray-500" style="font-size: 10px;">Nota Fiscal de Serviço ref. a essa
-                                fatura</small>
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-700 uppercase text-xs font-normal">
+                            <small>Nota Fiscal de Serviço ref. a essa
+                                fatura:</small><br />
+                            <div class="text-lg font-bold">
+                                <div *ngIf="invoiceData.nfseAttachment" class="flex justify-center">
+                                    <a (click)="viewNFSe(invoiceData.nfseAttachment)"
+                                        class="text-indigo-600 w-full mb-6 bg-transparent border border-solid border-indigo-custom font-bold uppercase text-xs px-4 py-2 rounded outline-none">
+                                        <i class="fas fa-cloud-download-alt mr-2"></i> Ver Nota Fiscal
+                                    </a>
+                                </div>
+                                <span *ngIf="!invoiceData.nfseAttachment" class="uppercase text-xs text-blueGray-600">
+                                    Aguardando Nota Fiscal
+                                </span>
+                            </div>
                         </h6>
                     </div>
                 </div>
             </div>
-            <div class="w-full text-center mb-3 mt-2">
-                <div *ngIf="!invoiceData.nfseAttachment" class="flex justify-center">
-                    <span class="font-normal p-3 text-orange-500">Aguardando Nota Fiscal!</span>
-                </div>
+        </div>
 
-                <div *ngIf="invoiceData.nfseAttachment" class="flex justify-center">
-                    <a (click)="viewNFSe(invoiceData.nfseAttachment)"
-                        class="text-indigo-600 w-full mb-6 bg-transparent border border-solid border-indigo-custom font-bold uppercase text-xs px-4 py-2 rounded outline-none">
-                        <i class="fas fa-cloud-download-alt mr-2"></i> Ver Nota Fiscal
-                    </a>
+        <div *ngIf="isHourly()"
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-lg bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-700 uppercase text-xs font-normal">
+                            <small>Horas Ref. a Fatura:</small><br />
+                            <div class="text-lg font-bold">
+                                <span *ngIf="invoiceData?.hoursToInvoice">
+                                    {{invoiceData?.hoursToInvoice}} <small class="font-normal text-md">horas</small>
+                                </span>
+                                <span *ngIf="!invoiceData?.hoursToInvoice" class="uppercase text-xs text-blueGray-600">
+                                    Nenhuma hora configurada
+                                </span>
+                            </div>
+                        </h6>
+                    </div>
                 </div>
             </div>
         </div>

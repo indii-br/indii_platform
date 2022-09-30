@@ -6,7 +6,10 @@ import { StorageService } from 'src/app/services/storage.service';
 import { WepayoutService } from 'src/app/services/wepayout.service';
 import { INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
 import { convertArrayInObject } from 'src/app/utils/helpers';
+import { CHECK_INVOICE } from 'src/app/utils/invoicesUtil';
 import { environment } from 'src/environments/environment';
+
+declare var Swal: any;
 
 @Component({
   selector: 'app-invoice',
@@ -16,6 +19,7 @@ import { environment } from 'src/environments/environment';
 export class InvoiceComponent implements OnInit {
 
   invoiceData: any;
+  checkInvoice: any = CHECK_INVOICE;
   wePayoutInvoiceData: any;
   invoiceID: string;
   invoiceStatus: any = INVOICE_STATUS;
@@ -93,7 +97,8 @@ export class InvoiceComponent implements OnInit {
     window.open(`${environment.wepayoutInvoicePage}${wePayoutKey}`)
   }
 
-  goToReceipt(invoice: any) {
+  isHourly() {
+    return this.invoiceData.contract?.contractType === 'HOURLY';
   }
 
   async viewNFSe(fileToDonwload) {
@@ -108,6 +113,67 @@ export class InvoiceComponent implements OnInit {
     if (file) {
       window.open(file.signedURL)
     }
+  }
+
+  async approveInvoice(id: string) {
+    const { data, error } = await this.invoiceService.approveInvoice(id)
+
+    if (data) {
+      this.getInvoiceById(id)
+      this.toastrService.success('Fatura aprovada com sucesso!')
+    }
+    if (error) {
+      console.log(error)
+      this.toastrService.error('Erro ao aprovar fatura!')
+    }
+  }
+
+  async removeApproval(id: string) {
+    Swal.fire({
+      title: 'Você tem certeza disso?',
+      text: "Ao remover a aprovação a fatura volta para EM ABERTO e sai do ciclo de cobranças!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, remover aprovação!',
+      cancelButtonText: 'Não'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data, error } = await this.invoiceService.removeApprovalInvoice(id)
+
+        if (data) {
+          this.getInvoiceById(id)
+          this.toastrService.success('Aprovação removida com sucesso!')
+        }
+        if (error) {
+          console.log(error)
+          this.toastrService.error('Erro ao remover aprovação fatura!')
+        }
+      }
+    })
+  }
+
+  async archiveInvoice(id: string) {
+    Swal.fire({
+      title: 'Você tem certeza disso?',
+      text: "Para reativar a fatura arquivada entre em contato com o suporte!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, arquivar fatura!',
+      cancelButtonText: 'Não'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data, error } = await this.invoiceService.archiveInvoice(id)
+
+        if (data) {
+          this.getInvoiceById(id)
+          this.toastrService.success('Arquivado com sucesso!')
+        }
+        if (error) {
+          console.log(error)
+          this.toastrService.error('Erro ao arquivar fatura!')
+        }
+      }
+    })
   }
 
 }

@@ -76,7 +76,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { userReducer } from "./stores/user.reducer";
 import { profileReducer } from "./stores/profile.reducer";
-
+import { configReducer } from "./stores/config.reducer";
 
 import { HeaderStatsContractorComponent } from './components/headers/header-stats-contractor/header-stats-contractor.component';
 import { JobsContractorComponent } from './views/admin/jobs-contractor/jobs-contractor.component';
@@ -95,15 +95,20 @@ import { DashInvoicesComponent } from './views/admin/dashboard/dash-invoices/das
 import { DashAppliesComponent } from './views/admin/dashboard/dash-applies/dash-applies.component';
 import { DashHolidaysComponent } from './views/admin/dashboard/dash-holidays/dash-holidays.component';
 import { DashContractsPendingComponent } from './views/admin/dashboard/dash-contracts-pending/dash-contracts-pending.component';
-import { BackofficeComponent } from './views/backoffice/backoffice.component';
-import { NewClientComponent } from './views/backoffice/new-client/new-client.component';
-import { PayInvoiceComponent } from './views/admin/invoices/pay-invoice/pay-invoice.component';
 import { MyContractComponent } from './views/admin/contracts-contractor/my-contract/my-contract.component';
 import { DashContractorInvoicesComponent } from './views/admin/dashboard/dash-contractor-invoices/dash-contractor-invoices.component';
 import { DashContractorOnboardingComponent } from './views/admin/dashboard/dash-contractor-onboarding/dash-contractor-onboarding.component';
 import { ContractorInvoiceComponent } from './views/admin/invoices/contractor-invoice/contractor-invoice.component';
 import { MyInvoicesComponent } from "./views/admin/invoices/my-invoices/my-invoices.component";
 import { CreateContractorComponent } from './views/signup/create-contractor/create-contractor.component';
+import { BillingComponent } from './views/admin/billing/billing.component';
+import { SquadsComponent } from './views/admin/squads/squads.component';
+import { ContractorMenuComponent } from './components/sidebar/contractor-menu/contractor-menu.component';
+import { ClientMenuComponent } from './components/sidebar/client-menu/client-menu.component';
+import { ViewDetailsBillComponent } from './views/admin/billing/view-details-bill/view-details-bill.component';
+import { JobRowComponent } from './views/admin/jobs-contractor/job-row/job-row.component';
+import { PartnerRowComponent } from './views/admin/jobs-contractor/partner-row/partner-row.component';
+import { JobWrapperComponent } from './views/admin/jobs-contractor/job-wrapper/job-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -171,15 +176,20 @@ import { CreateContractorComponent } from './views/signup/create-contractor/crea
     DashAppliesComponent,
     DashHolidaysComponent,
     DashContractsPendingComponent,
-    BackofficeComponent,
-    NewClientComponent,
-    PayInvoiceComponent,
     MyInvoicesComponent,
     MyContractComponent,
     DashContractorInvoicesComponent,
     DashContractorOnboardingComponent,
     ContractorInvoiceComponent,
     CreateContractorComponent,
+    BillingComponent,
+    SquadsComponent,
+    ContractorMenuComponent,
+    ClientMenuComponent,
+    ViewDetailsBillComponent,
+    JobRowComponent,
+    PartnerRowComponent,
+    JobWrapperComponent,
   ],
   imports: [
     BrowserModule, 
@@ -195,7 +205,8 @@ import { CreateContractorComponent } from './views/signup/create-contractor/crea
     StoreModule.forRoot({ 
       user: userReducer,
       profile: profileReducer,
-      company: companyReducer
+      company: companyReducer,
+      config: configReducer,
     })
   ],
   providers: [],

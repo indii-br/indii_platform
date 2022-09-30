@@ -2,17 +2,22 @@
   <div class="px-4 md:px-10 mx-auto w-full">
     <div>
       <div *ngIf="!loading" class="flex flex-wrap">
-        <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
           <app-card-stats isMoney="true" statSubtitle="Em Aberto" statTitle="{{dashInfos.PENDING.value}}"
             statPercentColor="{{dashInfos.PENDING.color}}" statDescripiron="Faturas Abertas" statIconName="fas {{dashInfos.PENDING.icon}}"
             statIconColor="{{dashInfos.PENDING.bg}}"></app-card-stats>
         </div>
-        <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
-          <app-card-stats isMoney="true" statSubtitle="Concluído" statTitle="{{dashInfos.PAID.value}}"
-            statPercentColor="{{dashInfos.PAID.color}}" statDescripiron="Pagamentos Concluidos ({{getMonth()}})" statIconName="fas {{dashInfos.PAID.icon}}"
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <app-card-stats isMoney="true" statSubtitle="Aprovados" statTitle="{{dashInfos.APPROVED.value}}"
+            statPercentColor="{{dashInfos.APPROVED.color}}" statDescripiron="Faturas Aprovadas" statIconName="fas {{dashInfos.APPROVED.icon}}"
+            statIconColor="{{dashInfos.APPROVED.bg}}"></app-card-stats>
+        </div>
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <app-card-stats isMoney="true" statSubtitle="Concluídos" statTitle="{{dashInfos.PAID.value}}"
+            statPercentColor="{{dashInfos.PAID.color}}" statDescripiron="Pagamentos Concluídos ({{getMonth()}})" statIconName="fas {{dashInfos.PAID.icon}}"
             statIconColor="{{dashInfos.PAID.bg}}"></app-card-stats>
         </div>
-        <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
           <app-card-stats statSubtitle="Oportunidades" statTitle="{{dashInfos.JOBS.value}}"
             statPercentColor="{{dashInfos.JOBS.color}}" statDescripiron="Oportunidades Abertas" statIconName="fas {{dashInfos.JOBS.icon}}"
             statIconColor="{{dashInfos.JOBS.bg}}"></app-card-stats>

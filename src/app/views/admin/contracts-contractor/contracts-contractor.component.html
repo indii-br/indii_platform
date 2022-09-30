@@ -51,7 +51,6 @@
                                 class="font-normal border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 {{contract.contractorRole}}<br />
                                 <small>{{contract.seniorityLevel}}</small><br />
-                                <small>({{contract.contractName}})</small>
                             </td>
                             <td
                                 class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -60,12 +59,10 @@
                                 <span *ngIf="contract.paymentConfig"
                                     style="font-weight: bold;">{{contract.paymentConfig.rate | currency :
                                     'R$'}}</span><br />
-                                <span class="font-normal" *ngIf="contract.paymentConfig">
-                                    {{paymentCyclesValues[contract.paymentConfig.paymentCycle]}} -
-                                    {{rateTypes[contract.contractType].label}}<br />
-                                    <small style="font-size: 9px;">Venc.:
-                                        <strong>{{dueDateLimitValues[contract.paymentConfig.dueDate]}}</strong></small>
-                                </span>
+                                <span class="font-normal">{{rateTypes[contract.contractType].label}}</span><br />
+                                <small class="font-normal" *ngIf="contract.paymentConfig">
+                                    {{paymentCyclesValues[contract.paymentConfig.paymentCycle]}}
+                                </small>
                             </td>
                             <td
                                 class="font-semibold border-t-0 text-sm {{contractStatus[contract.status].color}} px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">

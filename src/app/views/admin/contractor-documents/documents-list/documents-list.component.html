@@ -12,7 +12,17 @@
         <small>CPF: {{contract.contractor.cpf}}</small><br />
     </span>
 </td>
+<td class="font-normal border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+    <span *ngIf="!contractorCompany" class="withoutDocument">
+        <i class="fas fa-times mr-1"></i>
+        Sem Empresa
+    </span>
 
+    <span *ngIf="contractorCompany" class="ml-3">
+        {{contractorCompany.razaoSocial}}<br />
+        <small>CNPJ: {{contractorCompany.cnpj}}</small><br />
+    </span>
+</td>
 <td class="font-normal border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
     <span *ngIf="!documentData.idDocument" class="withoutDocument">
         <i class="fas fa-folder-open mr-1"></i>

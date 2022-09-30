@@ -63,8 +63,8 @@
                         <span [innerHTML]="checkInvoice(invoice)"></span>
                     </td>
                     <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <a style="font-size: 11px;"
-                            class="text-indigo-600 text-xs font-semibold cursor-pointer">SOLICITAR</a>
+                        <a style="font-size: 11px;" [routerLink]="['/admin/m/invoice', invoice.id]" 
+                            class="text-indigo-600 text-xs font-semibold cursor-pointer">ACESSAR</a>
                     </td>
                 </tr>
             </tbody>

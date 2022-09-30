@@ -48,9 +48,16 @@ export class JobService {
 
   // CONTRACTOR AREA
 
-  async getAllOpen(){
+  async getAll(){
     return this.supabaseService.supabase
       .from('jobs')
       .select("*, company!inner(name)")
+  }
+
+  async getAllOpen(){
+    return this.supabaseService.supabase
+      .from('jobs')
+      .select("*, company:companies(name), partner:partners(name)")
+      .eq("statusCode", 200)
   }
 }

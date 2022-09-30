@@ -1,0 +1,96 @@
+<div *ngIf="loaded" class="w-full h-screen mb-4 px-4">
+    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
+        <div class="rounded-t mb-0 px-4 py-3 border-0">
+            <div class="flex flex-wrap items-center">
+                <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                    <h3 class="font-semibold uppercase text-lg text-blueGray-700">
+                        Cobranças
+                    </h3>
+                </div>
+                <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                    <!-- <button style="background-color: #ececec;"
+                    class="text-blueGray-500 text-xs font-semibold px-3 py-1 rounded outline-none mr-1 mb-1"
+                    type="button">
+                    Ver concluidos e arquivados
+                </button> -->
+                </div>
+            </div>
+        </div>
+        <div class="block w-full overflow-x-auto">
+            <table class="items-center w-full bg-transparent border-collapse">
+                <thead>
+                    <tr>
+                        <th
+                            class="px-1 text-center align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            ID
+                        </th>
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            Valor
+                        </th>
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            Vencimento
+                        </th>
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            Status
+                        </th>
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            Itens
+                        </th>
+                        <th
+                            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let billing of billingList">
+                        <td
+                            class="font-normal cursor-pointer text-center border-t-0 px-1 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            #{{billing.id}}
+                        </td>
+                        <td
+                            class="border-t-0 text-md font-semibold px-6 align-middle border-l-0 border-r-0 whitespace-nowrap p-4">
+                            <span class="font-semibold text-sm">{{billing.amount | currency : 'R$'}}</span><br />
+                        </td>
+                        <td
+                            class="border-t-0 font-normal px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            <span class="{{getDueDateColor(billing.dueDate)}}">{{billing.dueDate | date: 'dd MMMM,
+                                yyyy': '' : 'pt-BR' }}</span>
+                        </td>
+                        <td
+                            class="border-t-0 uppercase font-bold px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            <span>{{billingStatusCode[billing.statusCode]}}</span>
+                        </td>
+                        <td
+                            class="border-t-0 uppercase font-normal px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            <span *ngIf="billing.invoicesToBill">
+                                <strong>{{billing.invoicesToBill.length}}</strong><small>&ensp;Faturas</small>
+                            </span><br />
+                            <span *ngIf="billing.squadsToBill">
+                                <strong>{{billing.squadsToBill.length}}</strong><small>&ensp;Squads</small>
+                            </span>
+                        </td>
+                        <td
+                            class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                            <a [routerLink]="['/admin/billing-details', billing.id]"
+                                class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-4 mb-1">
+                                Ver detalhes
+                            </a>
+                            <a target="_blank" [href]="billing.invoiceUrl"
+                                class="text-white bg-teal-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mb-1">
+                                Pagar Cobrança
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 *ngIf="!billingList || billingList.length === 0"
+                class="text-blueGray-500 text-center p-8 font-semibold text-xl">
+                Você não tem nenhuma cobrança em aberto
+            </h2>
+        </div>
+    </div>
+</div>

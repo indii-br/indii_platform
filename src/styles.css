@@ -2,6 +2,12 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import '~ngx-toastr/toastr';
 
+.icon-wrap{
+    width: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .disabled{
     pointer-events: none;
@@ -54,8 +60,16 @@
     color:#d86c00!important;
 }
 
+.dash-stats-green-text{
+    color:rgb(13, 148, 136, .9)!important;
+}
+
 .dash-stats-default-bg{
     background:#fcdab7!important;
+}
+
+.dash-stats-green-bg{
+    background:rgb(13, 148, 136, .2)!important;
 }
 
 .green-btn{
@@ -99,3 +113,19 @@
     width: 80%!important;
     margin: 30px auto;
 }
+
+.danger-zone-block {
+    color: tomato;
+    border-top: 1px solid rgba(255, 99, 71, 0.36);
+    padding-top: 15px;
+}
+
+.danger-zone-btn{
+    border: 2px solid tomato!important;
+    cursor: pointer;
+}
+
+.danger-zone-btn:hover{
+    color: white;
+    background: tomato;
+}   

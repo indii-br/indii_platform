@@ -1,0 +1,76 @@
+<ul class="md:flex-col md:min-w-full flex flex-col list-none">
+    <li class="items-center">
+        <a [routerLink]="['/admin/dashboard']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #adminDashboard="routerLinkActive" [ngClass]="
+            adminDashboard.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+
+            <span class="icon-wrap">
+                <i class="fas fa-home text-sm" [ngClass]="
+                adminDashboard.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Painel
+        </a>
+    </li>
+
+    <li *ngIf="isJobsEnabled()" class="items-center">
+        <a [routerLink]="['/admin/oportunidades-abertas']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #jobContractor="routerLinkActive" [ngClass]="
+            jobContractor.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+            <span class="icon-wrap">
+                <i class="fas fa-briefcase text-sm" [ngClass]="
+                jobContractor.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Oportunidades
+        </a>
+    </li>
+
+    <li *ngIf="isContractsEnabled()" class="items-center">
+        <a [routerLink]="['/admin/meus-contratos']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #myContractContractor="routerLinkActive" [ngClass]="
+            myContractContractor.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+            <span class="icon-wrap">
+                <i class="fas fa-file-contract text-sm" [ngClass]="
+                myContractContractor.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Contratos
+        </a>
+    </li>
+
+    <li *ngIf="isComplianceEnabled()" class="items-center">
+        <a [routerLink]="['/admin/meus-documentos']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #adminDocuments="routerLinkActive" [ngClass]="
+            adminDocuments.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+            <span class="icon-wrap">
+                <i class="fas fa-id-card text-sm" [ngClass]="
+                adminDocuments.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Documentos
+        </a>
+    </li>
+
+    <li *ngIf="isInvoiceEnabled()" class="items-center">
+        <a [routerLink]="['/admin/meus-pagamentos']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #adminMyInvoices="routerLinkActive" [ngClass]="
+            adminMyInvoices.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+            <span class="icon-wrap">
+                <i class="fas fa-briefcase text-sm text-blueGray-300"></i>
+            </span>
+            Pagamentos
+        </a>
+    </li>
+</ul>

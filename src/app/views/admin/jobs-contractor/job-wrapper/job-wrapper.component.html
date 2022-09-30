@@ -1,0 +1,2 @@
+<app-job-row *ngIf="!job.partner" [job]="job"></app-job-row>
+<app-partner-row *ngIf="job.partner" [job]="job"></app-partner-row>

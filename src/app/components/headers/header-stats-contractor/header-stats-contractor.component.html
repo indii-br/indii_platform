@@ -2,21 +2,26 @@
   <div class="px-4 md:px-10 mx-auto w-full">
     <div>
       <div *ngIf="!loading" class="flex flex-wrap">
-        <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
           <app-card-stats isMoney="true" statSubtitle="Em Aberto" statTitle="{{dashInfos.PENDING.value}}"
             statPercentColor="{{dashInfos.PENDING.color}}" statDescripiron="Pagamentos em Aberto"
             statIconName="fas {{dashInfos.PENDING.icon}}" statIconColor="{{dashInfos.PENDING.bg}}"></app-card-stats>
         </div>
-        <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <app-card-stats isMoney="true" statSubtitle="Aprovados" statTitle="{{dashInfos.APPROVED.value}}"
+            statPercentColor="{{dashInfos.APPROVED.color}}" statDescripiron="Faturas Aprovadas" statIconName="fas {{dashInfos.APPROVED.icon}}"
+            statIconColor="{{dashInfos.APPROVED.bg}}"></app-card-stats>
+        </div>
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
           <app-card-stats isMoney="true" statSubtitle="Recebidos" statTitle="{{dashInfos.PAID.value}}"
             statPercentColor="{{dashInfos.PAID.color}}" statDescripiron="Pagamentos Recebidos ({{getMonth()}})"
             statIconName="fas {{dashInfos.PAID.icon}}" statIconColor="{{dashInfos.PAID.bg}}"></app-card-stats>
         </div>
-        <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
           <a [routerLink]="['/admin/oportunidades-abertas']" class="access-contract">
             <span>
               Oportunidades<br />
-              <small>Encontre novos clientes e projetos</small>
+              <small>Encontre novos clientes</small>
             </span>
           </a>
         </div>

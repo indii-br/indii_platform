@@ -1,5 +1,6 @@
 export const SELECTORS = {
     USER: "user",
     PROFILE: "profile",
-    COMPANY: "company"
+    COMPANY: "company",
+    CONFIG: "config",
 }

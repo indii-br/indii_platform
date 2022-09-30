@@ -37,4 +37,13 @@ export class StorageService {
   async getSignedNfseUrl(fileKey): Promise<any> {
     return this.supabaseService.supabase.storage.from('notas-fiscais-invoices').createSignedUrl(fileKey, 1800)
   }
+
+  async saveAvatar(file, email): Promise<any> {
+    return this.supabaseService.supabase.storage
+      .from('avatars')
+      .upload(`${email}`, file, {
+        cacheControl: '3600',
+        upsert: true
+      })
+  }
 }

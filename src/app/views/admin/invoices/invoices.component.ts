@@ -23,14 +23,14 @@ export class InvoicesComponent implements OnInit {
 
   invoiceStatus: any = INVOICE_STATUS;
   getDueDateColor: any = getDueDateColor;
-  
+
   checkInvoice: any = CHECK_INVOICE;
 
   constructor(
     private store: Store<any>,
     private invoiceService: InvoiceService,
     private toastrService: ToastrService
-    ) { }
+  ) { }
 
   async ngOnInit() {
     this.store
@@ -41,18 +41,22 @@ export class InvoicesComponent implements OnInit {
       })
   }
 
-  async getAllInvoices(company: any){
-    if(company){
-      const {data: invoicesList, error} = await this.invoiceService.getInvoicetByCompany(company.id);
+  async getAllInvoices(company: any) {
+    if (company) {
+      const { data: invoicesList, error } = await this.invoiceService.getInvoicesByCompany(company.id);
       this.loading = false;
-      if(invoicesList){
+      if (invoicesList) {
         this.invoicesList = invoicesList;
       }
 
-      if(error){
+      if (error) {
         console.error(error)
         this.toastrService.error("Erro ao recuperar Pagamentos!")
       }
     }
+  }
+
+  isOpen(invoice: any) {
+    return invoice.statusCode < 400;
   }
 }

@@ -22,6 +22,12 @@ export class HeaderStatsComponent implements OnInit {
       icon: 'fa-wind',
       bg: 'dash-stats-default-bg'
     },
+    APPROVED: {
+      value: 0,
+      color: 'dash-stats-default-text',
+      icon: 'fa-wind',
+      bg: 'dash-stats-default-bg'
+    },
     PENDING: {
       value: 0,
       color: 'dash-stats-default-text',
@@ -50,9 +56,9 @@ export class HeaderStatsComponent implements OnInit {
         const company = res?.companyData
 
         if (company) {
-          const { data: invoiceList, error: errorInvoiceList } = await this.invoiceService.getInvoicetByCompany(company.id)
+          const { data: invoiceList, error: errorInvoiceList } = await this.invoiceService.getInvoicesByCompany(company.id)
 
-          const { data: jobsList, error: errorJobsList } = await this.jobService.getAllOpen()
+          const { data: jobsList, error: errorJobsList } = await this.jobService.getAll()
 
           if (jobsList && jobsList.length !== 0) {
             this.dashInfos.JOBS.value = jobsList.length;
@@ -62,6 +68,7 @@ export class HeaderStatsComponent implements OnInit {
           if (invoiceList && invoiceList.length !== 0) {
 
             let PENDING = 0;
+            let APPROVED = 0;
             let PAID = 0;
 
             const PENDING_AMOUNT = invoiceList
@@ -88,9 +95,28 @@ export class HeaderStatsComponent implements OnInit {
               })
             }
 
+            const APPROVED_AMOUNT = invoiceList
+              .filter(invoice => {
+                return invoice.status === INVOICE_STATUS.APPROVED.status
+              })
+              .map(invoice => invoice.amount)
+
+            if (APPROVED_AMOUNT && APPROVED_AMOUNT.length !== 0) {
+              APPROVED = APPROVED_AMOUNT.reduce((previousValue, currentValue) => {
+                return parseFloat(previousValue) + parseFloat(currentValue)
+              })
+            }
+
+            if (APPROVED !== 0) {
+              this.dashInfos.APPROVED.value = APPROVED;
+              this.dashInfos.APPROVED.icon = 'fa-check';
+            }
+
             if (PAID !== 0) {
               this.dashInfos.PAID.value = PAID;
-              this.dashInfos.PAID.icon = 'fa-check';
+              this.dashInfos.PAID.icon = ' fa-dollar-sign';
+              this.dashInfos.PAID.color = 'dash-stats-green-text';
+              this.dashInfos.PAID.bg = 'dash-stats-green-bg';
             }
 
             if (PENDING !== 0) {

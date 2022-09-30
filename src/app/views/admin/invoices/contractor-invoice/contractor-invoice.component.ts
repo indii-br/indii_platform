@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { ContractService } from 'src/app/services/contract.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { SELECTORS } from 'src/app/stores/selectors';
+import { CHECK_INVOICE } from 'src/app/utils/invoicesUtil';
 import { InvoiceService } from '../../../../services/invoice.service';
 import { INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from '../../../../utils/constants';
 import { convertArrayInObject } from '../../../../utils/helpers';
@@ -17,20 +19,24 @@ import { convertArrayInObject } from '../../../../utils/helpers';
 export class ContractorInvoiceComponent implements OnInit {
 
   invoiceData: any;
+  checkInvoice: any = CHECK_INVOICE
+  contractData: any;
   invoiceID: string;
   invoiceStatus: any = INVOICE_STATUS;
   rateTypes: any = RATE_TYPE;
   paymentCyclesValues: any = convertArrayInObject(PAYMENT_CYCLES)
 
   documentDataNFSe: any = {};
-
   userData: any;
+
+  editingHoursWork: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private storageService: StorageService,
     private toastrService: ToastrService,
     private invoiceService: InvoiceService,
+    private contractService: ContractService,
     private toastr: ToastrService,
     private store: Store<any>
   ) { }
@@ -55,10 +61,24 @@ export class ContractorInvoiceComponent implements OnInit {
     const { data, error } = await this.invoiceService.getInvoicetById(invoiceID);
     if (data && data[0]) {
       this.invoiceData = data[0];
+      this.editingHoursWork = !!this.invoiceData?.hoursToInvoice;
+
+      this.getContractData(this.invoiceData.contract.id)
     }
 
     if (error) {
       this.toastr.error('Erro ao carregar Invoice | Fale com Suporte!')
+    }
+  }
+
+  async getContractData(contractId: string) {
+    const { data, error } = await this.contractService.getContractById(contractId);
+    if (data) {
+      this.contractData = data;
+    }
+
+    if (error) {
+      this.toastr.error('Erro ao carregar Contrato | Fale com Suporte!')
     }
   }
 
@@ -110,6 +130,42 @@ export class ContractorInvoiceComponent implements OnInit {
     if (file) {
       window.open(file.signedURL)
     }
+  }
+
+  isHourly(){
+    return this.invoiceData.contract?.contractType === 'HOURLY';
+  }
+
+  async editHours(hoursToEdit) {
+    if (!hoursToEdit || hoursToEdit === '' || hoursToEdit === 0) {
+      this.toastrService.warning("Valor inválido!");
+      return
+    }
+
+    const maxHoursLimit = this.contractData?.paymentConfig?.maxHoursPerCycle;
+    const hoursRate = this.contractData?.paymentConfig?.rate;
+
+    if (hoursToEdit > maxHoursLimit) {
+      this.toastrService.warning(`Máximo de horas permitido: ${maxHoursLimit}h`);
+      return
+    }
+
+    const { data, error } = await this.invoiceService.updateHoursWorked(hoursToEdit, hoursRate, this.invoiceID)
+
+    if (error) {
+      this.toastrService.error("Erro ao atualizar horas da fatura!");
+    }
+
+    if (data) {
+      this.toastrService.success("Fatura atualizada com sucesso!");
+
+      this.editingHoursWork = false;
+      this.getInvoiceById(this.invoiceID)
+    }
+  }
+
+  isOpen(invoice: any) {
+    return invoice.statusCode < 400;
   }
 
 }

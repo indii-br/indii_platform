@@ -1,19 +1,19 @@
 export const JOB_STATUS = {
-    IN_REVIEW: {
+    100: {
         label: 'Aguardando Revisão',
         color: 'text-orange-500'
     },
-    PUBLISHED: {
+    200: {
         label: 'Publicado',
-        color: 'text-indigo-500'
+        color: 'text-teal-500'
     },
-    ARCHIVED: {
+    300: {
+        label: 'Concluido',
+        color: 'text-teal-500'
+    },
+    400: {
         label: 'Arquivado',
         color: 'text-red-500'
-    },
-    COMPLETED: {
-        label: 'Arquivado',
-        color: 'text-teal-500'
     }
 }
 
@@ -80,20 +80,29 @@ export const CONTRACT_MODEL_TYPE = {
     }
 }
 
+export const CONTRACT_STATUS_CODE = {
+    100: 'WAITING_CONFIG_PAYMENT',
+    110: 'WAITING_CONTRACTOR',
+    120: 'WAITING_UPLOAD_CONTRACT',
+    200: 'PAYMENT_CYCLE',
+    300: 'DONE',
+    400: 'ARCHIVED',
+}
+
 export const CONTRACT_STATUS = {
-    SELF_UPLOADED_WAITING_CONFIG_PAYMENT: {
+    WAITING_CONFIG_PAYMENT: {
         label: 'Aguardando',
         sub_label: 'Configurar Forma de Pagamento',
         color: 'text-orange-500',
         position: 2
     },
-    SELF_UPLOADED_WAITING_CONTRACTOR: {
+    WAITING_CONTRACTOR: {
         label: 'Aguardando',
         sub_label: 'Profissional entrar no projeto',
         color: 'text-orange-500',
         position: 3
     },
-    SELF_UPLOADED_WAITING_UPLOAD_CONTRACT: {
+    WAITING_UPLOAD_CONTRACT: {
         label: 'Aguardando',
         sub_label: 'Upload do Contrato',
         color: 'text-orange-500',
@@ -124,15 +133,45 @@ export const USER_TYPES = {
     CONTRACTOR: 'CONTRACTOR'
 }
 
+export const INVOICE_STATUS_CODE = {
+    200: 'PAYIN_CREATED',
+    210: 'APPROVED',
+    300: 'PAYIN_PAID',
+    400: 'ARCHIVED'
+}
+
 export const INVOICE_STATUS = {
     PAYIN_CREATED: {
         status: 'PAYIN_CREATED',
         color: 'text-yellow-500',
-        label: 'Em Aberto'
+        label: 'Em Aberto',
+        description: 'Fatura aguardando aprovação',
     },
     PAYIN_PAID: {
         status: 'PAYIN_PAID',
         color: 'text-teal-500',
-        label: 'Pago'
-    }
+        label: 'Pago',
+        description: 'Fatura paga'
+    },
+    ARCHIVED: {
+        status: 'ARCHIVED',
+        color: 'text-red-500',
+        label: 'Arquivada',
+        description: 'Fatura arquivada, para restaurar entre em contato com o suporte'
+    },
+    APPROVED: {
+        status: 'APPROVED',
+        color: 'text-teal-500',
+        label: 'Aprovada',
+        description: 'Fatura aprovada, aguardando pagamento!'
+    },
 }
+
+
+export const BILLING_STATUS_CODE = {
+    200: 'EM ABERTO',
+    300: 'PAGO',
+    401: 'CANCELADO',
+}
+
+export const URL_INDII_API = 'https://web-production-9009.up.railway.app'

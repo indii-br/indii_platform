@@ -119,7 +119,7 @@ export class NewJobComponent implements OnInit {
     this.selectedProfileType = this.jobToSaveOrUpdate.profileType;
     this.selectedContractType = this.jobToSaveOrUpdate.contractType;
     this.selectedAvailabilityType = this.jobToSaveOrUpdate.availabilityType;
-    this.selectedMeetingTimeType = this.jobToSaveOrUpdate.meetingTimeType;
+    // this.selectedMeetingTimeType = this.jobToSaveOrUpdate.meetingTimeType;
     this.selectedRate = this.jobToSaveOrUpdate.rate;
   }
 
@@ -224,7 +224,7 @@ export class NewJobComponent implements OnInit {
       !jobToSave.profileType || jobToSave.profileType === '' ||
       !jobToSave.contractType || jobToSave.contractType === '' ||
       !jobToSave.availabilityType || jobToSave.availabilityType === '' ||
-      !jobToSave.meetingTimeType || jobToSave.meetingTimeType === '' ||
+      // !jobToSave.meetingTimeType || jobToSave.meetingTimeType === '' ||
       !jobToSave.rate || jobToSave.rate === ''
     )
   }

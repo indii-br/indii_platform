@@ -1,0 +1,111 @@
+<ul class="md:flex-col md:min-w-full flex flex-col list-none">
+    <li class="items-center">
+        <a [routerLink]="['/admin/dashboard']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #adminDashboard="routerLinkActive" [ngClass]="
+            adminDashboard.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+
+            <span class="icon-wrap">
+                <i class="fas fa-home text-sm" [ngClass]="
+                adminDashboard.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Painel
+        </a>
+    </li>
+
+    <li *ngIf="isContractsEnabled()" class="items-center">
+        <a [routerLink]="['/admin/novo-contrato']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #adminNewContracts="routerLinkActive" [ngClass]="
+            adminNewContracts.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+
+            <span class="icon-wrap">
+                <i class="fas fa-plus-circle text-sm" [ngClass]="
+                adminNewContracts.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Criar Contrato
+        </a>
+    </li>
+
+    <li *ngIf="isContractsEnabled()" class="items-center">
+        <a [routerLink]="['/admin/contratos']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #adminContracts="routerLinkActive" [ngClass]="
+            adminContracts.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+
+            <span class="icon-wrap">
+                <i class="fas fa-file-contract text-sm" [ngClass]="
+                adminContracts.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Contratos
+        </a>
+    </li>
+
+    <li *ngIf="isInvoiceEnabled()" class="items-center">
+        <a [routerLink]="['/admin/faturas']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #adminPayments="routerLinkActive" [ngClass]="
+                adminPayments.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+
+            <span class="icon-wrap">
+                <i class="fas fa-dollar-sign text-sm" [ngClass]="
+                adminPayments.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Faturas
+        </a>
+    </li>
+
+    <li *ngIf="isJobsEnabled()" class="items-center">
+        <a [routerLink]="['/admin/oportunidades']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #adminJobs="routerLinkActive" [ngClass]="
+            adminJobs.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+
+            <span class="icon-wrap">
+                <i class="fas fa-briefcase text-sm" [ngClass]="
+                adminJobs.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Oportunidades
+        </a>
+    </li>
+
+    <li *ngIf="isComplianceEnabled()" class="items-center">
+        <a [routerLink]="['/admin/documentos']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #adminDocuments="routerLinkActive" [ngClass]="
+            adminDocuments.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+            <span class="icon-wrap">
+                <i class="fas fa-id-card text-sm" [ngClass]="
+                adminDocuments.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Compliance
+        </a>
+    </li>
+
+    <li *ngIf="isSquadsEnabled()" class="items-center">
+        <a [routerLink]="['/admin/squads']" class="text-xs uppercase py-3 font-bold block"
+            routerLinkActive #adminSquads="routerLinkActive" [ngClass]="
+            adminSquads.isActive
+                ? 'text-red-600 hover:text-red-700'
+                : 'text-blueGray-700 hover:text-blueGray-500'
+            ">
+            <span class="icon-wrap">
+                <i class="fas fa-shapes text-sm" [ngClass]="
+                adminSquads.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
+            </span>
+            Squads
+        </a>
+    </li>
+</ul>

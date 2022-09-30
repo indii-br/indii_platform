@@ -1,0 +1,181 @@
+<div *ngIf="billingData" class="flex flex-wrap h-screen">
+    <div class="w-full xl:w-6/12 px-4">
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-600 text-2xl font-semibold flex items-center"
+                            style="justify-content: space-between;">
+                            Cobrança #{{billingData.id}}
+
+                            <a target="_blank" [href]="billingData.invoiceUrl"
+                                class="text-white cursor-pointer green-btn text-sm font-bold uppercase px-3 py-1 rounded outline-none">
+                                <i class="fas fa-hand-holding-usd"></i>&ensp;Pagar cobrança
+                            </a>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-auto px-4 pb-2 lg:px-10 py-10 pt-8">
+                <div class="flex flex-col flex-wrap pb-4">
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Valor:</span><br />
+                        <strong class="pt-1 block text-lg" style="border-bottom: 1px solid #ededed;">
+                            <small>R$</small> {{billingData.amount |
+                            currency:'':''}}
+                        </strong>
+
+                        <span class="pt-1 block" style="padding-left: 5px;">
+                            <small>R$</small> {{(billingData.amount - billingData.fee) |
+                            currency:'':''}}<br />
+                            <small>R$</small> {{billingData.fee |
+                            currency:'':''}} <small class="lowercase">(1% Fee)</small>
+                        </span>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Status:</span><br />
+                        <strong class="pt-1 block ">
+                            {{billingStatusCode[billingData.statusCode]}}
+                        </strong>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Descrição:</span><br />
+                        <span class="pt-1 block ">
+                            {{billingData.description}}
+                        </span>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Criado em:</span><br />
+                        <span class="pt-1 block">{{billingData.created_at | date : 'dd/MM/yyyy'}}</span>
+                    </p>
+
+                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                        <span>Vencimento:</span><br />
+                        <span class="pt-1 block {{getDueDateColor(billingData.dueDate)}}">{{billingData.dueDate |
+                            date: 'dd MMMM,
+                            yyyy': '' : 'pt-BR' }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full xl:w-6/12 px-4">
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-600 text-1xl font-semibold flex items-center">
+                            <i class="fas fa-file-invoice-dollar"></i>&ensp;Faturas de contratos<br />
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-auto lg:px-2 py-2 pt-2">
+                <h2 *ngIf="!billingInvoiceList || billingInvoiceList.length === 0"
+                    class="text-blueGray-500 text-center p-8 font-semibold text-xl">
+                    Nenhuma fatura
+                </h2>
+
+                <table *ngIf="billingInvoiceList && billingInvoiceList.length !== 0"
+                    class="items-center w-full bg-transparent border-collapse">
+                    <thead class="thead-light">
+                        <tr>
+                            <th
+                                class="px-6 uppercase bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-normal text-left">
+                                <strong>#</strong>
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                                Status
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let invoice of billingInvoiceList">
+                            <td
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                <small>#{{invoice.id}}</small><br />
+                                <b>{{invoice.amount | currency : 'R$'}}</b><br />
+                                <span class="divider-invoice"></span>
+                                <small>Vencimento:</small><br />
+                                <small class="{{getDueDateColor(invoice.dueDate)}}">{{invoice.dueDate | date: 'dd MMMM,
+                                    yyyy': '' : 'pt-BR' }}</small>
+                            </td>
+                            <td
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                <small class="uppercase">{{invoiceStatus[invoice.status].label}}</small><br />
+                                <span class="divider-invoice"></span>
+                                <span [innerHTML]="checkInvoice(invoice)"></span>
+                            </td>
+                            <td
+                                class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                <a [routerLink]="['/admin/invoice', invoice.id]"
+                                    class="text-white bg-indigo-400 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                    Acessar
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-600 text-1xl font-semibold flex items-center">
+                            <i class="fas fa-users"></i>&ensp;Meus Squads<br />
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-auto lg:px-2 py-2 pt-2">
+                <h2 *ngIf="!billingData.squadsToBill || billingData.squadsToBill.length === 0"
+                    class="text-blueGray-500 text-center p-8 font-semibold text-xl">
+                    Nenhum Squad
+                </h2>
+
+                <table *ngIf="billingData.squadsToBill && billingData.squadsToBill.length !== 0"
+                    class="items-center w-full bg-transparent border-collapse">
+                    <thead class="thead-light">
+                        <tr>
+                            <th
+                                class="px-6 uppercase bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-normal text-left">
+                                <strong>#</strong>
+                            </th>
+                            <th
+                                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let squad of billingData.squadsToBill">
+                            <td
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                <strong>Squad</strong>&emsp;#{{squad}}
+                            </td>
+                            <td
+                                class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                <a [routerLink]="['/admin/squads']"
+                                    class="text-white bg-indigo-400 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+                                    Ver Squads
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

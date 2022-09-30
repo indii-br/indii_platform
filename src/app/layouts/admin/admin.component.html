@@ -8,8 +8,8 @@
     <app-header-stats *ngIf="isClient()"></app-header-stats>
 
 
-    <div class="px-4 md:px-10 mx-auto w-full -m-24">
-      <router-outlet></router-outlet>
+    <div class="px-4 md:px-10 mx-auto w-full -m-24" style="padding-bottom: 180px;">
+      <router-outlet (activate)="onActivate($event)"></router-outlet>
     </div>
   </div>
 </div>

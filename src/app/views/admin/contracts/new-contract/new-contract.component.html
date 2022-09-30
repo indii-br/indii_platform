@@ -23,7 +23,8 @@
             <div
               class="text-center relative m-aut border-coolGray-600 py-6 cursor-pointer shadow-lg border-2 w-full h-96 text-blueGray-600 rounded-lg selectBoxType">
               <h6 class="font-semibold mb-3 pt-6">Contrato Próprio</h6>
-              <p class="text-xs leading-4 px-6">Utilize seu próprio contrato assinado, fazendo o upload dele pela plataforma.</p>
+              <p class="text-xs leading-4 px-6">Utilize seu próprio contrato assinado, fazendo o upload dele pela
+                plataforma.</p>
               <span class="selected-label text-white"><i class="fas fa-check mr-1"></i> Selecionado</span>
             </div>
           </div>
@@ -35,7 +36,8 @@
         </p>
       </section>
 
-      <h6 class="text-blueGray-400 text-sm font-bold uppercase"  *ngIf="!editingNewContract && contractData && contractData?.id">
+      <h6 class="text-blueGray-400 text-sm font-bold uppercase"
+        *ngIf="!editingNewContract && contractData && contractData?.id">
         Configurações do Contrato
       </h6>
 
@@ -107,6 +109,16 @@
 
     <!-- PAYMENT INFO | CONTRACT -->
     <app-payment-block *ngIf="showPaymentBlock()" [contractData]="contractData"></app-payment-block>
+
+    <div *ngIf="!editingNewContract && contractData && contractData?.id" style="border: 2px solid tomato" class="relative flex flex-col min-w-0 break-words w-full mb-6 py-6 px-6 shadow-lg rounded bg-white">
+      <p style="color: tomato" class="block uppercase text-xs font-normal">
+        <strong>Danger Zone:</strong><br />
+        <a (click)="archiveContract(contractData.id)"
+          class="danger-zone-btn bg-transparent inline-flex border border-solid font-bold uppercase text-xs px-4 py-2 mt-4 rounded outline-none ease-linear">
+          Arquivar e Concluir Contrato
+        </a>
+      </p>
+    </div>
   </div>
 
   <div class="w-full lg:w-4/12 px-4">
@@ -117,7 +129,8 @@
     <app-contractor-block *ngIf="showContractorBlock()" [contractData]="contractData"></app-contractor-block>
 
     <!-- CONTRACT BLOCK UPLOAD | CONTRACT -->
-    <app-upload-contract-block *ngIf="showImportContractBlock()" [contractData]="contractData"></app-upload-contract-block>
+    <app-upload-contract-block *ngIf="showImportContractBlock()" [contractData]="contractData">
+    </app-upload-contract-block>
   </div>
 </div>
 

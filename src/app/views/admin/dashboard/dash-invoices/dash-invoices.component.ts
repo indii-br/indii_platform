@@ -37,7 +37,7 @@ export class DashInvoicesComponent implements OnInit {
         const company = res?.companyData
 
         if (company) {
-          const { data: invoicesList, error: errorContractList } = await this.invoiceService.getInvoicetByCompany(company.id)
+          const { data: invoicesList, error: errorContractList } = await this.invoiceService.getInvoicesByCompany(company.id)
 
           this.invoicesListSize = invoicesList.length;
           this.invoicesList = invoicesList.slice(0, 5);

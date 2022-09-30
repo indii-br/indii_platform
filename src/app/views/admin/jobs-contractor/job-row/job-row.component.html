@@ -1,0 +1,25 @@
+<td [routerLink]="['/admin/editar-oportunidade', job.id]"
+    class="border-t-0 cursor-pointer px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left flex items-center">
+    <span class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
+        <i class="fas fa-building text-blueGray-400 text-2xl"></i>
+    </span>
+    <span class="ml-3 font-semibold text-blueGray-600">
+        {{job.title}}<br />
+        <small>{{job.company.name}}</small>
+    </span>
+</td>
+<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+    {{job.rate | currency : 'R$'}}<br />
+    <small>{{job.contractType}} </small>
+</td>
+<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+    {{job.profileType}}<br />
+    <small class="capitalize">100% Remoto</small><br />
+    <small class="lowercase">({{job.availabilityType}})</small>
+</td>
+<td [routerLink]="['/admin/oportunidade', job.id]"
+    class="cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+    <a class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
+        Ver detalhes
+    </a>
+</td>

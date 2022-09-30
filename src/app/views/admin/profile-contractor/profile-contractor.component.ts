@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileService } from 'src/app/services/profile.service';
+import { StorageService } from 'src/app/services/storage.service';
+import { SELECTORS } from 'src/app/stores/selectors';
 import { RATE_TYPE } from 'src/app/utils/constants';
 
 declare var Swal: any;
@@ -38,9 +41,13 @@ export class ProfileContractorComponent implements OnInit {
   selectedMinRate: any;
   selectedMaxRate: any;
 
+  userData: any
+
   constructor(
     private profileService: ProfileService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private storageService: StorageService,
+    private store: Store<any>
   ) { }
 
   setEditing(ev) {
@@ -54,6 +61,10 @@ export class ProfileContractorComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.store
+      .select(SELECTORS.USER)
+      .subscribe(res => this.userData = res?.userData)
+
     const { data: profilesData, error } = await this.profileService.getProfileByUserUuid();
 
     if (profilesData && profilesData.length !== 0) {
@@ -66,6 +77,40 @@ export class ProfileContractorComponent implements OnInit {
     } else {
       this.loaded = true;
       this.editingProfile = true;
+    }
+  }
+
+  getAvatarImg() {
+    if(this.userData.avatar){
+      return this.userData.avatar
+    }
+ 
+    return '../../../../assets/img/blank_avatar.jpeg'
+  }
+
+  async uploadedAvatar(event) {
+    const file = event.target.files[0]
+
+    if (file) {
+      const { data: avatarUploaded, error } = await this.storageService.saveAvatar(file, this.userData.email)
+
+      if (error) {
+        this.toastrService.error("Erro ao carregar foto!");
+        console.error(error)
+      }
+
+      if (avatarUploaded) {
+        let documentResponse;
+        let errorResponse;
+
+        console.log(avatarUploaded)
+
+
+        // if (errorResponse) {
+        //   this.toastrService.error("Erro ao atualizar Documento - Upload!");
+        //   console.error(errorResponse)
+        // }
+      }
     }
   }
 
@@ -85,14 +130,14 @@ export class ProfileContractorComponent implements OnInit {
     this.selectedSkillsList = JSON.parse(this.profileData.skills);
   }
 
-  setHideCancel(){
+  setHideCancel() {
     return !this.profileData || !this.profileData.id;
   }
 
   updateOrSaveProfile() {
     if (this.profileData && this.profileData.id) {
       this.editProfile()
-    }else{
+    } else {
       this.saveProfile()
     }
   }
@@ -121,7 +166,8 @@ export class ProfileContractorComponent implements OnInit {
     const profileToUpdate = Object.assign(this.profileToUpdate, {
       minRate: this.selectedMinRate,
       maxRate: this.selectedMaxRate,
-      links: this.profileToUpdate.links
+      links: this.profileToUpdate.links,
+      user: this.userData.id
     })
 
     const { data, error } = await this.profileService.saveProfileData(profileToUpdate)

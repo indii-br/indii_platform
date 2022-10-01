@@ -109,6 +109,8 @@ import { ViewDetailsBillComponent } from './views/admin/billing/view-details-bil
 import { JobRowComponent } from './views/admin/jobs-contractor/job-row/job-row.component';
 import { PartnerRowComponent } from './views/admin/jobs-contractor/partner-row/partner-row.component';
 import { JobWrapperComponent } from './views/admin/jobs-contractor/job-wrapper/job-wrapper.component';
+import { NewSquadComponent } from "./views/admin/squads/new-squad/new-squad.component";
+import { CreateClientComponent } from './views/signup/create-client/create-client.component';
 
 @NgModule({
   declarations: [
@@ -190,6 +192,8 @@ import { JobWrapperComponent } from './views/admin/jobs-contractor/job-wrapper/j
     JobRowComponent,
     PartnerRowComponent,
     JobWrapperComponent,
+    NewSquadComponent,
+    CreateClientComponent,
   ],
   imports: [
     BrowserModule, 

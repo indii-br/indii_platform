@@ -25,6 +25,7 @@ export class AppliesService {
       .from('applications')
       .select("*, job!inner(*, company!inner(*)), profile!inner(*, user!inner(avatar, full_name))")
       .eq('job.company.id', companyId)
+      .order('created_at', { ascending: true })
       .is('canceledAt', null)
   }
 

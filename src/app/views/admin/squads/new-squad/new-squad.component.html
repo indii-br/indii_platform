@@ -1,0 +1,40 @@
+<section style="margin-top: 50px;">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap justify-center">
+      <div class="w-full lg:w-8/12 px-4">
+        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white">
+          <div class="flex-auto p-5 lg:p-10">
+            <h4 class="text-2xl font-semibold">Solicitar Squad</h4>
+            <p class="leading-relaxed mt-1 mb-4 text-blueGray-500">
+              Ou envie um email para <strong>contato@indii.com.br</strong>
+            </p>
+
+            <div class="relative w-full mb-3 mt-8">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="full-name">
+                Título do Projeto
+              </label>
+              <input #projectName type="text" name="name" formControlName="name"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow w-full"
+                placeholder="Insira o título do projeto" />
+            </div>
+
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="message">
+                Fale um pouco mais sobre o seu projeto
+              </label>
+              <textarea #description rows="4" cols="80" name="message" formControlName="message"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow w-full"
+                placeholder="Fale um pouco sobre sua necessidade..."></textarea>
+            </div>
+            <div class="text-center mt-6">
+              <button (click)="requestSquad(projectName.value, description.value)"
+                class="bg-blueGray-800 text-white text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none mr-1 mb-1">
+                Solicitar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

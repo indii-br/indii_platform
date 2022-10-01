@@ -2,8 +2,8 @@
   <div class="items-center flex">
     <span
       class="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full overflow-hidden">
-      <img *ngIf="user.userType !== 'CLIENT' && user.avatar" class="w-full rounded-full align-middle border-none shadow-lg"
-        [src]="user.avatar" />
+      <div *ngIf="user.userType !== 'CLIENT' && user.avatar" [ngStyle]="{'background-image': 'url(' + user.avatar + ')'}"
+        class="avatar-img-l shadow-xl rounded-full border-none mb-36"></div>
 
       <app-avatar-default *ngIf="!user.avatar || user.userType === 'CLIENT'" [seed]="user.email"></app-avatar-default>
     </span>

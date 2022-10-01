@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileService } from 'src/app/services/profile.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { UserService } from 'src/app/services/user.service';
 import { SELECTORS } from 'src/app/stores/selectors';
 import { RATE_TYPE } from 'src/app/utils/constants';
 
@@ -32,20 +33,35 @@ export class ProfileContractorComponent implements OnInit {
     'FIXED',
   ]
 
+  seniorityLevelList: Array<string> = [
+    'Junior',
+    'Pleno',
+    'Senior',
+    'Lead/Leader',
+    'Principal / Staff',
+    'C-Level'
+  ]
+
   rateTypeLabels = RATE_TYPE;
 
   selectedAvailabilityType: string;
+  selectedSeniorityLevel: string
   selectedRateType: string;
   selectedSkillsList: any;
 
   selectedMinRate: any;
   selectedMaxRate: any;
 
+  avatarImg: any;
+
   userData: any
+
+  profileLinks: Array<any> = [];
 
   constructor(
     private profileService: ProfileService,
     private toastrService: ToastrService,
+    private userService: UserService,
     private storageService: StorageService,
     private store: Store<any>
   ) { }
@@ -69,6 +85,9 @@ export class ProfileContractorComponent implements OnInit {
 
     if (profilesData && profilesData.length !== 0) {
       this.profileData = profilesData[0];
+
+      this.profileLinks = (this.profileData.links) ? this.profileData.links : [];
+
       this.setInitValues();
 
       this.getWorkExp();
@@ -81,10 +100,14 @@ export class ProfileContractorComponent implements OnInit {
   }
 
   getAvatarImg() {
-    if(this.userData.avatar){
-      return this.userData.avatar
+    if (this.userData.avatar) {
+      return this.userData.avatar;
     }
- 
+
+    if (this.avatarImg) {
+      return this.avatarImg;
+    }
+
     return '../../../../assets/img/blank_avatar.jpeg'
   }
 
@@ -103,13 +126,28 @@ export class ProfileContractorComponent implements OnInit {
         let documentResponse;
         let errorResponse;
 
-        console.log(avatarUploaded)
+        const updateTimeAvatar = '?t='+new Date().getTime()
 
+        const { data: dataGetUrl, error: errorGetUrl } = await this.storageService.getUrlToSave(this.userData.email)
 
-        // if (errorResponse) {
-        //   this.toastrService.error("Erro ao atualizar Documento - Upload!");
-        //   console.error(errorResponse)
-        // }
+        if (dataGetUrl) {
+          this.avatarImg = dataGetUrl.publicURL+updateTimeAvatar;
+
+          await this.userService.updateUserData({
+            avatar: this.avatarImg
+          }, this.userData.id);
+
+          this.toastrService.success("Imagem alterada com sucesso!");
+
+          //@ts-ignore
+          document.querySelector('.avatar-img').style.backgroundImage = `url(${this.avatarImg})`;
+
+        }
+
+        if (errorResponse || errorGetUrl) {
+          this.toastrService.error("Erro ao atualizar Documento - Upload!");
+          console.error(errorResponse)
+        }
       }
     }
   }
@@ -184,8 +222,8 @@ export class ProfileContractorComponent implements OnInit {
   }
 
   removeLinkFromListToSave(linkIndex: number) {
-    this.profileData.links.splice(linkIndex, 1);
-    this.profileToUpdate['links'] = this.profileData.links;
+    this.profileLinks.splice(linkIndex, 1);
+    this.profileToUpdate['links'] = this.profileLinks;
   }
 
   async addLink() {
@@ -200,8 +238,8 @@ export class ProfileContractorComponent implements OnInit {
     })
 
     if (url) {
-      this.profileData.links.push(url)
-      this.profileToUpdate['links'] = this.profileData.links;
+      this.profileLinks.push(url)
+      this.profileToUpdate['links'] = this.profileLinks
     }
   }
 

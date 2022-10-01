@@ -5,8 +5,8 @@
 
             <div class="w-full flex flex-wrap flex-row edit-img-block">
                 <div class="flex">
-                    <img alt="..." [src]="getAvatarImg()"
-                    class="shadow-xl rounded-full h-auto border-none mb-36 max-w-150-px" />
+                    <div [ngStyle]="{'background-image': 'url(' + getAvatarImg() + ')'}"
+                        class="avatar-img shadow-xl rounded-full border-none mb-36"></div>
                 </div>
 
                 <div class="flex self-center">
@@ -31,6 +31,14 @@
                     (change)="setValue('headline', headline?.value)"
                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
                     placeholder="Insira o nome da empresa" />
+            </app-editable-input-block>
+
+            <app-editable-input-block [value]="profileData?.seniorityLevel" title="Nível de Senioridade"
+                [editing]="editingProfile">
+                <ng-select placeholder="Selecione uma opção" [(ngModel)]="selectedSeniorityLevel"
+                    (change)="setValue('seniorityLevel', selectedSeniorityLevel)">
+                    <ng-option *ngFor="let sLevel of seniorityLevelList" [value]="sLevel">{{sLevel}}</ng-option>
+                </ng-select>
             </app-editable-input-block>
 
             <app-editable-input-block [value]="profileData?.availability" title="Disponibilidade"
@@ -65,28 +73,26 @@
                 </ng-select>
             </app-editable-input-block>
 
-            <app-editable-input-block *ngIf="profileData?.typeRate" isCurrency="true" [value]="profileData?.minRate"
-                title="Qual o valor MÍNIMO {{rateTypeLabels[profileData?.typeRate].label}} que você costuma cobrar?"
-                [editing]="editingProfile">
+            <app-editable-input-block *ngIf="selectedRateType" isCurrency="true" [value]="profileData?.minRate"
+                title="Qual o valor MÍNIMO que você costuma cobrar?" [editing]="editingProfile">
                 <input type="text" [(ngModel)]="selectedMinRate" currencyMask
                     [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
                     class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-lg shadow focus:outline-none focus:ring w-full ease-linear"
-                    placeholder="Insira o valor (R$) / {{rateTypeLabels[profileData?.typeRate].label}}" />
+                    placeholder="Insira o valor (R$)" />
 
                 <small class="text-blueGray-600 text-xs">*Insira o valor
-                    <strong>{{rateTypeLabels[profileData?.typeRate].label}}</strong> </small>
+                    <strong>{{rateTypeLabels[selectedRateType].label}}</strong> </small>
             </app-editable-input-block>
 
-            <app-editable-input-block *ngIf="profileData?.typeRate" isCurrency="true" [value]="profileData?.maxRate"
-                title="Qual o valor MÁXIMO {{rateTypeLabels[profileData?.typeRate].label}} que você costuma cobrar?"
-                [editing]="editingProfile">
+            <app-editable-input-block *ngIf="selectedRateType" isCurrency="true" [value]="profileData?.maxRate"
+                title="Qual o valor MÁXIMO que você costuma cobrar?" [editing]="editingProfile">
                 <input type="text" [(ngModel)]="selectedMaxRate" currencyMask
                     [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
                     class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-lg shadow focus:outline-none focus:ring w-full ease-linear"
-                    placeholder="Insira o valor (R$) / {{rateTypeLabels[profileData?.typeRate].label}}" />
+                    placeholder="Insira o valor (R$)" />
 
                 <small class="text-blueGray-600 text-xs">*Insira o valor
-                    <strong>{{rateTypeLabels[profileData?.typeRate].label}}</strong> </small>
+                    <strong>{{rateTypeLabels[selectedRateType].label}}</strong> </small>
             </app-editable-input-block>
 
             <hr class="w-full mt-6 border-b-1 border-blueGray-300" />
@@ -98,7 +104,7 @@
             </h6>
 
             <ul class="w-full mx-6 mb-8 text-md text-blueGray-700">
-                <li class="mb-2 w-full" *ngFor="let link of profileData?.links, let i = index">
+                <li class="mb-2 w-full" *ngFor="let link of profileLinks, let i = index">
                     <i class="fas fa-link mr-2 text-xs"></i>
                     {{link}}
                     <span *ngIf="editingProfile" (click)="removeLinkFromListToSave(i)"

@@ -58,7 +58,7 @@ export class HeaderStatsComponent implements OnInit {
         if (company) {
           const { data: invoiceList, error: errorInvoiceList } = await this.invoiceService.getInvoicesByCompany(company.id)
 
-          const { data: jobsList, error: errorJobsList } = await this.jobService.getAll()
+          const { data: jobsList, error: errorJobsList } = await this.jobService.getJobsByCompany(company.id)
 
           if (jobsList && jobsList.length !== 0) {
             this.dashInfos.JOBS.value = jobsList.length;

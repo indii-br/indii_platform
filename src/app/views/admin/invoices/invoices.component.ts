@@ -57,6 +57,6 @@ export class InvoicesComponent implements OnInit {
   }
 
   isOpen(invoice: any) {
-    return invoice.statusCode < 400;
+    return invoice.statusCode < 300;
   }
 }

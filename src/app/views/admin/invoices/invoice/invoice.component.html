@@ -80,7 +80,7 @@
                             [innerHTML]="invoiceData.description"></strong>
                     </p>
 
-                    <p *ngIf="invoiceData.statusCode < 400"
+                    <p *ngIf="invoiceData.statusCode < 300"
                         class="danger-zone-block uppercase text-xs font-normal mb-4">
                         <strong>Danger Zone:</strong><br />
                         <a (click)="archiveInvoice(invoiceData.id)"

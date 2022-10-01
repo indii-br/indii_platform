@@ -46,4 +46,11 @@ export class StorageService {
         upsert: true
       })
   }
+
+  async getUrlToSave(key): Promise<any> {
+    return this.supabaseService.supabase
+      .storage
+      .from('avatars')
+      .getPublicUrl(key)
+  }
 }

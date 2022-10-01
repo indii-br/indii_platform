@@ -40,6 +40,8 @@ import { MyInvoicesComponent } from "./views/admin/invoices/my-invoices/my-invoi
 import { BillingComponent } from "./views/admin/billing/billing.component";
 import { SquadsComponent } from "./views/admin/squads/squads.component";
 import { ViewDetailsBillComponent } from "./views/admin/billing/view-details-bill/view-details-bill.component";
+import { NewSquadComponent } from "./views/admin/squads/new-squad/new-squad.component";
+import { CreateClientComponent } from "./views/signup/create-client/create-client.component";
 
 const routes: Routes = [
   // admin views
@@ -71,6 +73,7 @@ const routes: Routes = [
       { path: "billing", component: BillingComponent },
       { path: "billing-details/:id", component: ViewDetailsBillComponent },
       { path: "squads", component: SquadsComponent },
+      { path: "squads/request", component: NewSquadComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ],
   },
@@ -91,6 +94,7 @@ const routes: Routes = [
       component: AuthComponent,
       children: [
         { path: "contractor", component: CreateContractorComponent },
+        { path: "bk-create-client", component: CreateClientComponent },
       ],
     },
   // no layout views

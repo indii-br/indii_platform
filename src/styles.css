@@ -128,4 +128,22 @@
 .danger-zone-btn:hover{
     color: white;
     background: tomato;
-}   
+} 
+
+.avatar-img{
+    width: 150px!important;
+    height: 150px!important;
+    background-position: center!important;
+    background-repeat: no-repeat!important;
+    background-size: cover!important;
+    display: inline-flex!important;
+}
+
+.avatar-img-l{
+    width: 100%!important;
+    height: 100%!important;
+    background-position: center!important;
+    background-repeat: no-repeat!important;
+    background-size: cover!important;
+    display: inline-flex!important;
+}

@@ -16,13 +16,7 @@
     <div class="block w-full overflow-x-auto">
 
         <h3 *ngIf="!contractsList || contractsList.length === 0" class="text-center p-5">
-            <i style="font-size: 80px;" class="fas fa-file-contract text-blueGray-300 mb-3"></i><br />
             <span class="text-sm text-blueGray-500">Nenhum contrato pendente :)</span><br />
-            <a [routerLink]="['/admin/nova-oportunidade']"
-                class="text-indigo-600 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1">
-                <i class="fa fa-plus"></i>
-                <span class="ml-1">Criar Contrato</span>
-            </a>
         </h3>
 
         <table *ngIf="contractsList && contractsList.length !== 0"

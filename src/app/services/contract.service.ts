@@ -18,7 +18,7 @@ export class ContractService {
       .select(`*, 
         inviteContractor->contractor_invite(*), 
         paymentConfig->contract_payment_config(*),
-        company->companies(*),
+        company!inner(*),
         contractor->user(id, full_name, email, cpf, city, state, avatar)
       `)
       .eq('id', contractId)
@@ -29,7 +29,7 @@ export class ContractService {
     return this.supabaseService.supabase
       .from('contracts')
       .select(`*, 
-        company->companies(*), 
+        company!inner(*), 
         inviteContractor->contractor_invite(*), 
         paymentConfig->contract_payment_config(*),
         contractor->user(id, full_name, email, avatar, cpf)
@@ -41,7 +41,7 @@ export class ContractService {
     return this.supabaseService.supabase
       .from('contracts')
       .select(`*, 
-        company->companies(*), 
+        company!inner(*), 
         inviteContractor->contractor_invite(*), 
         paymentConfig->contract_payment_config(*),
         contractor->user(id, full_name, email, avatar)

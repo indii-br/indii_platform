@@ -150,7 +150,7 @@ export const INVOICE_STATUS = {
     PAYIN_PAID: {
         status: 'PAYIN_PAID',
         color: 'text-teal-500',
-        label: 'Pago',
+        label: 'Fatura Paga',
         description: 'Fatura paga'
     },
     ARCHIVED: {
@@ -161,7 +161,7 @@ export const INVOICE_STATUS = {
     },
     APPROVED: {
         status: 'APPROVED',
-        color: 'text-teal-500',
+        color: 'text-indigo-600',
         label: 'Aprovada',
         description: 'Fatura aprovada, aguardando pagamento!'
     },
@@ -173,5 +173,15 @@ export const BILLING_STATUS_CODE = {
     300: 'PAGO',
     401: 'CANCELADO',
 }
+
+export const SQUADS_STATUS_CODE = {
+    100: 'SOLICITADO',
+    110: 'PROJETO EM ANÁLISE',
+    200: 'MONTANDO SQUAD',
+    230: 'ATIVO',
+    400: 'ARQUIVADO',
+}
+
+export const MAGIC_WORDS = 'Mercenary@2022'
 
 export const URL_INDII_API = 'https://web-production-9009.up.railway.app'

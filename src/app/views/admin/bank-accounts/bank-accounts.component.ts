@@ -80,7 +80,7 @@ export class BankAccountsComponent implements OnInit {
   async getAllBankAccounts(userId: string) {
     const { data, error } = await this.bankService.getBanksByUser(userId)
 
-    if (data) {
+    if (data && data.length !== 0) {
       this.myBankAccounts = data;
       this.setBankAccountToEdit(this.myBankAccounts[0]);
       this.editingBankAccount = false;
@@ -106,7 +106,7 @@ export class BankAccountsComponent implements OnInit {
     this.selectedDocumentType = this.bankAccountToSaveOrUpdate.documentType;
   }
 
-  setHideCancel(){
+  setHideCancel() {
     return !this.bankAccountData || !this.bankAccountData.id
   }
 
@@ -119,7 +119,7 @@ export class BankAccountsComponent implements OnInit {
   }
 
   saveNewBankAccount() {
-    const wepayoutBankToSave = {
+    const bankDataToSave = {
       "name": `#${this.userData.id} | ${this.selectedBankAccount.name}`,
       "bank_code": this.selectedBankAccount.code,
       "bank_branch": this.bankAccountToSaveOrUpdate.bankBranch,
@@ -133,44 +133,36 @@ export class BankAccountsComponent implements OnInit {
       "document_type": this.bankAccountToSaveOrUpdate.documentType
     }
 
-    if (this.checkBankDataToSave(wepayoutBankToSave)) {
-      this.wepayoutService
-        .createNewRecipient(wepayoutBankToSave)
-        .then(res => {
-          if (res.status) {
-            const bankToSave = {
-              "wepayout_id": res.data.id,
-              "wallet_uuid": res.data.wallet_uuid,
-              "bankCode": res.data.bank_code,
-              "bankName": res.data.bank_name,
-              "bankBranch": res.data.bank_branch,
-              "bankBranchDigit": res.data.bank_branch_digit,
-              "account": res.data.account,
-              "accountDigit": res.data.account_digit,
-              "accountType": res.data.account_type,
-              "pixKey": res.data.pix_key,
-              "document": res.data.document,
-              "documentType": res.data.document_type,
-              "email": res.data.email,
-              "user": this.userData.id,
-            }
+    if (this.checkBankDataToSave(bankDataToSave)) {
+      const bankToSave = {
+        // "wepayout_id": res.data.id,
+        // "wallet_uuid": res.data.wallet_uuid,
+        "bankCode": bankDataToSave.bank_code,
+        "bankName": this.selectedBankAccount.name,
+        "bankBranch": bankDataToSave.bank_branch,
+        "bankBranchDigit": bankDataToSave.bank_branch_digit,
+        "account": bankDataToSave.account,
+        "accountDigit": bankDataToSave.account_digit,
+        "accountType": bankDataToSave.account_type,
+        "pixKey": bankDataToSave.pix_key,
+        "document": bankDataToSave.document,
+        "documentType": bankDataToSave.document_type,
+        "email": bankDataToSave.email,
+        "user": this.userData.id,
+      }
 
-            this.bankService
-              .saveNewBankAccount(bankToSave)
-              .then(res => {
-                if (res) {
-                  this.toastrService.success('Conta Bancária Cadastrada com sucesso!')
-                }
-              })
-              .catch(err => {
-                console.error(err);
-                this.toastrService.error('Erro ao cadastrar conta bancária!')
-              })
-          } else {
-            this.toastrService.error('COD.: WPO - Erro ao cadastrar conta bancária!')
+      this.bankService
+        .saveNewBankAccount(bankToSave)
+        .then(res => {
+          if (res) {
+            this.toastrService.success('Conta Bancária Cadastrada com sucesso!')
+            this.getAllBankAccounts(this.userData.id);
           }
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+          console.error(err);
+          this.toastrService.error('Erro ao cadastrar conta bancária!')
+        })
     }
   }
 
@@ -192,26 +184,18 @@ export class BankAccountsComponent implements OnInit {
     delete this.bankAccountToSaveOrUpdate.user;
 
     if (this.checkBankDataToSave(wepayoutBankToUpdate)) {
-      this.wepayoutService
-        .updateRecipient(wepayoutBankToUpdate, this.bankAccountToSaveOrUpdate.wepayout_id)
+      this.bankService
+        .updateBankAccount(this.bankAccountToSaveOrUpdate, this.bankAccountToSaveOrUpdate.id)
         .then(res => {
-          if (res.status) {
-            this.bankService
-              .updateBankAccount(this.bankAccountToSaveOrUpdate, this.bankAccountToSaveOrUpdate.id)
-              .then(res => {
-                if (res) {
-                  this.toastrService.success('Conta Bancária editada com sucesso!')
-                }
-              })
-              .catch(err => {
-                console.error(err);
-                this.toastrService.error('Erro ao editar conta bancária!')
-              })
-          } else {
-            this.toastrService.error('COD.: WPO - Erro ao editar conta bancária!')
+          if (res) {
+            this.toastrService.success('Conta Bancária editada com sucesso!')
+            this.getAllBankAccounts(this.userData.id);
           }
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+          console.error(err);
+          this.toastrService.error('Erro ao editar conta bancária!')
+        })
     }
   }
 

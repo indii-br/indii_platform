@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -31,6 +31,7 @@
     "@tailwindcss/forms": "0.2.1",
     "angular-imask": "^6.4.2",
     "chart.js": "2.9.4",
+    "logrocket": "^3.0.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
     "ngx-currency": "^2.5.3",

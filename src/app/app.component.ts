@@ -4,7 +4,7 @@ import { Component } from "@angular/core";
   selector: "app-root",
   templateUrl: "./app.component.html",
 })
-export class AppComponent {
+export class AppComponent{
   onActivate(event) {
     window.scroll({
       top: 0,

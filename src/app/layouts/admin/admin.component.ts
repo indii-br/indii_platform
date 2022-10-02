@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Session } from "@supabase/supabase-js";
+import * as LogRocket from 'logrocket';
+
 import { AuthService } from "src/app/services/auth.service";
 import { CompanyService } from "src/app/services/company.service";
 import { ConfigService } from "src/app/services/config.service";
@@ -11,6 +13,7 @@ import { hydrateConfig } from "src/app/stores/config.actions";
 import { hydrateProfile } from "src/app/stores/profile.actions";
 import { hydrateUser } from "src/app/stores/user.actions";
 import { USER_TYPES } from "src/app/utils/constants";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-admin",
@@ -33,6 +36,10 @@ export class AdminComponent implements OnInit {
 
   async ngOnInit() {
     this.authService.authChanges((_, session) => this.session = session);
+    
+    if (environment.production) {
+      LogRocket.init('dtcuec/indii');
+    }
 
     this.populateStores()
   }

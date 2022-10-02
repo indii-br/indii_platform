@@ -72,19 +72,19 @@ export class InvoiceService {
       .or(queryToBuild)
   }
 
-  async goToPaymentInvoice(invoiceId: string): Promise<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
+  // async goToPaymentInvoice(invoiceId: string): Promise<any> {
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //   })
 
-    const data = {
-      invoiceId: invoiceId,
-    }
+  //   const data = {
+  //     invoiceId: invoiceId,
+  //   }
 
-    return this.http
-      .post(`${environment.api}/invoice/generate-payin-wepayout`, data, { headers: headers })
-      .toPromise()
-  }
+  //   return this.http
+  //     .post(`${environment.api}/invoice/generate-payin-wepayout`, data, { headers: headers })
+  //     .toPromise()
+  // }
 
   async updateNFSeInvoice(nfseAttachment: any, id: string): Promise<any> {
     return this.supabaseService.supabase

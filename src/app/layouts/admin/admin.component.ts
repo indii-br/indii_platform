@@ -36,7 +36,7 @@ export class AdminComponent implements OnInit {
 
   async ngOnInit() {
     this.authService.authChanges((_, session) => this.session = session);
-    
+
     if (environment.production) {
       LogRocket.init('dtcuec/indii');
     }
@@ -49,6 +49,15 @@ export class AdminComponent implements OnInit {
 
     if (userData) {
       this.userData = userData;
+
+      if (environment.production) {
+        LogRocket.identify(this.userData.id, {
+          name: this.userData.full_name,
+          email: this.userData.email,
+          subscriptionType: this.userData.userType
+        });
+      }
+
       this.store.dispatch(hydrateUser(userData));
 
       if (this.isContractor()) {

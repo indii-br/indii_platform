@@ -53,8 +53,8 @@
 						<tr *ngFor="let contract of contractList">
 							<td
 								class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-								<img *ngIf="contract.contractor && contract.contractor.avatar" [src]="contract.contractor.avatar"
-									class="h-12 w-12 bg-white rounded-full border" />
+								<img *ngIf="contract.contractor && contract.contractor.avatar"
+									[src]="contract.contractor.avatar" class="h-12 w-12 bg-white rounded-full border" />
 								<span *ngIf="!contract.contractor || !contract.contractor.avatar"
 									class="h-12 w-12 bg-white items-center justify-center flex rounded-full border">
 									<i class="fas fa-user text-blueGray-400 text-2xl"></i>
@@ -69,22 +69,31 @@
 										Contratado)</small>
 								</span>
 							</td>
-							<td class="font-normal border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+							<td
+								class="font-normal border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
 								{{contract.contractorRole}}<br />
 								<small>{{contract.seniorityLevel}}</small><br />
 								<small>({{contract.contractName}})</small>
 							</td>
 							<td
 								class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-								<span *ngIf="!contract.paymentConfig" style="opacity: .7; font-weight: 500;">Aguardando
-									Configuração</span>
-								<span *ngIf="contract.paymentConfig" style="font-weight: bold;">{{contract.paymentConfig.rate | currency
-									:
-									'R$'}}</span><br />
-								<strong class="font-semibold text-xs" *ngIf="contract.paymentConfig">{{rateTypes[contract.contractType].label}}</strong><br />
-								<small class="font-normal" *ngIf="contract.paymentConfig">
-									{{paymentCyclesValues[contract.paymentConfig.paymentCycle]}}
-								</small>
+								<span *ngIf="!isMilestone(contract.contractType)">
+									<span *ngIf="!contract.paymentConfig"
+										style="opacity: .8; font-weight: 500;">Aguardando
+										Configuração</span>
+									<span *ngIf="contract.paymentConfig"
+										style="font-weight: bold;">{{contract.paymentConfig.rate | currency
+										:
+										'R$'}}</span><br />
+									<strong class="font-semibold text-xs"
+										*ngIf="contract.paymentConfig">{{rateTypes[contract.contractType].label}}</strong><br />
+									<small class="font-normal" *ngIf="contract.paymentConfig">
+										{{paymentCyclesValues[contract.paymentConfig.paymentCycle]}}
+									</small>
+								</span>
+								<span *ngIf="isMilestone(contract.contractType)">
+									<app-milestone-table-data [contractId]="contract.id"></app-milestone-table-data>
+								</span>
 							</td>
 							<td
 								class="font-semibold border-t-0 text-xs {{contractStatus[contract.status].color}} px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">

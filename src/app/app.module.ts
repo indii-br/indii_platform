@@ -66,7 +66,6 @@ import { TipsJobComponent } from './views/admin/jobs/tips-job/tips-job.component
 import { ProfileAppliedComponent } from './views/admin/jobs/profile-applied/profile-applied.component';
 import { ProfileComponent } from "./views/admin/profile/profile.component";
 import { SelectTypeContractComponent } from './views/admin/contracts/select-type-contract/select-type-contract.component';
-import { AddMilestonesComponent } from './views/admin/contracts/add-milestones/add-milestones.component';
 import { ResetPasswordComponent } from './views/auth/reset-password/reset-password.component';
 import { InfoContractComponent } from './views/admin/contracts/info-contract/info-contract.component';
 import { ContractorBlockComponent } from './views/admin/contracts/contractor-block/contractor-block.component';
@@ -111,6 +110,8 @@ import { PartnerRowComponent } from './views/admin/jobs-contractor/partner-row/p
 import { JobWrapperComponent } from './views/admin/jobs-contractor/job-wrapper/job-wrapper.component';
 import { NewSquadComponent } from "./views/admin/squads/new-squad/new-squad.component";
 import { CreateClientComponent } from './views/signup/create-client/create-client.component';
+import { MilestoneBlockComponent } from './views/admin/contracts/milestone-block/milestone-block.component';
+import { MilestoneTableDataComponent } from './views/admin/contracts/milestone-table-data/milestone-table-data.component';
 
 @NgModule({
   declarations: [
@@ -156,7 +157,6 @@ import { CreateClientComponent } from './views/signup/create-client/create-clien
     TipsJobComponent,
     ProfileAppliedComponent,
     SelectTypeContractComponent,
-    AddMilestonesComponent,
     ResetPasswordComponent,
     InfoContractComponent,
     ContractorBlockComponent,
@@ -194,6 +194,8 @@ import { CreateClientComponent } from './views/signup/create-client/create-clien
     JobWrapperComponent,
     NewSquadComponent,
     CreateClientComponent,
+    MilestoneBlockComponent,
+    MilestoneTableDataComponent,
   ],
   imports: [
     BrowserModule, 

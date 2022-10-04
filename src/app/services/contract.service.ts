@@ -67,7 +67,18 @@ export class ContractService {
       .from('contracts')
       .update({
         status: 'WAITING_CONTRACTOR',
-        paymentConfig: paymentConfigId
+        paymentConfig: paymentConfigId,
+        statusCode: 110,
+      })
+      .eq("id", contractId)
+  }
+
+  async changeSelfUploadedContractStateMilestone(contractId: any): Promise<any> {
+    return this.supabaseService.supabase
+      .from('contracts')
+      .update({
+        status: 'WAITING_CONTRACTOR',
+        statusCode: 110,
       })
       .eq("id", contractId)
   }
@@ -107,7 +118,8 @@ export class ContractService {
       .from('contracts')
       .update({
         status: 'WAITING_UPLOAD_CONTRACT',
-        inviteContractor: inviteContractorId
+        inviteContractor: inviteContractorId,
+        statusCode: 120,
       })
       .eq("id", contractId)
   }
@@ -117,7 +129,8 @@ export class ContractService {
       .from('contracts')
       .update({
         status: 'PAYMENT_CYCLE',
-        contractSelfUploaded: contractUrl
+        contractSelfUploaded: contractUrl,
+        statusCode: 200,
       })
       .eq("id", contractId)
   }

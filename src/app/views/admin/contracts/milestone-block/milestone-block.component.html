@@ -1,0 +1,48 @@
+<app-editable-painel [editing]="editMilestone" [title]="getTitle()" (isEditing)="setEditing($event)"
+    (onSave)="triggerSaveOrEdit()" [hideCancel]="hideCancel">
+
+    <app-editable-input-block [value]="milestoneData.title" title="Titulo da Milestone" [editing]="editMilestone">
+        <input type="text" [value]="milestoneData.title" #title (change)="setValue('title', title.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            placeholder="Insira o titulo" />
+    </app-editable-input-block>
+
+    <app-editable-input-block [value]="milestoneData.description" title="Descrição da milestone"
+        [editing]="editMilestone">
+        <textarea type="text" #description (change)="setValue('description', description.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            rows="2">{{milestoneData.description}}</textarea>
+    </app-editable-input-block>
+
+    <app-editable-input-block [value]="milestoneData.dor" title="[D.O.R] - Definição de preparado"
+        [editing]="editMilestone">
+        <textarea type="text" #dor (change)="setValue('dor', dor.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            rows="2">{{milestoneData.dor}}</textarea>
+        <small>Saiba mais em: <a target="_blank" href="https://www.lumis.com.br/a-lumis/blog/dor-e-dod.htm">www.lumis.com.br/a-lumis/blog/dor-e-dod.htm</a></small>
+    </app-editable-input-block>
+
+    <app-editable-input-block [value]="milestoneData.dod" title="[D.O.D] - Definição de concluído"
+        [editing]="editMilestone">
+        <textarea type="text" #dod (change)="setValue('dod', dod.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            rows="2">{{milestoneData.dod}}</textarea>
+        <small>Saiba mais em: <a target="_blank" href="https://www.lumis.com.br/a-lumis/blog/dor-e-dod.htm">www.lumis.com.br/a-lumis/blog/dor-e-dod.htm</a></small>
+    </app-editable-input-block>
+
+    <app-editable-input-block isCurrency="true" [value]="milestoneData.amount" title="Valor da Milestone / Entrega"
+        [editing]="editMilestone">
+        <input type="text" [(ngModel)]="selectedAmount" currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-lg shadow focus:outline-none focus:ring w-full ease-linear"
+            placeholder="Insira o valor a ser pago pela milestone/entrega" />
+    </app-editable-input-block>
+
+    <app-editable-input-block isDate="true" [value]="milestoneData.dueDate" title="Data prevista de conclusão"
+        [editing]="editMilestone">
+        <input type="date" [value]="milestoneData?.dueDate" #dueDate (change)="setValue('dueDate', dueDate.value)"
+            class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
+            placeholder="Insira data prevista de conclusão" />
+    </app-editable-input-block>
+
+</app-editable-painel>

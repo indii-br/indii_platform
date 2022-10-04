@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CompanyService } from 'src/app/services/company.service';
 import { ContractService } from 'src/app/services/contract.service';
 import { SELECTORS } from 'src/app/stores/selectors';
-import { CONTRACT_STATUS, DUE_DATE_LIMIT, PAYMENT_CYCLES, RATE_TYPE, SUBMIT_DOCUMENT_LIMIT } from 'src/app/utils/constants';
+import { CONTRACT_STATUS, CONTRACT_TYPES, DUE_DATE_LIMIT, PAYMENT_CYCLES, RATE_TYPE, SUBMIT_DOCUMENT_LIMIT } from 'src/app/utils/constants';
 import { convertArrayInObject } from 'src/app/utils/helpers';
 
 @Component({
@@ -43,5 +42,10 @@ export class ContractsComponent implements OnInit {
           this.loading = true;
         }
       })
+  }
+
+
+  isMilestone(contractType) {
+    return contractType === CONTRACT_TYPES.MILESTONE
   }
 }

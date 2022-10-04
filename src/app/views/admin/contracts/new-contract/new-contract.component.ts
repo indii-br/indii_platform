@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CompanyService } from 'src/app/services/company.service';
 import { ContractService } from 'src/app/services/contract.service';
+import { MilestoneService } from 'src/app/services/milestone.service';
 import { CONTRACT_MODEL_TYPE, RATE_TYPE } from 'src/app/utils/constants';
 
 declare var Swal: any;
@@ -29,6 +30,8 @@ export class NewContractComponent implements OnInit {
 
   rateType: any = RATE_TYPE
   contractModelType: any = CONTRACT_MODEL_TYPE
+
+  milestonesList: any;
 
   seniorityLevelList: Array<string> = [
     'Não se aplica',
@@ -57,6 +60,7 @@ export class NewContractComponent implements OnInit {
     private contractService: ContractService,
     private toastrService: ToastrService,
     private companyService: CompanyService,
+    private milestoneService: MilestoneService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -85,6 +89,27 @@ export class NewContractComponent implements OnInit {
       this.contractData = contractData;
       this.contractToSaveOrUpdate = contractData;
       this.selectedContractType = contractData.contractType
+
+      this.getMilestones(contractData.id)
+    }
+  }
+
+  async getMilestones(contractId: any) {
+    const { data: milestonesList, error } = await this.milestoneService.getMilestonesByContract(contractId)
+
+    if (milestonesList && milestonesList.length !== 0) {
+      this.milestonesList = milestonesList;
+    }
+
+    if (milestonesList && milestonesList.length === 0) {
+      this.milestonesList = [{
+        title: '',
+        dueDate: ''
+      }];
+    }
+
+    if (error) {
+      console.error(error)
     }
   }
 
@@ -108,6 +133,18 @@ export class NewContractComponent implements OnInit {
     } else {
       this.saveNewContract();
     }
+  }
+
+  addNewMilestone() {
+    this.milestonesList.unshift({
+      title: '',
+      dueDate: ''
+    })
+  }
+
+  onSaveMilestone() {
+    this.getContractData(this.contractData.id)
+    this.getMilestones(this.contractData.id)
   }
 
   async saveNewContract() {
@@ -202,11 +239,16 @@ export class NewContractComponent implements OnInit {
       this.contractData.contractType !== 'MILESTONE';
   }
 
+  showMilestoneBlock() {
+    return this.contractData &&
+      this.contractData.id &&
+      this.contractData.contractType === 'MILESTONE';
+  }
+
   showContractorBlock() {
     return this.contractData &&
       this.contractData.id &&
-      this.contractData.paymentConfig &&
-      this.contractData.contractType !== 'MILESTONE';
+      this.contractData.statusCode === 110;
   }
 
   showImportContractBlock() {
@@ -233,7 +275,7 @@ export class NewContractComponent implements OnInit {
           this.getContractData(id)
           this.toastrService.success('Arquivado com sucesso!')
         }
-        
+
         if (error) {
           console.log(error)
           this.toastrService.error('Erro ao arquivar contrato!')

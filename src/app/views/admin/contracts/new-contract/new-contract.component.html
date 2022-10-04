@@ -91,8 +91,7 @@
       <app-editable-input-block isDate="true" [value]="contractData?.startAt" title="Data de início do contrato"
         [editing]="editingNewContract">
         <input type="date" [value]="contractData?.startAt" #startAt (change)="setValue('startAt', startAt.value)"
-          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
-          placeholder="Ex: Landing Page, Consultoria de Marketing, Aplicativo MVP, Time de TI" />
+          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear" />
       </app-editable-input-block>
 
       <a (click)="setEndDate()" *ngIf="!contractData?.endAt"
@@ -102,20 +101,38 @@
       <app-editable-input-block *ngIf="hasEndDate || contractData?.endAt" isDate="true" [value]="contractData?.endAt"
         title="Data de término do contrato" [editing]="editingNewContract" class="mt-6">
         <input type="date" [value]="contractData?.endAt" #endAt (change)="setValue('endAt', endAt.value)"
-          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
-          placeholder="Ex: Landing Page, Consultoria de Marketing, Aplicativo MVP, Time de TI" />
+          class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear" />
       </app-editable-input-block>
     </app-editable-painel>
 
     <!-- PAYMENT INFO | CONTRACT -->
     <app-payment-block *ngIf="showPaymentBlock()" [contractData]="contractData"></app-payment-block>
 
-    <div *ngIf="!editingNewContract && contractData && contractData?.id" style="border: 2px solid tomato" class="relative flex flex-col min-w-0 break-words w-full mb-6 py-6 px-6 shadow-lg rounded bg-white">
+    <section *ngIf="showMilestoneBlock()">
+      <h6 class="text-blueGray-500 text-lg mt-3 mb-6 font-normal uppercase milestone-header">
+        <span>
+          <i class="fas fa-tasks"></i>&ensp;Entregas
+        </span>
+
+        <button (click)="addNewMilestone()"
+          class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1"
+          type="button">
+          <i class="fa fa-plus"></i>
+          <span class="ml-2">Criar nova Entrega/Milestone</span>
+        </button>
+      </h6>
+
+      <app-milestone-block (onSaveMilestone)="onSaveMilestone()" [contractData]="contractData"
+        [milestoneData]="milestone" *ngFor="let milestone of milestonesList"></app-milestone-block>
+    </section>
+
+    <div *ngIf="!editingNewContract && contractData && contractData?.id" style="border: 2px solid tomato"
+      class="relative flex flex-col min-w-0 break-words w-full mb-6 py-6 px-6 shadow-lg rounded bg-white">
       <p style="color: tomato" class="block uppercase text-xs font-normal">
         <strong>Danger Zone:</strong><br />
         <a (click)="archiveContract(contractData.id)"
           class="danger-zone-btn bg-transparent inline-flex border border-solid font-bold uppercase text-xs px-4 py-2 mt-4 rounded outline-none ease-linear">
-          Arquivar e Concluir Contrato
+          Concluir e Arquivar Contrato
         </a>
       </p>
     </div>

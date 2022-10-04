@@ -54,13 +54,12 @@ export class PaymentBlockComponent implements OnInit {
     this.hideCancel = false;
     this.selectedRate = this.paymentData.rate;
     this.selectedPaymentCycle = this.paymentData.paymentCycle;
-    // this.selectedSubmitLimit = this.paymentData.submitLimitDocuments;
     this.selectedDueDate = this.paymentData.dueDate;
   }
 
   triggerSaveOrEdit() {
     if(this.paymentData && this.paymentData?.id){
-
+      // TODO
     }else{
       this.savePaymentConfig();
     }

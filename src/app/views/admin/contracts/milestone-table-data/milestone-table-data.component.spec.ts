@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddMilestonesComponent } from './add-milestones.component';
+import { MilestoneTableDataComponent } from './milestone-table-data.component';
 
-describe('AddMilestonesComponent', () => {
-  let component: AddMilestonesComponent;
-  let fixture: ComponentFixture<AddMilestonesComponent>;
+describe('MilestoneTableDataComponent', () => {
+  let component: MilestoneTableDataComponent;
+  let fixture: ComponentFixture<MilestoneTableDataComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddMilestonesComponent ]
+      declarations: [ MilestoneTableDataComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddMilestonesComponent);
+    fixture = TestBed.createComponent(MilestoneTableDataComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

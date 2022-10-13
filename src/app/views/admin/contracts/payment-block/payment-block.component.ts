@@ -42,7 +42,7 @@ export class PaymentBlockComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if(this.contractData && this.contractData.paymentConfig){
+    if (this.contractData && this.contractData.paymentConfig) {
       this.editingPaymentContract = false;
       this.paymentData = this.contractData.paymentConfig;
       this.paymentToSaveOrUpdate = this.contractData.paymentConfig;
@@ -58,18 +58,18 @@ export class PaymentBlockComponent implements OnInit {
   }
 
   triggerSaveOrEdit() {
-    if(this.paymentData && this.paymentData?.id){
-      // TODO
-    }else{
+    if (this.paymentToSaveOrUpdate && this.paymentToSaveOrUpdate.id) {
+      this.updatePaymentConfigData();
+    } else {
       this.savePaymentConfig();
     }
   }
 
   async savePaymentConfig() {
-    const paymentConfigToSave = Object.assign({
+    const paymentConfigToSave = Object.assign(this.paymentToSaveOrUpdate, {
       rate: this.selectedRate,
       contract: this.contractData.id
-    }, this.paymentToSaveOrUpdate)
+    })
 
     const { data, error } = await this.contractService.saveNewPaymentConfig(paymentConfigToSave)
 
@@ -80,7 +80,7 @@ export class PaymentBlockComponent implements OnInit {
 
     if (data) {
       const { data: dataUpdateContract, error: errorOnUpdateContract } = await this.contractService.changeSelfUploadedContractStatePaymentConfig(this.contractData.id, data[0].id)
-     
+
       if (dataUpdateContract) {
         this.toastrService.success("Pagamento configurado com sucesso!")
         this.paymentData = data;
@@ -93,6 +93,27 @@ export class PaymentBlockComponent implements OnInit {
         this.toastrService.error("Erro ao atualizar status do contrato!")
       }
 
+    }
+  }
+
+  async updatePaymentConfigData() {
+    const paymentConfigToSave = Object.assign(this.paymentToSaveOrUpdate, {
+      rate: this.selectedRate,
+      contract: this.contractData.id
+    })
+
+    const { data, error } = await this.contractService.updatePaymentConfigData(paymentConfigToSave, paymentConfigToSave.id)
+
+    if (data && data.length) {
+      this.toastrService.success("Pagamento atualizado com sucesso!")
+      this.paymentData = data[0];
+      this.paymentToSaveOrUpdate = data[0];
+      this.editingPaymentContract = false;
+    }
+
+    if (error) {
+      console.error(error)
+      this.toastrService.error("Erro ao atualizar pagamento!")
     }
   }
 

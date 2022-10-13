@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { ContractService } from 'src/app/services/contract.service';
 import { InvoiceService } from 'src/app/services/invoice.service';
-import { CONTRACT_STATUS, DUE_DATE_LIMIT, INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
+import { MilestoneService } from 'src/app/services/milestone.service';
+import { CONTRACT_STATUS, CONTRACT_TYPES, DUE_DATE_LIMIT, INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
 import { convertArrayInObject, getDueDateColor } from 'src/app/utils/helpers';
 import { CHECK_INVOICE } from 'src/app/utils/invoicesUtil';
 
@@ -30,12 +30,14 @@ export class MyContractComponent implements OnInit {
   getDueDateColor: any = getDueDateColor;
 
   invoicesListByContract: Array<any>;
+  milestonesListByContracts: Array<any>;
 
   checkInvoice: any = CHECK_INVOICE;
 
   constructor(
     private contractService: ContractService,
     private invoiceService: InvoiceService,
+    private milestoneService: MilestoneService,
     private route: ActivatedRoute,
   ) { }
 
@@ -52,9 +54,10 @@ export class MyContractComponent implements OnInit {
         }
 
         const { data: invoiceListByContractData, errorInvoices } = await this.invoiceService.getInvoiceByContract(contractId)
-        console.log(invoiceListByContractData)
-
         this.invoicesListByContract = invoiceListByContractData;
+
+        const { data: milestonesListByContracts, errorMilestones } = await this.milestoneService.getMilestonesByContract(contractId)
+        this.milestonesListByContracts = milestonesListByContracts;
       }
     })
   }
@@ -64,4 +67,7 @@ export class MyContractComponent implements OnInit {
     return splitedDocumenName[splitedDocumenName.length - 1]
   }
 
+  isMilestone(contractType) {
+    return contractType === CONTRACT_TYPES.MILESTONE
+  }
 }

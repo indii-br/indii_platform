@@ -8,8 +8,10 @@ import { StorageService } from 'src/app/services/storage.service';
 import { SELECTORS } from 'src/app/stores/selectors';
 import { CHECK_INVOICE } from 'src/app/utils/invoicesUtil';
 import { InvoiceService } from '../../../../services/invoice.service';
-import { INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from '../../../../utils/constants';
+import { CONTRACT_TYPES, INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from '../../../../utils/constants';
 import { convertArrayInObject } from '../../../../utils/helpers';
+
+declare var Swal: any;
 
 @Component({
   selector: 'app-contractor-invoice',
@@ -132,7 +134,7 @@ export class ContractorInvoiceComponent implements OnInit {
     }
   }
 
-  isHourly(){
+  isHourly() {
     return this.invoiceData.contract?.contractType === 'HOURLY';
   }
 
@@ -168,4 +170,30 @@ export class ContractorInvoiceComponent implements OnInit {
     return invoice.statusCode < 400;
   }
 
+  isMilestone(contractType) {
+    return contractType === CONTRACT_TYPES.MILESTONE
+  }
+
+  addAcceptanceCriteria() {
+    Swal.fire({
+      title: 'Solicitar análise',
+      input: 'textarea',
+      showCancelButton: true,
+      confirmButtonText: 'Solicitar',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      if (result.value) {
+        const { data, error } = await this.invoiceService.updateAcceptanceCriteria(result.value, this.invoiceID)
+
+        if (error) {
+          this.toastrService.error("Erro ao atualizar solicitação de análise!");
+        }
+
+        if (data) {
+          this.toastrService.success("Fatura atualizada com sucesso!");
+          this.getInvoiceById(this.invoiceID)
+        }
+      }
+    })
+  }
 }

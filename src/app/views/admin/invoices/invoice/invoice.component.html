@@ -62,7 +62,7 @@
                         <strong class="pt-1 block">#{{invoiceData.contract.id}}</strong>
                     </p>
 
-                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                    <p *ngIf="!isMilestone(invoiceData.contract.contractType)" class="text-blueGray-500 uppercase text-xs font-normal mb-4">
                         <span>Ciclo de pagamento:</span><br />
                         <strong class="pt-1 ">{{rateTypes[invoiceData.contract.contractType].label}}</strong>
                         <strong class="pt-1 "> -
@@ -187,5 +187,26 @@
                 </div>
             </div>
         </div>
+
+        <div
+        class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+        <div class="rounded-lg bg-white mb-0 px-6 py-6 border-0">
+            <div class="flex flex-wrap items-center">
+                <div class="relative w-full px-2 max-w-full flex-grow flex-1">
+                    <h6 class="text-blueGray-700 uppercase text-xs font-normal">
+                        <small>Solicitação de entrega:</small><br/>
+                        <div class="text-lg">
+                            <div *ngIf="invoiceData.milestoneAcceptanceCriteria" class="text-left text-blueGray-600 text-sm font-normal mt-3">
+                                {{invoiceData.milestoneAcceptanceCriteria}}
+                            </div>
+                            <span *ngIf="!invoiceData.milestoneAcceptanceCriteria" class="uppercase text-xs text-blueGray-600 font-bold">
+                                Aguardando Solicitação da entrega
+                            </span>
+                        </div>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 </div>

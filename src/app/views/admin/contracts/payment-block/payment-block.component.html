@@ -19,7 +19,7 @@
 
     <app-editable-input-block *ngIf="contractData.contractType === 'HOURLY'" [value]="paymentData?.maxHoursPerCycle"
         title="Máximo de horas por ciclo de pagamento" [editing]="editingPaymentContract">
-        <input type="number" [value]="contractData?.maxHoursPerCycle" #maxHoursPerCycle
+        <input type="number" [value]="paymentData?.maxHoursPerCycle" #maxHoursPerCycle
             (change)="setValue('maxHoursPerCycle', maxHoursPerCycle.value)"
             class="border-0 px-3 py-3 placeholder-blueGray-400 text-blueGray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
             placeholder="Quantidade máxima de horas por ciclo de pagamento" />

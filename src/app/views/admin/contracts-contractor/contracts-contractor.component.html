@@ -54,15 +54,20 @@
                             </td>
                             <td
                                 class="font-semibold border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                <small *ngIf="!contract.paymentConfig"
-                                    style="opacity: .7; font-weight: 400;">(Aguardando Configuração)</small>
-                                <span *ngIf="contract.paymentConfig"
-                                    style="font-weight: bold;">{{contract.paymentConfig.rate | currency :
-                                    'R$'}}</span><br />
-                                <span class="font-normal">{{rateTypes[contract.contractType].label}}</span><br />
-                                <small class="font-normal" *ngIf="contract.paymentConfig">
-                                    {{paymentCyclesValues[contract.paymentConfig.paymentCycle]}}
-                                </small>
+                                <span *ngIf="!isMilestone(contract.contractType)">
+                                    <small *ngIf="!contract.paymentConfig"
+                                        style="opacity: .7; font-weight: 400;">(Aguardando Configuração)</small>
+                                    <span *ngIf="contract.paymentConfig"
+                                        style="font-weight: bold;">{{contract.paymentConfig.rate | currency :
+                                        'R$'}}</span><br />
+                                    <span class="font-normal">{{rateTypes[contract.contractType].label}}</span><br />
+                                    <small class="font-normal" *ngIf="contract.paymentConfig">
+                                        {{paymentCyclesValues[contract.paymentConfig.paymentCycle]}}
+                                    </small>
+                                </span>
+                                <span *ngIf="isMilestone(contract.contractType)">
+                                    <app-milestone-table-data [contractId]="contract.id"></app-milestone-table-data>
+                                </span>
                             </td>
                             <td
                                 class="font-semibold border-t-0 text-sm {{contractStatus[contract.status].color}} px-6 align-middle border-l-0 border-r-0 whitespace-nowrap break-words p-4">

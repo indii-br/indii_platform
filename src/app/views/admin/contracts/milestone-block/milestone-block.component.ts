@@ -30,7 +30,7 @@ export class MilestoneBlockComponent implements OnInit {
   ngOnInit(): void {
     this.milestoneToSaveOrUpdate = this.milestoneData;
 
-    if(this.milestoneData && this.milestoneData.id){
+    if (this.milestoneData && this.milestoneData.id) {
       this.editMilestone = false;
     }
   }
@@ -41,7 +41,12 @@ export class MilestoneBlockComponent implements OnInit {
       contract: this.contractData.id
     })
 
-    this.saveMilestoneConfig(milestoneToSaveOrUpdate)
+    if (milestoneToSaveOrUpdate && milestoneToSaveOrUpdate.id) {
+      this.updateMilestone(milestoneToSaveOrUpdate)
+    } else {
+      this.saveMilestoneConfig(milestoneToSaveOrUpdate)
+    }
+
   }
 
   async saveMilestoneConfig(milestoneToSaveOrUpdate) {
@@ -68,9 +73,23 @@ export class MilestoneBlockComponent implements OnInit {
     }
   }
 
+  async updateMilestone(milestoneToSaveOrUpdate) {
+    const { data, error } = await this.milestoneService.updateMilestoneData(milestoneToSaveOrUpdate, milestoneToSaveOrUpdate.id)
+
+    if (data) {
+      this.toastrService.success("Milestone/Entrega atualizado com sucesso!")
+      this.onSaveMilestone.emit(true);
+    }
+
+    if (error) {
+      this.toastrService.error("Erro ao atualizar Milestone/Entrega!")
+    }
+  }
+
   setEditing(ev) {
     this.editMilestone = ev;
     this.hideCancel = false;
+    this.selectedAmount = this.milestoneData.amount
   }
 
   setValue(key: string, value: string) {
@@ -78,7 +97,7 @@ export class MilestoneBlockComponent implements OnInit {
   }
 
   getTitle() {
-    if(this.milestoneData && this.milestoneData.id){
+    if (this.milestoneData && this.milestoneData.id) {
       return this.milestoneData.title;
     }
 

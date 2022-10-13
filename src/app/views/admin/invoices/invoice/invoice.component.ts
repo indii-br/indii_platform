@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { WepayoutService } from 'src/app/services/wepayout.service';
-import { INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
+import { CONTRACT_TYPES, INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
 import { convertArrayInObject } from 'src/app/utils/helpers';
 import { CHECK_INVOICE } from 'src/app/utils/invoicesUtil';
 import { environment } from 'src/environments/environment';
@@ -176,4 +176,7 @@ export class InvoiceComponent implements OnInit {
     })
   }
 
+  isMilestone(contractType) {
+    return contractType === CONTRACT_TYPES.MILESTONE
+  }
 }

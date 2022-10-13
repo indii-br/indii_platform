@@ -30,7 +30,7 @@ export class MilestoneTableDataComponent implements OnInit {
   }
 
   getAmountMilestones(){
-    return this.milestonesData.reduce((acc, milestone) => acc + milestone.amount, 0);
+    return this.milestonesData.reduce((acc, milestone) => parseFloat(acc) + parseFloat(milestone.amount), 0);
   }
 
 }

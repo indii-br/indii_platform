@@ -16,7 +16,7 @@ export class InvoiceService {
     return this.supabaseService.supabase
       .from('invoices')
       .select(`*, 
-        contract!inner(*, paymentConfig!inner(*)), 
+        contract!inner(*, paymentConfig->contract_payment_config(*)), 
         company!inner(*),
         contractor!inner(id, full_name, email, avatar)
       `)
@@ -28,7 +28,7 @@ export class InvoiceService {
     return this.supabaseService.supabase
       .from('invoices')
       .select(`*, 
-        contract!inner(*, paymentConfig!inner(*)), 
+        contract!inner(*, paymentConfig->contract_payment_config(*)), 
         company!inner(*),
         contractor!inner(id, full_name, email, avatar)
       `)
@@ -40,7 +40,7 @@ export class InvoiceService {
     return this.supabaseService.supabase
       .from('invoices')
       .select(`*, 
-        contract!inner(*, paymentConfig!inner(*)), 
+        contract!inner(*, paymentConfig->contract_payment_config(*)), 
         company!inner(*),
         contractor!inner(id, full_name, email, avatar)
       `)
@@ -51,7 +51,7 @@ export class InvoiceService {
     return this.supabaseService.supabase
       .from('invoices')
       .select(`*, 
-        contract!inner(*, paymentConfig!inner(*)), 
+        contract!inner(*, paymentConfig->contract_payment_config(*)), 
         company!inner(*),
         contractor!inner(id, full_name, email, avatar)
       `)
@@ -99,6 +99,13 @@ export class InvoiceService {
     return this.supabaseService.supabase
       .from('invoices')
       .update({ hoursToInvoice: hoursToInvoice, amount: amountUpdated })
+      .eq("id", id)
+  }
+
+  async updateAcceptanceCriteria(milestoneAcceptanceCriteria: any, id: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('invoices')
+      .update({ milestoneAcceptanceCriteria: milestoneAcceptanceCriteria })
       .eq("id", id)
   }
 

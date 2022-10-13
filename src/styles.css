@@ -147,3 +147,7 @@
     background-size: cover!important;
     display: inline-flex!important;
 }
+
+.border-red-500{
+    border-color: tomato!important;
+}

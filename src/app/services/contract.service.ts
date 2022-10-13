@@ -159,7 +159,7 @@ export class ContractService {
   async getAllByContractor(userId: string): Promise<any> {
     return this.supabaseService.supabase
       .from('contracts')
-      .select("*, contractor!inner(*), company!inner(*), paymentConfig!inner(*), inviteContractor!inner(*)")
+      .select("*, contractor!inner(*), company!inner(*), paymentConfig->contract_payment_config(*), inviteContractor!inner(*)")
       .eq('contractor.id', userId)
   }
 

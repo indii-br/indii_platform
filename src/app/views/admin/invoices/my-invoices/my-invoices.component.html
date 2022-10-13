@@ -64,10 +64,19 @@
                             </td>
                             <td
                                 class="font-normal cursor-pointer border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{paymentCyclesValues[invoice.contract.paymentConfig.paymentCycle]}}<br />
-                                <small>
-                                    Contrato {{rateTypes[invoice.contract.contractType].label}}
-                                </small>
+                                <span *ngIf="!isMilestone(invoice.contract.contractType)">
+                                    {{paymentCyclesValues[invoice.contract.paymentConfig.paymentCycle]}}<br />
+                                    <small>
+                                        Contrato {{rateTypes[invoice.contract.contractType].label}}
+                                    </small>
+                                </span>
+
+                                <span *ngIf="isMilestone(invoice.contract.contractType)">
+                                    Entrega #{{invoice.milestone}}<br />
+                                    <small>
+                                        Contrato {{rateTypes[invoice.contract.contractType].label}}
+                                    </small>
+                                </span>
                             </td>
                             <td
                                 class="border-t-0 text-xs px-6 align-middle border-l-0 border-r-0 whitespace-nowrap p-4">

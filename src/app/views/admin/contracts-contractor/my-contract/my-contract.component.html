@@ -1,4 +1,4 @@
-<div *ngIf="contractData" class="flex flex-wrap h-screen">
+<div *ngIf="contractData" class="flex flex-wrap">
     <div class="w-full xl:w-6/12 px-4">
         <div
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
@@ -49,23 +49,27 @@
                         <strong *ngIf="!contractData.endAt" class="pt-1 block">--</strong>
                     </p>
 
-                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                    <p *ngIf="!isMilestone(contractData.contractType)"
+                        class="text-blueGray-500 uppercase text-xs font-normal mb-4">
                         <span>Ciclo de pagamento:</span><br />
                         <strong class="pt-1 ">{{paymentCyclesValues[contractData.paymentConfig.paymentCycle]}}</strong>
                     </p>
 
-                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                    <p *ngIf="!isMilestone(contractData.contractType)"
+                        class="text-blueGray-500 uppercase text-xs font-normal mb-4">
                         <span>Tipo de pagamento:</span><br />
                         <strong class="pt-1 ">{{rateTypes[contractData.contractType].label}}</strong>
                     </p>
 
-                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                    <p *ngIf="!isMilestone(contractData.contractType)"
+                        class="text-blueGray-500 uppercase text-xs font-normal mb-4">
                         <span>Valor do contrato:</span><br />
                         <strong class="pt-1 ">{{contractData.paymentConfig.rate | currency :
                             'R$'}}&emsp;/&emsp;{{rateTypes[contractData.contractType].label}}</strong>
                     </p>
 
-                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                    <p *ngIf="!isMilestone(contractData.contractType)"
+                        class="text-blueGray-500 uppercase text-xs font-normal mb-4">
                         <span>Vencimento:</span><br />
                         <strong class="pt-1 ">{{dueDateLimitValues[contractData.paymentConfig.dueDate]}}</strong>
                     </p>
@@ -82,7 +86,8 @@
                                         <strong></strong></small>
                                 </span> -->
 
-                    <p *ngIf="contractData.contractSelfUploaded" class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                    <p *ngIf="contractData.contractSelfUploaded"
+                        class="text-blueGray-500 uppercase text-xs font-normal mb-4">
                         <span class="block" style="margin-bottom: 8px">
                             Documentos Assinados: <br />
                             <small class="lowercase">*Clique para baixar</small>
@@ -90,6 +95,54 @@
                         <a class="font-bold cursor-pointer" style="color: rgb(87, 87, 253);"><i
                                 class="fas fa-cloud-download-alt"></i>&ensp;{{documentNameFormat(contractData.contractSelfUploaded)}}</a>
                     </p>
+
+                    <span *ngIf="isMilestone(contractData.contractType)">
+                        <div class="divider mt-4 mb-5"></div>
+
+                        <h6 class="text-blueGray-600 text-lg font-semibold flex items-center mb-4">
+                            Entregas / Milestones
+                        </h6>
+
+                        <p *ngIf="!milestonesListByContracts || milestonesListByContracts.length === 0" class="mt-2">
+                            Nenhuma Entrega / Milestone Configurada
+                        </p>
+
+                        <span *ngFor="let milestone of milestonesListByContracts; let i = index" class="mt-2">
+                            <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                                <span>Título:</span><br />
+                                <strong class="pt-1 block">{{milestone.title}}</strong>
+                            </p>
+
+                            <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                                <span>Descrição:</span><br />
+                                <strong class="pt-1 block">{{milestone.description}}</strong>
+                            </p>
+
+                            <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                                <span>Definição de preparado:</span><br />
+                                <strong class="pt-1 block">{{milestone.dor}}</strong>
+                            </p>
+
+                            <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                                <span>Definição de entregue:</span><br />
+                                <strong class="pt-1 block">{{milestone.dod}}</strong>
+                            </p>
+
+                            <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                                <span>Data prevista de conclusão:</span><br />
+                                <strong *ngIf="milestone.dueDate" class="pt-1 block">{{milestone.dueDate | date :
+                                    'dd/MM/yyyy'}}</strong>
+                                <strong *ngIf="!milestone.dueDate" class="pt-1 block">--</strong>
+                            </p>
+
+                            <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                                <span>Valor:</span><br />
+                                <strong class="pt-1 ">{{milestone.amount | currency : 'R$'}}</strong>
+                            </p>
+
+                            <div *ngIf="milestonesListByContracts.length !== (i + 1)" class="divider mt-2 mb-2"></div>
+                        </span>
+                    </span>
                 </div>
             </div>
         </div>
@@ -112,7 +165,7 @@
                     class="text-blueGray-500 text-center p-8 font-semibold text-xl">
                     Você não tem nenhum pagamento para esse contrato ainda
                 </h2>
-                
+
                 <table *ngIf="invoicesListByContract && invoicesListByContract.length !== 0"
                     class="items-center w-full bg-transparent border-collapse">
                     <thead class="thead-light">
@@ -132,16 +185,18 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let invoice of invoicesListByContract">
-                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                <small>#{{invoice.id}}</small><br/>
-                                <b>{{invoice.amount | currency : 'R$'}}</b><br/>
+                            <td
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                                <small>#{{invoice.id}}</small><br />
+                                <b>{{invoice.amount | currency : 'R$'}}</b><br />
                                 <span class="divider-invoice"></span>
-                                <small>Vencimento:</small><br/>
-                                <small class="{{getDueDateColor(invoice.dueDate)}}">{{invoice.dueDate | date: 'dd MMMM, yyyy': '' : 'pt-BR' }}</small>
+                                <small>Vencimento:</small><br />
+                                <small class="{{getDueDateColor(invoice.dueDate)}}">{{invoice.dueDate | date: 'dd MMMM,
+                                    yyyy': '' : 'pt-BR' }}</small>
                             </td>
                             <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
-                                <small class="uppercase">{{invoiceStatus[invoice.status].label}}</small><br/>
+                                <small class="uppercase">{{invoiceStatus[invoice.status].label}}</small><br />
                                 <span class="divider-invoice"></span>
                                 <span [innerHTML]="checkInvoice(invoice)"></span>
                             </td>

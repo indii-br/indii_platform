@@ -22,6 +22,7 @@ export class MilestoneService {
       .from('milestones')
       .select("*, company!inner(*)")
       .eq('company.id', companyId)
+      .lt('statusCode', 400)
   }
 
   async getMilestonesByContract(contractId: string): Promise<any> {
@@ -29,6 +30,7 @@ export class MilestoneService {
       .from('milestones')
       .select("*, contract!inner(*)")
       .eq('contract.id', contractId)
+      .lt('statusCode', 400)
   }
 
   async updateMilestoneData(milestoneToUpdate: any, id: string): Promise<any> {

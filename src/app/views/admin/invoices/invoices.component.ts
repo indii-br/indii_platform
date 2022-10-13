@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { SELECTORS } from 'src/app/stores/selectors';
-import { INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
+import { CONTRACT_TYPES, INVOICE_STATUS, PAYMENT_CYCLES, RATE_TYPE } from 'src/app/utils/constants';
 import { convertArrayInObject, getDueDateColor } from 'src/app/utils/helpers';
 import { CHECK_INVOICE } from 'src/app/utils/invoicesUtil';
 
@@ -58,5 +58,9 @@ export class InvoicesComponent implements OnInit {
 
   isOpen(invoice: any) {
     return invoice.statusCode < 300;
+  }
+
+  isMilestone(contractType) {
+    return contractType === CONTRACT_TYPES.MILESTONE
   }
 }

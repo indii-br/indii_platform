@@ -1,5 +1,5 @@
 <span *ngIf="milestoneConfigValue" style="opacity: .8; font-weight: 500;">{{milestoneConfigValue}}</span>
-<span *ngIf="!milestoneConfigValue">
+<span *ngIf="!milestoneConfigValue && milestonesData">
     <span>{{getAmountMilestones() | currency : 'R$'}}</span><br />
     <small class="font-normal"><b>{{milestonesData.length}}</b> Entregas/Milestones</small>
 </span>

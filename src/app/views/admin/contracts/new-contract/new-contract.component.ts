@@ -248,15 +248,13 @@ export class NewContractComponent implements OnInit {
   showContractorBlock() {
     return this.contractData &&
       this.contractData.id &&
-      this.contractData.statusCode === 110;
+      this.contractData.statusCode >= 110;
   }
 
   showImportContractBlock() {
     return this.contractData &&
       this.contractData.id &&
-      this.contractData.paymentConfig &&
-      (this.contractData.inviteContractor || this.contractData.contractor) &&
-      this.contractData.contractType !== 'MILESTONE';
+      this.contractData.statusCode >= 120;
   }
 
   async archiveContract(id: string) {

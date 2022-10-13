@@ -61,7 +61,8 @@
                         <strong class="pt-1 block">#{{invoiceData.contract.id}}</strong>
                     </p>
 
-                    <p class="text-blueGray-500 uppercase text-xs font-normal mb-4">
+                    <p *ngIf="!isMilestone(invoiceData.contract.contractType)"
+                        class="text-blueGray-500 uppercase text-xs font-normal mb-4">
                         <span>Ciclo de pagamento:</span><br />
                         <strong class="pt-1 ">{{rateTypes[invoiceData.contract.contractType].label}}</strong>
                         <strong class="pt-1 "> -
@@ -87,7 +88,7 @@
                             <small>Status:</small><br />
                             <span class="{{invoiceStatus[invoiceData.status].color}} text-lg font-bold">
                                 {{invoiceStatus[invoiceData.status].label}}
-                            </span><br/>
+                            </span><br />
                             <span [innerHTML]="checkInvoice(invoiceData)"></span>
                         </h6>
                     </div>
@@ -132,6 +133,45 @@
             </div>
         </div>
 
+        <div *ngIf="isMilestone(invoiceData.contract.contractType)"
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
+            <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
+                <div class="flex flex-wrap items-center">
+                    <div class="relative w-full px-1 max-w-full flex-grow flex-1">
+                        <h6 class="text-blueGray-600 text-sm font-semibold">
+                            <span class="uppercase">Solicitar análise da entrega </span><br />
+                            <small class="text-blueGray-500" style="font-size: 10px;">
+                                Insira informações sobre a conclusão dessa entrega
+                            </small>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full text-center mb-3 mt-2">
+                <p *ngIf="invoiceData.milestoneAcceptanceCriteria" style="font-size: 10px;"
+                    class="text-blueGray-600 font-normal text-left px-4 py-4">
+                    <b>Descrição: </b><br />
+                    {{invoiceData.milestoneAcceptanceCriteria}}
+                </p>
+
+                <div *ngIf="isOpen(invoiceData)" class="flex justify-center px-2">
+                    <button (click)="addAcceptanceCriteria()"
+                        class="text-white w-full bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1"
+                        type="button">
+
+                        <span *ngIf="!invoiceData.milestoneAcceptanceCriteria">
+                            <i class="fa fa-check"></i>
+                            <span class="ml-2">Solicitar Análise</span>
+                        </span>
+                        <span *ngIf="invoiceData.milestoneAcceptanceCriteria">
+                            <i class="fa fa-edit"></i>
+                            <span class="ml-2">Alterar</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div *ngIf="isHourly()"
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
             <div class="rounded-t bg-white mb-0 px-6 py-6 border-0">
@@ -139,7 +179,8 @@
                     <div class="relative w-full px-1 max-w-full flex-grow flex-1">
                         <h6 class="text-blueGray-600 text-sm font-semibold">
                             <span class="uppercase">Horas Trabalhadas</span><br />
-                            <small class="text-blueGray-500 font-normal" style="font-size: 10px;">Adicione as horas trabalhadas
+                            <small class="text-blueGray-500 font-normal" style="font-size: 10px;">Adicione as horas
+                                trabalhadas
                                 referentes a esta fatura</small><br />
                             <p *ngIf="contractData" class="text-xs text-left text-blueGray-500 font-normal">
                                 *maxímo de horas permitido: <b>{{contractData?.paymentConfig?.maxHoursPerCycle}}h</b>

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { ContractService } from 'src/app/services/contract.service';
 import { SELECTORS } from 'src/app/stores/selectors';
-import { CONTRACT_STATUS, DUE_DATE_LIMIT, PAYMENT_CYCLES, RATE_TYPE, SUBMIT_DOCUMENT_LIMIT } from 'src/app/utils/constants';
+import { CONTRACT_STATUS, CONTRACT_TYPES, DUE_DATE_LIMIT, PAYMENT_CYCLES, RATE_TYPE, SUBMIT_DOCUMENT_LIMIT } from 'src/app/utils/constants';
 import { convertArrayInObject } from 'src/app/utils/helpers';
 
 declare var Swal: any;
@@ -103,5 +103,9 @@ export class ContractsContractorComponent implements OnInit {
       console.error(errorContracts);
       this.toastrService.error("Erro ao carregar contratos")
     }
+  }
+
+  isMilestone(contractType) {
+    return contractType === CONTRACT_TYPES.MILESTONE
   }
 }

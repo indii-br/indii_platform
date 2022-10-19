@@ -3,6 +3,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ContractService } from 'src/app/services/contract.service';
 import { MilestoneService } from 'src/app/services/milestone.service';
 
+declare var Swal: any;
+
 @Component({
   selector: 'app-milestone-block',
   templateUrl: './milestone-block.component.html',
@@ -102,6 +104,30 @@ export class MilestoneBlockComponent implements OnInit {
     }
 
     return "Nova Entrega";
+  }
+
+  async archiveMilestone(id: string) {
+    Swal.fire({
+      title: 'Você tem certeza disso?',
+      text: "Delete a fatura gerada para esta entrega manualmente caso necessário!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, arquivar entrega!',
+      cancelButtonText: 'Não'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data, error } = await this.milestoneService.archiveMilestone(id)
+
+        if (data) {
+          this.onSaveMilestone.emit(true);
+          this.toastrService.success('Arquivado com sucesso!')
+        }
+        if (error) {
+          console.log(error)
+          this.toastrService.error('Erro ao arquivar milestone!')
+        }
+      }
+    })
   }
 
 }

@@ -2,7 +2,15 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 
+import Typed from 'typed.js';
+
 declare var Swal: any;
+
+let optionsTyped = {
+  strings: ['Futuro^2500', 'Presente'],
+  backSpeed: 70,
+  typeSpeed: 100,
+};
 
 @Component({
   selector: "app-site",
@@ -17,7 +25,9 @@ export class SiteComponent implements OnInit {
     message: new FormControl('', [Validators.required]),
   });
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    new Typed('.highlight', optionsTyped);
+  }
 
   onSubmit() {
     if (!this.contactForm.valid) {

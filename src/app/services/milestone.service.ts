@@ -45,4 +45,14 @@ export class MilestoneService {
       .from('milestones')
       .insert(milestoneToUpdate)
   }
+
+  async archiveMilestone(id: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('milestones')
+      .update({
+        statusCode: 400,
+        archivedAt: new Date()
+      })
+      .eq("id", id)
+  }
 }

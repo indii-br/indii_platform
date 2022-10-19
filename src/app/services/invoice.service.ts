@@ -21,7 +21,7 @@ export class InvoiceService {
         contractor!inner(id, full_name, email, avatar)
       `)
       .eq('company.id', companyId)
-      .order('statusCode', { ascending: true })
+      .order('dueDate', { ascending: false })
   }
 
   async getInvoicesByContractor(contractorUserId: string): Promise<any> {
@@ -33,7 +33,7 @@ export class InvoiceService {
         contractor!inner(id, full_name, email, avatar)
       `)
       .eq('contractor.id', contractorUserId)
-      .order('statusCode', { ascending: true })
+      .order('dueDate', { ascending: false })
   }
 
   async getInvoiceByContract(contractId: string): Promise<any> {

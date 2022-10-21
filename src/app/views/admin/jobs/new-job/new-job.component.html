@@ -1,6 +1,6 @@
 <div class="flex flex-wrap">
     <div class="w-full lg:w-8/12 px-4">
-        <app-editable-painel [editing]="editingNewJob" [title]="titlePanel" (isEditing)="setEditing($event)"
+        <app-editable-painel [hideEdit]="hideEdit" [editing]="editingNewJob" [title]="titlePanel" (isEditing)="setEditing($event)"
             (onSave)="triggerSaveOrEdit()" hideCancel="true">
 
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -119,7 +119,7 @@
                         <li><strong>Status:</strong> <span
                                 class="{{jobStatusList[jobData.statusCode].color}} text-sm font-semibold ml-2">{{jobStatusList[jobData.statusCode].label}}</span>
                         </li>
-                        <li *ngIf="jobData.status !== 'ARCHIVED'" class="mt-5">
+                        <li *ngIf="jobData.statusCode !== 400 " class="mt-5">
                             <button (click)="closeJob(jobData.id)" style="background-color: tomato;"
                                 class="text-white w-full text-xs font-bold px-3 py-1 rounded outline-none mr-1 mb-1"
                                 type="button">

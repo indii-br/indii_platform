@@ -1,4 +1,4 @@
-<app-editable-painel [editing]="editingPaymentContract" title="Configurar Pagamento" (isEditing)="setEditing($event)"
+<app-editable-painel [hideEdit]="hideEdit" [editing]="editingPaymentContract" title="Configurar Pagamento" (isEditing)="setEditing($event)"
     (onSave)="triggerSaveOrEdit()" [hideCancel]="hideCancel">
 
     <app-editable-input-block isCurrency="true" [value]="paymentData?.rate"

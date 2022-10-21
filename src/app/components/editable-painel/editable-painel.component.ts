@@ -9,6 +9,7 @@ export class EditablePainelComponent implements OnInit {
 
   @Input('title') title: string = '';
   @Input('editing') editing: boolean = false;
+  @Input('hideEdit') hideEdit: boolean = false;
   @Input('hideCancel') hideCancel: boolean;
   @Output() isEditing: EventEmitter<boolean> = new EventEmitter();
   @Output() onSave: EventEmitter<any> = new EventEmitter();

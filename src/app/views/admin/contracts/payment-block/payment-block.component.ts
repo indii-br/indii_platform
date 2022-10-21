@@ -35,6 +35,7 @@ export class PaymentBlockComponent implements OnInit {
   paymentToSaveOrUpdate: any = {};
 
   @Input("contractData") contractData;
+  @Input("hideEdit") hideEdit;
 
   constructor(
     private contractService: ContractService,

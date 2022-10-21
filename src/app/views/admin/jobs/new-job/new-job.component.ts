@@ -24,6 +24,7 @@ export class NewJobComponent implements OnInit {
   selectedAvailabilityType: string;
   selectedMeetingTimeType: string;
   
+  hideEdit: boolean = false;
 
   selectedRate: any;
   selectedSkillsList: any;
@@ -93,6 +94,10 @@ export class NewJobComponent implements OnInit {
         if (jobById) {
           this.editingNewJob = false;
           this.jobData = jobById;
+
+          if(this.jobData.statusCode === 400){
+            this.hideEdit = true;
+          }
         }
 
         if (jobById && error) {

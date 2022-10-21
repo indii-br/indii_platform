@@ -1,7 +1,7 @@
 <div *ngIf="showForm()" class="flex flex-wrap">
   <div class="w-full lg:w-8/12 px-4">
     <!-- BASIC INFO | CONTRACT -->
-    <app-editable-painel [editing]="editingNewContract" [title]="getTitlePanel()" (isEditing)="setEditing($event)"
+    <app-editable-painel [hideEdit]="hideEdit" [editing]="editingNewContract" [title]="getTitlePanel()" (isEditing)="setEditing($event)"
       (onSave)="triggerSaveOrEdit()" [hideCancel]="hideCancel">
 
       <section *ngIf="editingNewContract && !contractData?.id" class="w-full mb-8">
@@ -106,7 +106,7 @@
     </app-editable-painel>
 
     <!-- PAYMENT INFO | CONTRACT -->
-    <app-payment-block *ngIf="showPaymentBlock()" [contractData]="contractData"></app-payment-block>
+    <app-payment-block [hideEdit]="hideEdit" *ngIf="showPaymentBlock()" [contractData]="contractData"></app-payment-block>
 
     <section *ngIf="showMilestoneBlock()">
       <h6 class="text-blueGray-500 text-lg mt-3 mb-6 font-normal uppercase milestone-header">
@@ -126,7 +126,7 @@
         [milestoneData]="milestone" *ngFor="let milestone of milestonesList"></app-milestone-block>
     </section>
 
-    <div *ngIf="!editingNewContract && contractData && contractData?.id" style="border: 2px solid tomato"
+    <div *ngIf="isOpen() && !editingNewContract && contractData && contractData?.id" style="border: 2px solid tomato"
       class="relative flex flex-col min-w-0 break-words w-full mb-6 py-6 px-6 shadow-lg rounded bg-white">
       <p style="color: tomato" class="block uppercase text-xs font-normal">
         <strong>Danger Zone:</strong><br />

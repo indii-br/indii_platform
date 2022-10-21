@@ -20,6 +20,7 @@ export class NewContractComponent implements OnInit {
   selectedSeniorityLevel: string;
 
   hasEndDate: boolean = false;
+  hideEdit: boolean = false;
 
   contractData: any;
   contractToSaveOrUpdate: any = {};
@@ -89,6 +90,10 @@ export class NewContractComponent implements OnInit {
       this.contractData = contractData;
       this.contractToSaveOrUpdate = contractData;
       this.selectedContractType = contractData.contractType
+
+      if(this.contractData.statusCode >= 400){
+        this.hideEdit = true;
+      }
 
       this.getMilestones(contractData.id)
     }
@@ -280,5 +285,9 @@ export class NewContractComponent implements OnInit {
         }
       }
     })
+  }
+
+  isOpen(){
+    return this.contractData && this.contractData.statusCode !== 400;
   }
 }

@@ -42,7 +42,7 @@ export class JobService {
   async closeJob(jobid: any): Promise<any> {
     return this.supabaseService.supabase
       .from('jobs')
-      .update({ status: 'ARCHIVED' })
+      .update({ statusCode: 400 })
       .eq("id", jobid)
   }
 

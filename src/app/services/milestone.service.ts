@@ -55,4 +55,24 @@ export class MilestoneService {
       })
       .eq("id", id)
   }
+
+  async doneMilestone(id: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('milestones')
+      .update({
+        statusCode: 300,
+        doneDate: new Date()
+      })
+      .eq("id", id)
+  }
+
+  async reOpenMilestone(id: string): Promise<any> {
+    return this.supabaseService.supabase
+      .from('milestones')
+      .update({
+        statusCode: 200,
+        doneDate: null
+      })
+      .eq("id", id)
+  }
 }

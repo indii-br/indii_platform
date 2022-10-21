@@ -1,13 +1,17 @@
-<app-editable-painel [editing]="editMilestone" [title]="getTitle()" (isEditing)="setEditing($event)"
-    (onSave)="triggerSaveOrEdit()" [hideCancel]="hideCancel">
+<app-editable-painel [hideEdit]="hideEdit" [editing]="editMilestone" [title]="getTitle()"
+    (isEditing)="setEditing($event)" (onSave)="triggerSaveOrEdit()" [hideCancel]="hideCancel">
 
-    <app-editable-input-block [value]="milestoneData.title" title="Titulo da Milestone" [editing]="editMilestone">
+    <h4 *ngIf="isMilestoneDone(milestoneData?.statusCode)" class="text-green-500 mb-5 uppercase font-semibold">
+        <i class="fas fa-check"></i>&ensp;Entrega concluída
+    </h4>
+
+    <app-editable-input-block [value]="milestoneData.title" title="Titulo da Entrega" [editing]="editMilestone">
         <input type="text" [value]="milestoneData.title" #title (change)="setValue('title', title.value)"
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
             placeholder="Insira o titulo" />
     </app-editable-input-block>
 
-    <app-editable-input-block [value]="milestoneData.description" title="Descrição da milestone"
+    <app-editable-input-block [value]="milestoneData.description" title="Descrição da Entrega"
         [editing]="editMilestone">
         <textarea type="text" #description (change)="setValue('description', description.value)"
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear"
@@ -32,7 +36,7 @@
                 href="https://www.lumis.com.br/a-lumis/blog/dor-e-dod.htm">www.lumis.com.br/a-lumis/blog/dor-e-dod.htm</a></small>
     </app-editable-input-block>
 
-    <app-editable-input-block isCurrency="true" [value]="milestoneData.amount" title="Valor da Milestone / Entrega"
+    <app-editable-input-block isCurrency="true" [value]="milestoneData.amount" title="Valor da Entrega"
         [editing]="editMilestone">
         <input type="text" [(ngModel)]="selectedAmount" currencyMask
             [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
@@ -47,18 +51,47 @@
             placeholder="Insira data prevista de conclusão" />
     </app-editable-input-block>
 
-    <div class="w-full lg:w-12/12 pb-4 px-4 input-block">
+    <div *ngIf="!isMilestoneDone(milestoneData?.statusCode)" class="w-full lg:w-12/12 pb-4 px-4 input-block">
         <div class="relative w-full mb-3">
             <label class="block uppercase text-blueGray-600 text-xs mb-2">
-                Arquivar / Remover Milestone
+                Arquivar / Remover Entrega
             </label>
 
             <button (click)="archiveMilestone(milestoneData?.id)"
                 class="text-red-500 bg-transparent border border-solid border-red-500 font-bold uppercase text-xs px-3 py-1 rounded outline-none mr-1 mb-1"
                 type="button">
-                Arquivar Milestone
+                Arquivar Entrega
             </button>
         </div>
     </div>
+
+    <div *ngIf="!isMilestoneDone(milestoneData?.statusCode)" class="w-full lg:w-12/12 pb-4 px-4 input-block">
+        <div class="relative w-full mb-3">
+            <label class="block uppercase text-blueGray-600 text-xs mb-2">
+                Concluir Entrega
+            </label>
+
+            <button (click)="doneMilestone(milestoneData?.id)"
+                class="text-green-500 bg-transparent border border-solid border-green-500 font-bold uppercase text-xs px-3 py-1 rounded outline-none mr-1 mb-1"
+                type="button">
+                Concluir Entrega
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="isMilestoneDone(milestoneData?.statusCode)" class="w-full lg:w-12/12 pb-4 px-4 input-block">
+        <div class="relative w-full mb-3">
+            <label class="block uppercase text-blueGray-600 text-xs mb-2">
+                Reverter conclusão da entrega
+            </label>
+
+            <button (click)="openMilestoneAgain(milestoneData?.id)"
+                class="text-orange-500 bg-transparent border border-solid border-oragen-500 font-bold uppercase text-xs px-3 py-1 rounded outline-none mr-1 mb-1"
+                type="button">
+                Abrir Entrega Novamente
+            </button>
+        </div>
+    </div>
+    
 
 </app-editable-painel>

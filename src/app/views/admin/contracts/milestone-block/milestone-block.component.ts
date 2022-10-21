@@ -21,6 +21,8 @@ export class MilestoneBlockComponent implements OnInit {
   hideCancel: boolean = true;
   selectedAmount: any;
 
+  hideEdit: boolean = false;
+
   milestoneToSaveOrUpdate: any = {};
 
   constructor(
@@ -33,6 +35,10 @@ export class MilestoneBlockComponent implements OnInit {
     this.milestoneToSaveOrUpdate = this.milestoneData;
 
     if (this.milestoneData && this.milestoneData.id) {
+      if (this.isMilestoneDone(this.milestoneData.statusCode)) {
+        this.hideEdit = true;
+      }
+
       this.editMilestone = false;
     }
   }
@@ -128,6 +134,57 @@ export class MilestoneBlockComponent implements OnInit {
         }
       }
     })
+  }
+
+  async doneMilestone(id: string) {
+    Swal.fire({
+      title: 'Concluir Entrega?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, concluir entrega!',
+      cancelButtonText: 'Não'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data, error } = await this.milestoneService.doneMilestone(id)
+
+        if (data) {
+          this.onSaveMilestone.emit(true);
+          this.toastrService.success('Concluído com sucesso!')
+        }
+        if (error) {
+          console.log(error)
+          this.toastrService.error('Erro ao concluir entrega!')
+        }
+      }
+    })
+  }
+
+
+  async openMilestoneAgain(id: string) {
+    Swal.fire({
+      title: 'Reverter conclusão da entrega?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, Abrir entrega novamente!',
+      cancelButtonText: 'Não'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data, error } = await this.milestoneService.reOpenMilestone(id)
+
+        if (data) {
+          this.onSaveMilestone.emit(true);
+          this.toastrService.success('Concluído com sucesso!')
+        }
+        if (error) {
+          console.log(error)
+          this.toastrService.error('Erro ao reverter conclusão da entrega!')
+        }
+      }
+    })
+  }
+
+  isMilestoneDone(statusCode) {
+    return statusCode === 300;
   }
 
 }

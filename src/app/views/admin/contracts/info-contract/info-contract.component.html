@@ -1,6 +1,6 @@
 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
     <div class="flex-auto px-4 pb-2 lg:px-10 py-10 pt-8">
-        <div class="flex flex-wrap pb-4">
+        <div *ngIf="contractData && contractData.statusCode === 200" class="flex flex-wrap pb-4">
             <h6 class="text-blueGray-400 text-sm mb-6 font-bold uppercase text-center w-full">
                 <span *ngIf="!isDone(position)">
                     Etapa {{position}}/{{statusListToShow.length}}
@@ -12,6 +12,32 @@
             
             <ul class="w-full list-disc text-blueGray-600 text-xs">
                 <li *ngFor="let status of statusListToShow" class="{{getPositionClass(status.position, contractData)}} text-blueGray-400 mb-2 li-default">
+                    <i class="fas fa-circle mr-2"></i>
+                    <i class="fas fa-check-circle hidden mr-2"></i>
+                    <strong>{{status.label}}</strong>
+                    <span class="step-line"></span>
+                </li>
+            </ul>
+        </div>
+
+        <div *ngIf="contractData && contractData.statusCode === 400" class="flex flex-wrap">
+            <h6 class="text-red-500 text-sm mb-2 font-bold uppercase text-center w-full">
+                <span class="text-center">
+                    Contrato Arquivado<br/>
+                    <small style="font-size: 9px; margin-top: 15px;" class="text-blueGray-400 flex">Para reativar este contrato entre em contato com o suporte.</small>
+                </span>
+            </h6>
+        </div>
+
+        <div *ngIf="!contractData" class="flex flex-wrap">
+            <h6 class="text-blueGray-400 text-sm mb-5 font-bold uppercase text-center w-full">
+                <span class="text-center">
+                    Novo Contrato
+                </span>
+            </h6>
+
+            <ul class="w-full list-disc text-blueGray-600 text-xs mb-5">
+                <li *ngFor="let status of statusListToShow" class="text-blueGray-400 mb-2 li-default">
                     <i class="fas fa-circle mr-2"></i>
                     <i class="fas fa-check-circle hidden mr-2"></i>
                     <strong>{{status.label}}</strong>

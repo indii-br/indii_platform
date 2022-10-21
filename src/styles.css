@@ -151,3 +151,11 @@
 .border-red-500{
     border-color: tomato!important;
 }
+
+.border-green-500{
+    border-color: rgb(13, 175, 72)!important;
+}
+
+.border-oragen-500{
+    border-color: rgba(249, 115, 22)!important;
+}

@@ -9,18 +9,30 @@
                         </h3>
                     </div>
                     <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                        <!-- <button style="background-color: #ececec;"
-                            class="text-blueGray-500 text-xs font-semibold px-3 py-1 rounded outline-none mr-1 mb-1"
-                            type="button">
-                            Ver concluidos e arquivados
-                        </button> -->
+						<button (click)="applyFilter('all')" class="selectedFilter filter filter-all text-blueGray-500 text-xs font-semibold px-3 py-1 rounded outline-none mr-1 mb-1"
+							type="button">
+							Todas
+						</button>
 
-                        <!-- <button [routerLink]="['/admin/novo-contrato']"
-                            class="text-white bg-indigo-500 text-xs font-bold capitalize px-3 py-1 rounded outline-none ml-2 mr-1 mb-1"
-                            type="button">
-                            <i class="fa fa-plus"></i>
-                            <span class="ml-2">Criar Contrato</span>
-                        </button> -->
+                        <button (click)="applyFilter('open')" class="filter filter-open text-blueGray-500 text-xs font-semibold px-3 py-1 rounded outline-none mr-1 mb-1"
+							type="button">
+							Em Aberto
+						</button>
+
+                        <button (click)="applyFilter('approved')" class="filter filter-approved text-blueGray-500 text-xs font-semibold px-3 py-1 rounded outline-none mr-1 mb-1"
+							type="button">
+							Aprovadas
+						</button>
+
+                        <button (click)="applyFilter('paid')" class="filter filter-paid text-blueGray-500 text-xs font-semibold px-3 py-1 rounded outline-none mr-1 mb-1"
+							type="button">
+							Pagas
+						</button>
+
+                        <button (click)="applyFilter('archived')" class="filter filter-archived text-blueGray-500 text-xs font-semibold px-3 py-1 rounded outline-none mr-1 mb-1"
+							type="button">
+							Arquivadas
+						</button>
                     </div>
                 </div>
             </div>

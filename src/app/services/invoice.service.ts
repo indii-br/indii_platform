@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SupabaseService } from './supabase.service';
 
@@ -7,6 +8,8 @@ import { SupabaseService } from './supabase.service';
   providedIn: 'root'
 })
 export class InvoiceService {
+  private updateHeaderStats = new BehaviorSubject<string>('');
+
   constructor(
     private supabaseService: SupabaseService,
     private http: HttpClient
@@ -110,6 +113,7 @@ export class InvoiceService {
   }
 
   async archiveInvoice(id: string): Promise<any> {
+    this.updateHeaderStats.next(id)
     return this.supabaseService.supabase
       .from('invoices')
       .update({
@@ -121,6 +125,7 @@ export class InvoiceService {
   }
 
   async approveInvoice(id: string): Promise<any> {
+    this.updateHeaderStats.next(id)
     return this.supabaseService.supabase
       .from('invoices')
       .update({
@@ -131,7 +136,20 @@ export class InvoiceService {
       .eq("id", id)
   }
 
+  async markAsPaidInvoice(id: string): Promise<any> {
+    this.updateHeaderStats.next(id)
+    return this.supabaseService.supabase
+      .from('invoices')
+      .update({
+        statusCode: 300,
+        status: 'PAYIN_PAID',
+        approvedAt: new Date()
+      })
+      .eq("id", id)
+  }
+
   async removeApprovalInvoice(id: string): Promise<any> {
+    this.updateHeaderStats.next(id)
     return this.supabaseService.supabase
       .from('invoices')
       .update({
@@ -141,5 +159,9 @@ export class InvoiceService {
         approvalRemovedAt: new Date()
       })
       .eq("id", id)
+  }
+
+  getDataUpdateInvoice(){
+    return this.updateHeaderStats.asObservable();
   }
 }

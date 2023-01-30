@@ -1,6 +1,6 @@
 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-50 border-0">
     <div class="flex-auto px-4 pb-2 lg:px-10 py-10 pt-8">
-        <div *ngIf="contractData && contractData.statusCode === 200" class="flex flex-wrap pb-4">
+        <div *ngIf="contractData && contractData.statusCode <= 200" class="flex flex-wrap pb-4">
             <h6 class="text-blueGray-400 text-sm mb-6 font-bold uppercase text-center w-full">
                 <span *ngIf="!isDone(position)">
                     Etapa {{position}}/{{statusListToShow.length}}

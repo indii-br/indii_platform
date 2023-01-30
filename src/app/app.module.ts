@@ -112,6 +112,7 @@ import { NewSquadComponent } from "./views/admin/squads/new-squad/new-squad.comp
 import { CreateClientComponent } from './views/signup/create-client/create-client.component';
 import { MilestoneBlockComponent } from './views/admin/contracts/milestone-block/milestone-block.component';
 import { MilestoneTableDataComponent } from './views/admin/contracts/milestone-table-data/milestone-table-data.component';
+import { PriceComponent } from './components/price/price.component';
 
 @NgModule({
   declarations: [
@@ -196,6 +197,7 @@ import { MilestoneTableDataComponent } from './views/admin/contracts/milestone-t
     CreateClientComponent,
     MilestoneBlockComponent,
     MilestoneTableDataComponent,
+    PriceComponent,
   ],
   imports: [
     BrowserModule, 

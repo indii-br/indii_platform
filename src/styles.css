@@ -159,3 +159,19 @@
 .border-oragen-500{
     border-color: rgba(249, 115, 22)!important;
 }
+
+.soon{
+    background: rgba(254, 125, 33, 0.755);
+    color: white;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 3px 4px;
+    text-transform: lowercase;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
